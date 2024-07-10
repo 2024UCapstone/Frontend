@@ -1,0 +1,19 @@
+.loadingPage .bus-icon {
+    display: flex;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.loadingPage .logo .bus-icon {
+    width: 20rem;
+    height: 20rem;
+    animation: busMove 2s linear infinite;
+}
+
+@keyframes busMove {
+    0% { transform: translateX(-30%); }
+    25% { transform: translateX(0); }
+    50% { transform: translateX(30%); }
+    75% { transform: translateX(0); }
+    100% { transform: translateX(-30%); }
+}
