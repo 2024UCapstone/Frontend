@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../App.css';
-import HelpIcon from '../shared/HelpIcon';
+import '../../App.css';
+// import HelpIcon from '../../components/HelpIcon/HelpIcon';
 
 
 function LoginPage() {
@@ -24,7 +24,7 @@ function LoginPage() {
           <button onClick={handleLogin}>Continue with Apple</button>
         </div>
       </div>
-      <HelpIcon />
+      {/* <HelpIcon /> */}
     </div>
   );
 }
