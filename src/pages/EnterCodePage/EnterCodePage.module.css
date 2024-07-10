@@ -1,0 +1,39 @@
+.enterCodePage {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.enterCodePage .bus-icon {
+    width: 100px;
+    height: auto;
+}
+
+.enterCodePage input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.enterCodePage .inputContainer .button {
+    background-color: #80cbc4;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+}
+
+.enterCodePage .error-message {
+    color: red;
+    margin-top: 10px;
+}
