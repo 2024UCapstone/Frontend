@@ -34,9 +34,12 @@
   padding: 12px 14px;
   border-radius: 16px;
   background-color: #fff;
-  box-shadow: 1px 1px 3px #ddd;
+  box-shadow: 0 2px 3px #ddd;
 }
 
+.loginButtons > button:focus {
+  box-shadow: 0 2px 5px #ccc;
+}
 .logo {
   width: 20px;
   height: 20px;

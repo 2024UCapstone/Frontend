@@ -33,10 +33,14 @@ function EnterCodePage() {
       <div className={styles["inputContainer"]}>
         <input
           type="text"
-          placeholder="고유코드를 입력하세요."
+          placeholder="고유 코드 번호를 입력하세요."
           value={code}
           onChange={handleChange}
         />
+        {/* isCodeCorrect가 false면 코드가 틀렸다고 알려주는 부분*/}
+        <p className={styles["error-message"]}>
+          {isCodeCorrect === false && "코드가 틀렸습니다. 다시 시도하세요."}
+        </p>
         <button
           type="button"
           className={styles["button"]}
@@ -44,12 +48,6 @@ function EnterCodePage() {
         >
           접속
         </button>
-        {/* isCodeCorrect가 false면 코드가 틀렸다고 알려주는 부분*/}
-        {isCodeCorrect === false && (
-          <p className={styles["error-message"]}>
-            코드가 틀렸습니다. 다시 시도하세요.
-          </p>
-        )}
       </div>
       <HelpIcon />
     </div>
