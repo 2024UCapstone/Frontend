@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styles from './LoadingPage.module.css'; // CSS 파일에서 애니메이션 설정
 import useStore from '../../store/UseStore';
-import busIcon from "../../Assets/Image/free-icon-bus-1168001.png";
+import busIcon from "../../assets/Image/free-icon-bus-1168001.png";
 
 const LoadingPage = () => {
   const navigate = useNavigate();

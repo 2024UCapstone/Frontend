@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./EnterCodePage.module.css";
-import HelpIcon from '../../Components/HelpIconComponents/HelpIcon';
+import HelpIcon from '../../components/HelpIconComponents/HelpIcon';
 
 function EnterCodePage() {
   const [code, setCode] = useState(''); // 코드 담아두는 변수

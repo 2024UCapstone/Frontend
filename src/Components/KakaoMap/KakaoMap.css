@@ -1,13 +1,13 @@
 .map {
-    min-width: 320px;
+    /* min-width: 320px; */
     width: 40rem;
     height: 50vh;
     border-radius: 20px;
     border: solid 1px black;
 }
 
-@media (min-width: 320px) {
+/* @media (min-width: 320px) {
     .map{
         width: calc(100% - 10%);
     }
-}
+} */

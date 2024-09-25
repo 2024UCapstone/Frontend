@@ -1,7 +1,7 @@
 import { Map, MapMarker, MapTypeId } from "react-kakao-maps-sdk";
 import "./KakaoMap.css";
 import { useEffect, useState } from "react";
-import BusIcon from "../../Assets/Image/free-icon-bus-1168001.png"
+import BusIcon from "../../assets/Image/free-icon-bus-1168001.png"
 
 
 function KakaoMap(){

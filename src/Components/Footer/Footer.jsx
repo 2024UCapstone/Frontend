@@ -1,6 +1,6 @@
 import styles from "./Footer.module.css";
 import { useNavigate } from "react-router-dom";
-import busIcon from "../../Assets/Image/free-icon-bus-1168001.png";
+import busIcon from "../../assets/Image/free-icon-bus-1168001.png";
 import MyInfoModal from "../MyInfoModal/MyInfoModal";
 import { useState } from "react";
 

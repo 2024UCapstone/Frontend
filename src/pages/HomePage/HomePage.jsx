@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import useStore from '../../store/UseStore';
-import KakaoMap from '../../Components/KakaoMap/KakaoMap';
-import MapComponent from '../../Components/MapComponent/MapComponent';
-import Footer from '../../Components/Footer/Footer';
-import ViewBusComponent from '../../Components/ViewBusComponent/ViewBusComponent';
+import KakaoMap from '../../components/KakaoMap/KakaoMap';
+import MapComponent from '../../components/MapComponent/MapComponent';
+import Footer from '../../components/Footer/Footer';
+import ViewBusComponent from '../../components/ViewBusComponent/ViewBusComponent';
 import "./HomePage.css";
 
 function HomePage() {
