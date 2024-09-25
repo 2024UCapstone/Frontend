@@ -61,8 +61,7 @@
   color: #fff;
   font-size: 16px;
   font-weight: 600;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease,
-    transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .enterCodePage .inputContainer .button:hover {

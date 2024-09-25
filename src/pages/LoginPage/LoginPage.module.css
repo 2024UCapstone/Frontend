@@ -35,11 +35,19 @@
   border-radius: 16px;
   background-color: #fff;
   box-shadow: 0 2px 3px #ddd;
+  transition: all 0.3s ease;
+}
+
+.loginButtons > button:hover {
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 5px #ccc;
 }
 
 .loginButtons > button:focus {
-  box-shadow: 0 2px 5px #ccc;
+  background-color: #fff;
+  box-shadow: 0 2px 3px #ddd;
 }
+
 .logo {
   width: 20px;
   height: 20px;
