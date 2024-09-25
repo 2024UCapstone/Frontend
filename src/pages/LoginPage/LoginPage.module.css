@@ -1,0 +1,31 @@
+.LoginPage{
+    /* display: flex; */
+    /* justify-content: center; */
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.bus-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.loginButtons {
+    width: 100%;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+}
+
+.loginButtons > *{
+    margin: 10px;
+}

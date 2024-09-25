@@ -13,10 +13,6 @@
   --main-color5: #8cc2bf;
 }
 
-body {
-  font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-}
-
 button {
   background: none;
   color: inherit;
@@ -43,6 +39,7 @@ html {
 }
 
 body {
+  font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   min-width: 320px;
   background: var(--main-color2);
   width: 430px;

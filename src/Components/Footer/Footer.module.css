@@ -1,0 +1,33 @@
+.Footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 34rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 8rem;
+    background-color: #ffffff;
+}
+
+.Footer > button {
+    display: flex;
+    flex-direction: column;
+    width: 6rem;
+    height: 7rem;
+}
+
+.Footer button > img {
+    width: 100%;
+    height: 80%;
+    background: #eee;
+}
+
+.Footer button > p {
+    flex: 1;
+    font-size: 1.4rem;
+    width: 100%;
+}
+  
