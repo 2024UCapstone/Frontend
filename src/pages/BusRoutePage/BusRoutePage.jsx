@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./BusRoutePage.css"
-import busIcon from "../../assets/Image/free-icon-bus-1168001.png";
-import Footer from "../../components/Footer/Footer";
+import "./BusRoutePage.css";
+import { BusIcon } from "assets/images";
+import Footer from "components/Footer/Footer";
 
 function BusRoutePage() {
   const navigate = useNavigate();
   const [favorites, setFavorites] = useState([
-    { id: 1, name: '울산과학대 서부캠퍼스', isFavorite: false },
-    { id: 2, name: '집에갈래요', isFavorite: true },
-    { id: 3, name: '집에보내줄까', isFavorite: false },
-    { id: 4, name: '어림도 없지', isFavorite: false },
-    { id: 5, name: 'ㅠㅠ', isFavorite: false },
-    { id: 6, name: '울산과학대 동부캠퍼스', isFavorite: false },
+    { id: 1, name: "울산과학대 서부캠퍼스", isFavorite: false },
+    { id: 2, name: "집에갈래요", isFavorite: true },
+    { id: 3, name: "집에보내줄까", isFavorite: false },
+    { id: 4, name: "어림도 없지", isFavorite: false },
+    { id: 5, name: "ㅠㅠ", isFavorite: false },
+    { id: 6, name: "울산과학대 동부캠퍼스", isFavorite: false },
   ]);
 
   const toggleFavorite = (id) => {
@@ -23,30 +23,34 @@ function BusRoutePage() {
     );
   };
 
-
   return (
     <div className="bus-stop-list-container">
-        <div className="header">
-            <h2>울산과학대의 정류장 목록</h2>
-        </div>
-        <div className="bus-stop-list">
-            <ul>
-                {favorites.map((stop, index) => (
-                <li key={stop.id} className={`bus-stop-item ${index !== favorites.length - 1 ? 'connected' : ''}`}>
-                    <div className="circle"></div>
-                    <div className="bus-stop-name">{stop.name}</div>
-                    <button
-                    className="favorite-button"
-                    onClick={() => toggleFavorite(stop.id)}
-                    >
-                        {stop.isFavorite ? '★' : '☆'}
-                    </button>
-                </li>
-                ))}
-            </ul>
-        </div>
+      <div className="header">
+        <h2>울산과학대의 정류장 목록</h2>
+      </div>
+      <div className="bus-stop-list">
+        <ul>
+          {favorites.map((stop, index) => (
+            <li
+              key={stop.id}
+              className={`bus-stop-item ${
+                index !== favorites.length - 1 ? "connected" : ""
+              }`}
+            >
+              <div className="circle"></div>
+              <div className="bus-stop-name">{stop.name}</div>
+              <button
+                className="favorite-button"
+                onClick={() => toggleFavorite(stop.id)}
+              >
+                {stop.isFavorite ? "★" : "☆"}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
-    );
-};
+  );
+}
 
 export default BusRoutePage;

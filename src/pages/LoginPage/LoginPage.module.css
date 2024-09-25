@@ -1,31 +1,48 @@
-.LoginPage{
-    /* display: flex; */
-    /* justify-content: center; */
+.LoginPage {
+  /* display: flex; */
+  /* justify-content: center; */
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .bus-icon {
-    width: 100px;
-    height: 100px;
+  width: 100px;
+  height: 100px;
 }
 
 .title {
-    font-size: 2rem;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .loginButtons {
-    width: 100%;
-    background-color: red;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
 }
 
-.loginButtons > *{
-    margin: 10px;
+.loginButtons > button {
+  display: flex;
+  align-items: center;
+  border: solid 1px #ddd;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px #ddd;
+}
+
+.logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
+
+.loginButtons > * {
+  margin: 4px;
 }

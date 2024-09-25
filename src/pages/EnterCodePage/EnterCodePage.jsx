@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./EnterCodePage.module.css";
 import HelpIcon from "components/HelpIconComponents/HelpIcon";
+import { BusIcon } from "assets/images";
 
 function EnterCodePage() {
   const [code, setCode] = useState(""); // 코드 담아두는 변수
@@ -26,11 +27,7 @@ function EnterCodePage() {
   return (
     <div className={styles["enterCodePage"]}>
       <div className={styles["logo"]}>
-        <img
-          src={process.env.PUBLIC_URL + "/Image/free-icon-bus-1168001.png"}
-          className={styles["bus-icon"]}
-          alt="Bus Logo"
-        />
+        <img src={BusIcon} className={styles["bus-icon"]} alt="Bus Logo" />
       </div>
       <div className={styles["title"]}>내 버스 찾아죠</div>
       <div className={styles["inputContainer"]}>

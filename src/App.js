@@ -5,6 +5,8 @@ import EnterCodePage from "pages/EnterCodePage/EnterCodePage";
 import LoadingPage from "pages/LoadingPage/LoadingPage";
 import HomePage from "pages/HomePage/HomePage";
 import DetailFavoritesListPage from "pages/DetailFavoritesListPage/DetailFavoritesListPage";
+import BusListPage from "pages/BusListPage/BusListPage";
+import BusRoutePage from "pages/BusRoutePage/BusRoutePage";
 
 function App() {
   return (
