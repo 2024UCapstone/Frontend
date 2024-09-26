@@ -53,11 +53,6 @@ function KakaoMap() {
         lat: 35.495789,
         lng: 129.415649,
       }}
-      // style={{
-      //     // 지도의 크기
-      //     width: "40vh",
-      //     height: "50vh",
-      // }}
       level={4} // 지도의 확대 레벨
     >
       {busStopList.map((busStopList, index) => (
@@ -65,7 +60,7 @@ function KakaoMap() {
           key={`${busStopList.title}-${busStopList.latlng}`}
           position={busStopList.latlng} // 마커를 표시할 위치
           image={{
-            src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
+            src: {BusIcon}, // 마커이미지의 주소입니다
             size: {
               width: 24,
               height: 35,

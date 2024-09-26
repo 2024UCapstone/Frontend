@@ -6,6 +6,7 @@ import HomePage from "pages/HomePage/HomePage";
 import DetailFavoritesListPage from "pages/DetailFavoritesListPage/DetailFavoritesListPage";
 import BusListPage from "pages/BusListPage/BusListPage";
 import BusRoutePage from "pages/BusRoutePage/BusRoutePage";
+import BusDirectionPage from "pages/BusDirectionPage/BusDirectionPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           path="detailfavoriteslist"
           element={<DetailFavoritesListPage />}
         />
+        <Route path="/bus-direction" element={<BusDirectionPage />} />
         <Route path="/bus-list" element={<BusListPage />} />
         <Route path="/bus-route" element={<BusRoutePage />} />
       </Routes>

@@ -30,7 +30,7 @@ const Footer = () => {
       </button>
       <button
         onClick={() => {
-          navigate("/bus-list");
+          navigate("/bus-direction");
         }}
       >
         <img src={BusIcon} alt="bus-icon" />
