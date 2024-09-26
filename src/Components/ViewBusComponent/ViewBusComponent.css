@@ -1,17 +1,15 @@
 .Viewbuscomponent .station-list {
-    background-color: #e0ebeb;
-    border-radius: 10px;
-    margin: 10px;
-    /* width: 40rem; */
-    /* padding: 10px; */
-    margin: 20px auto; /* 가운데 정렬 */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
-  
+  background-color: #e0ebeb;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 20px auto; /* 가운데 정렬 */
+  box-shadow: 0 2px 3px #525252;
+  font-size: 16px;
+}
+
 .Viewbuscomponent .station-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   font-weight: bold;
   padding-bottom: 10px;
   border-bottom: 1px solid #ccc;
@@ -19,14 +17,15 @@
 
 .Viewbuscomponent .search-icon {
   font-size: 18px;
+  margin-left: auto;
   cursor: pointer;
 }
-  
+
 .Viewbuscomponent .station-items {
   display: flex;
   flex-direction: column;
 }
-  
+
 .Viewbuscomponent .station-item {
   display: flex;
   justify-content: space-between;
@@ -36,47 +35,47 @@
   align-items: center; /* 세로 중앙 정렬 */
   cursor: pointer;
 }
-  
+
 .Viewbuscomponent .station-item.selected {
   background-color: #d0e0e3;
 }
-  
+
 .Viewbuscomponent .station-item.empty {
   color: #999;
 }
-  
+
 .Viewbuscomponent .station-item:last-child {
   border-bottom: none;
 }
-  
+
 .Viewbuscomponent .star {
   color: gold;
 }
-  
+
 .Viewbuscomponent .bus-info {
   margin-top: 10px;
 }
-  
+
 .Viewbuscomponent .bus-item {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
 }
-  
+
 .Viewbuscomponent .bus-id {
   font-weight: bold;
   margin-right: 10px;
 }
-  
+
 .Viewbuscomponent .bus-distance {
   margin-right: 10px;
 }
-  
+
 .Viewbuscomponent .bus-status {
   color: red;
   margin-right: 10px;
 }
-  
+
 .Viewbuscomponent .progress-bar {
   width: 100px;
   height: 10px;
@@ -85,12 +84,12 @@
   overflow: hidden;
   margin-right: 10px;
 }
-  
+
 .Viewbuscomponent .progress {
   height: 100%;
   background-color: #4caf50;
 }
-  
+
 .Viewbuscomponent .bus-seats {
   background-color: #b0c4de;
   border-radius: 15px;
@@ -99,7 +98,7 @@
 }
 
 @media (min-width: 320px) {
-  .Viewbuscomponent{
-      width: calc(100% - 10%);
+  .Viewbuscomponent {
+    width: calc(100% - 10%);
   }
 }
