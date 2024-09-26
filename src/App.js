@@ -10,7 +10,7 @@ import BusRoutePage from "pages/BusRoutePage/BusRoutePage";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/enter-code" element={<EnterCodePage />} />

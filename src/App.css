@@ -1,7 +1,7 @@
-
 .App {
   font-family: Arial, sans-serif;
-  padding: 20px;
+  /* padding: 20px; */
+  /* 화면 스크롤 잡히는 이유 */
 }
 
 header {
@@ -13,7 +13,6 @@ header {
 main {
   padding: 20px;
 }
-
 
 /* 작은 모바일 기기 (320px 이상) */
 @media (min-width: 320px) {

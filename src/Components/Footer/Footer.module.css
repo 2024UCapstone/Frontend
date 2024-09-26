@@ -1,33 +1,29 @@
 .Footer {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    max-width: 34rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 8rem;
-    background-color: #ffffff;
+  position: fixed;
+  bottom: 10px;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Footer > button {
-    display: flex;
-    flex-direction: column;
-    width: 6rem;
-    height: 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 6rem;
+  height: 7rem;
 }
 
 .Footer button > img {
-    width: 100%;
-    height: 80%;
-    background: #eee;
+  width: 100%;
+  height: 80%;
+  filter: drop-shadow(1px 1px 2px #000);
 }
 
 .Footer button > p {
-    flex: 1;
-    font-size: 1.4rem;
-    width: 100%;
+  flex: 1;
+  font-size: 1.4rem;
+  font-weight: 600;
+  width: 100%;
 }
-  
