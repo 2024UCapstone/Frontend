@@ -1,13 +1,8 @@
 .map {
-    /* min-width: 320px; */
-    width: 40rem;
-    height: 50vh;
-    border-radius: 20px;
-    border: solid 1px black;
+  min-width: 320px;
+  width: 80vw;
+  height: 40vh;
+  border-radius: 20px;
+  border: solid 1px black;
+  box-shadow: 0 2px 3px #525252;
 }
-
-/* @media (min-width: 320px) {
-    .map{
-        width: calc(100% - 10%);
-    }
-} */
