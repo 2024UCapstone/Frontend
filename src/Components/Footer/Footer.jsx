@@ -1,13 +1,12 @@
 import styles from "./Footer.module.css";
 import { useNavigate } from "react-router-dom";
-import { BusIcon, hamburgerIcon, HomeIcon, BusStopIcon } from "assets/images";
+import { BusIcon, HamburgerIcon, HomeIcon, BusStopIcon } from "assets/images";
 import MyInfoModal from "components/MyInfoModal/MyInfoModal";
 import { useState } from "react";
 
 const Footer = () => {
   const [showModal, setShowModal] = useState(false);
   const [isAdmin, setIsAdmin] = useState(true); // 임시로 관리자인지 여부를 설정 (실제로는 API 응답을 통해 설정)
-
 
   const handleModal = () => {
     setShowModal(!showModal);
@@ -18,9 +17,13 @@ const Footer = () => {
   return (
     <footer className={styles.Footer}>
       <button onClick={handleModal}>
-        <img src={hamburgerIcon} alt="마이페이지" />
+        <img src={HamburgerIcon} alt="마이페이지" />
         <p>내 정보</p>
-        <MyInfoModal showModal={showModal} onClose={handleModal} isAdmin={isAdmin} />
+        <MyInfoModal
+          showModal={showModal}
+          onClose={handleModal}
+          isAdmin={isAdmin}
+        />
       </button>
       <button
         onClick={() => {
