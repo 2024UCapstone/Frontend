@@ -34,7 +34,7 @@ const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
         </button>
         <div className="modal-header">안녕하세요</div>
         <div className="modal-body">
-          <p>[울산과학대] 접속 상태</p>
+          <p>[{"울산과학대"}] 접속 상태</p>
           <button className="logout-button" onClick={onClose}>
             로그아웃
           </button>

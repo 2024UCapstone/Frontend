@@ -11,13 +11,14 @@
   --main-color3: #7ab2b2;
   --main-color4: #4d869c;
   --main-color5: #8cc2bf;
+  --main-color6: #4caf50;
 }
 
 button {
   background: none;
   color: inherit;
   border: none;
-  cursor: pointer;
+  /* cursor: pointer; */
   outline: inherit;
 }
 
