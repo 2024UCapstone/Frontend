@@ -1,11 +1,13 @@
 import styles from "./Footer.module.css";
 import { useNavigate } from "react-router-dom";
-import { BusIcon } from "assets/images";
+import { BusIcon, hamburgerIcon, HomeIcon, BusStopIcon } from "assets/images";
 import MyInfoModal from "components/MyInfoModal/MyInfoModal";
 import { useState } from "react";
 
 const Footer = () => {
   const [showModal, setShowModal] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true); // 임시로 관리자인지 여부를 설정 (실제로는 API 응답을 통해 설정)
+
 
   const handleModal = () => {
     setShowModal(!showModal);
@@ -16,16 +18,16 @@ const Footer = () => {
   return (
     <footer className={styles.Footer}>
       <button onClick={handleModal}>
-        <img src={BusIcon} alt="마이페이지" />
+        <img src={hamburgerIcon} alt="마이페이지" />
         <p>내 정보</p>
-        <MyInfoModal showModal={showModal} onClose={handleModal} />
+        <MyInfoModal showModal={showModal} onClose={handleModal} isAdmin={isAdmin} />
       </button>
       <button
         onClick={() => {
           navigate("/home");
         }}
       >
-        <img src={BusIcon} alt="homeImg" />
+        <img src={HomeIcon} alt="homeImg" />
         <p>홈</p>
       </button>
       <button
@@ -33,13 +35,13 @@ const Footer = () => {
           navigate("/bus-direction");
         }}
       >
-        <img src={BusIcon} alt="bus-icon" />
+        <img src={BusStopIcon} alt="bus-icon" />
         <p>버스 노선</p>
       </button>
-      <button onClick={() => {}}>
+      {/* <button onClick={() => {}}>
         <img src={BusIcon} alt="my" />
         <p>즐겨찾기</p>
-      </button>
+      </button> */}
     </footer>
   );
 };

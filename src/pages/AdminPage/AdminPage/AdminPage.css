@@ -1,0 +1,18 @@
+.AdminPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.AdminPage div {
+    background-color: #d0c9df;
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
