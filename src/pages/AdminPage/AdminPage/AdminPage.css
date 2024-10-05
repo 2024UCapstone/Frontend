@@ -5,7 +5,7 @@
     align-items: center;
 }
 
-.AdminPage div {
+.AdminPage .busStopButton, .busButton {
     background-color: #d0c9df;
     border-radius: 20px;
     width: 100px;
