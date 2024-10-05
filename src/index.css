@@ -11,13 +11,14 @@
   --main-color3: #7ab2b2;
   --main-color4: #4d869c;
   --main-color5: #8cc2bf;
+  --main-color6: #4caf50;
 }
 
 button {
   background: none;
   color: inherit;
   border: none;
-  cursor: pointer;
+  /* cursor: pointer; */
   outline: inherit;
 }
 
@@ -40,12 +41,13 @@ html {
 
 body {
   font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-  min-width: 320px;
+  /* min-width: 320px;
+  min-height: 600px; */
   background: var(--main-color2);
-  width: 430px;
-  height: 932px;
-  max-width: 100vw;
-  max-height: 100vh;
+  /* width: 430px;
+  height: 932px; */
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

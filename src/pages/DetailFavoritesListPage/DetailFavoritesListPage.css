@@ -1,0 +1,99 @@
+.DetailFavoritesListPage .map {
+    margin: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.DetailFavoritesListPage .map-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.DetailFavoritesListPage .station-list {
+    background-color: #e0ebeb;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.DetailFavoritesListPage .station-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.DetailFavoritesListPage .search-icon {
+    font-size: 18px;
+}
+
+.DetailFavoritesListPage .station-info {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.DetailFavoritesListPage .station-info:last-child {
+    border-bottom: none;
+}
+
+.DetailFavoritesListPage .station-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.DetailFavoritesListPage .bus-info {
+    margin-left: 20px;
+}
+
+.DetailFavoritesListPage .bus-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.DetailFavoritesListPage .bus-id {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.DetailFavoritesListPage .bus-distance {
+    margin-right: 10px;
+}
+
+.DetailFavoritesListPage .bus-status {
+    color: red;
+    margin-right: 10px;
+}
+
+.DetailFavoritesListPage .progress-bar-container {
+    position: relative;
+    width: 30px;
+    height: 10px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+.DetailFavoritesListPage .progress-bar {
+    height: 100%;
+    background-color: #3498db;
+    border-radius: 10px;
+}
+  
+.DetailFavoritesListPage .bus-seats {
+    font-weight: bold;
+}
+
+.DetailFavoritesListPage .navigation-bar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #e0ebeb;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+}

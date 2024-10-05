@@ -1,0 +1,48 @@
+.BusListPage {
+  /* padding: 20px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.BusListPage h3 {
+  background-color: var(--main-color5);
+  border: solid 1px #000;
+  width: 34rem;
+  height: 4.8rem;
+  border-radius: 1rem;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  margin-bottom: 2rem;
+}
+
+.BusListPage ul {
+  border-radius: 1rem;
+  border: solid 1px #000;
+  height: 35rem;
+  width: 34rem;
+  overflow-y: auto;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.BusListPage li {
+  background-color: #f5f9271a;
+  border-bottom: solid 1px #d0c9df;
+  height: 6rem;
+  display: flex;
+  align-items: center;
+}
+
+.BusListPage img {
+  margin: 0 2rem;
+  width: 4rem;
+  height: auto;
+}
+
+.BusListPage p {
+  font-size: 1.5rem;
+}
