@@ -5,7 +5,7 @@ import MapComponent from "components/MapComponent/MapComponent";
 import Footer from "components/Footer/Footer";
 import ViewBusComponent from "components/ViewBusComponent/ViewBusComponent";
 import "./HomePage.css";
-import SearchBar from "pages/SearchBar/SearchBar";
+import SearchBar from "components/SearchBar/SearchBar";
 
 function HomePage() {
 
