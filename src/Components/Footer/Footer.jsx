@@ -41,6 +41,14 @@ const Footer = () => {
         <img src={BusStopIcon} alt="bus-icon" />
         <p>버스 노선</p>
       </button>
+
+      {
+        isAdmin &&
+        <button onClick={() => {navigate("/admin")}}>
+          <img src={BusStopIcon} alt="bus-icon"/>
+          <p>관리자 페이지</p>
+        </button>
+      }
       {/* <button onClick={() => {}}>
         <img src={BusIcon} alt="my" />
         <p>즐겨찾기</p>

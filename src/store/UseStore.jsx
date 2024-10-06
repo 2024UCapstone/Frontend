@@ -5,8 +5,8 @@ const useStore = create((set) => ({
   setUser: (user) => set({ user }),
   favoriteStops: [],
   setFavoriteStops: (stops) => set({ favoriteStops: stops }),
-  busStops: [],
-  setBusStops: (stops) => set({ busStops: stops }),
+  busStations: [],
+  setbusStations: (stops) => set({ busStations: stops }),
   isSearchModalOpen: false,
   setSearchModalOpen: (isOpen) => set({ isSearchModalOpen: isOpen }),
 }));

@@ -8,7 +8,7 @@ import BusListPage from "pages/BusListPage/BusListPage";
 import BusRoutePage from "pages/BusRoutePage/BusRoutePage";
 import BusDirectionPage from "pages/BusDirectionPage/BusDirectionPage";
 import AdminPage from "pages/AdminPage/AdminPage/AdminPage";
-import AdminBusStopPage from "pages/AdminPage/BusStop/AdminBusStopPage";
+import AdminBusStationPage from "pages/AdminPage/BusStationPage/AdminBusStopPage";
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
         <Route path="/bus-list" element={<BusListPage />} />
         <Route path="/bus-route" element={<BusRoutePage />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin/bus-stop" element={<AdminBusStopPage />} />
+        <Route path="/admin/bus-stop" element={<AdminBusStationPage />} />
       </Routes>
     </div>
   );
