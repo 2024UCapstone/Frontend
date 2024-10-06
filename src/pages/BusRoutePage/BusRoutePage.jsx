@@ -26,55 +26,27 @@ function BusRoutePage() {
     <div className="BusRoutePage">
       {/* 현 34rem으로 지정 */}
       <h3>{"울산과학대의 버스 목록"}</h3>
-      <div className="bus-stop-list">
-        <ul>
-            {favorites.map((stop, index) => (
-                <li
-                    key={stop.id}
-                    className={`bus-stop-item ${
-                        index !== favorites.length - 1 ? "connected" : ""
-                    }`}
-                >
-                    <div className="circle"></div>
-                    <div className="bus-stop-name">{stop.name}</div>
-                    <button
-                        className="favorite-button"
-                        onClick={() => toggleFavorite(stop.id)}
-                    >
-                        {stop.isFavorite ? "★" : "☆"}
-                    </button>
-                </li>
-            ))}
-        </ul>
-      </div>
+      <ul>
+        {favorites.map((stop, index) => (
+          <li
+            key={stop.id}
+            className={`bus-stop-item ${
+              index !== favorites.length - 1 ? "connected" : ""
+            }`}
+          >
+            <div className="circle"></div>
+            <p className="bus-stop-list">{stop.name}</p>
+            <button
+              className="favorite-button"
+              onClick={() => toggleFavorite(stop.id)}
+            >
+              {stop.isFavorite ? "★" : "☆"}
+            </button>
+          </li>
+        ))}
+      </ul>
       <Footer />
     </div>
-    // <div className="BusRoutePage">
-    //   <div className="header">
-    //     <h2>울산과학대의 정류장 목록</h2>
-    //   </div>
-    //   <div className="bus-stop-list">
-    //     <ul>
-    //       {favorites.map((stop, index) => (
-    //         <li
-    //           key={stop.id}
-    //           className={`bus-stop-item ${
-    //             index !== favorites.length - 1 ? "connected" : ""
-    //           }`}
-    //         >
-    //           <div className="circle"></div>
-    //           <div className="bus-stop-name">{stop.name}</div>
-    //           <button
-    //             className="favorite-button"
-    //             onClick={() => toggleFavorite(stop.id)}
-    //           >
-    //             {stop.isFavorite ? "★" : "☆"}
-    //           </button>
-    //         </li>
-    //       ))}
-    //     </ul>
-    //   </div>
-    // </div>
   );
 }
 
