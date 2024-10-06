@@ -1,26 +1,102 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./EnterCodePage.module.css";
 import HelpIcon from "components/HelpIconComponents/HelpIcon";
 import { BusIcon } from "assets/images";
+import useFetchData from "hooks/useFetchData";
+import usePostData from "hooks/usePostData";
 
 function EnterCodePage() {
-  const [code, setCode] = useState(""); // 코드 담아두는 변수
-  const [isCodeCorrect, setIsCodeCorrect] = useState(null); //입력한 코드와 일치하는지 아닌지 확인
+  const [schoolName, setSchoolName] = useState("");
+  const [schoolEmail, setSchoolEmail] = useState("");
+  const [schoolCode, setSchoolCode] = useState("");
+  const [isVaildSchool, setIsVaildSchool] = useState(null);
+  const [hasVaildSchool, setHasVaildSchool] = useState(false);
+
+  const [isVaildMail, setIsVaildMail] = useState(null);
+  const [hasVaildMail, setHasVaildMail] = useState(false);
+
+  const [isVaildCode, setIsVaildCode] = useState(null);
+  const [hasVaildCode, setHasVaildCode] = useState(false);
+
+  const { data: nameData, loading: nameLoad, message: nameMessage, postData: namePost } = usePostData(
+    'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/school/validation'
+  );
+  const { data: mailData, loading: mailLoad, message: mailMessage, postData: mailPost } = usePostData(
+    'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/school/mail'
+  );
+  const { data: codeData, loading: codeLoad, message: codeMessage, postData: codePost } = usePostData(
+    'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/school/code'
+  );
   const navigate = useNavigate();
 
-  // 코드 입력 받는 곳을
-  const handleChange = (event) => {
-    setCode(event.target.value);
+  useEffect(() => {
+    if (nameData !== null) {
+      setIsVaildSchool(nameData);
+      setHasVaildSchool(true);
+    }
+  }, [nameData]);
+
+  useEffect(() => {
+    if (mailData !== null) {
+      setIsVaildMail(mailData);
+      setHasVaildMail(true);
+    }
+  }, [mailData]);
+
+  useEffect(() => {
+    if (codeData !== null) {
+      setIsVaildCode(codeData);
+      setHasVaildCode(true);
+    }
+  }, [codeData]);
+
+  const handleSchoolNameChange = (event) => {
+    setSchoolName(event.target.value);
   };
 
-  // 접속을 눌렀을 때 코드가 맞으면 loading페이지로, 아니면 isCodeCorrect false로 변경
-  const handleSubmit = () => {
-    if (code === "1234") {
-      setIsCodeCorrect(true);
-      navigate("/loading");
-    } else {
-      setIsCodeCorrect(false);
+  const handleSchoolEmailChange = (event) => {
+    setSchoolEmail(event.target.value);
+  };
+
+  const handleSchoolCodeChange = (event) => {
+    setSchoolCode(event.target.value);
+  };
+
+  const handleSchoolVerification = async() => {
+    await namePost({schoolName: schoolName});
+    setHasVaildSchool(true);
+    if(nameData) setIsVaildSchool(true)
+    else setIsVaildSchool(false);
+  };
+
+  const handleEmailVerification = async () => {
+    if(isVaildSchool === false) return alert("학교명을 인증 후 메일을 인증해주세요!");
+    await mailPost({
+      schoolName: schoolName,
+      schoolEmail: schoolEmail
+    });
+    setHasVaildMail(true);
+    if(mailData) setIsVaildMail(true)
+    else setIsVaildMail(false);
+  };
+
+  const handleCodeVerification = async() => {
+    // if(isVaildMail === false) return alert("학교 메일 전송 후 코드를 입력해주세요!");
+
+    // 인증 코드 로직 구현
+    await codePost({
+      schoolName: schoolName,
+      schoolEmail: schoolEmail,
+      code: schoolCode
+    });
+    setHasVaildCode(true);
+    if(mailData) setIsVaildCode(true)
+    else setIsVaildCode(false);
+
+    if(isVaildCode) {
+      alert(codeMessage);
+      navigate("/home");
     }
   };
 
@@ -31,22 +107,57 @@ function EnterCodePage() {
       </div>
       <div className={styles["title"]}>내 버스 찾아죠</div>
       <div className={styles["inputContainer"]}>
-        <input
-          type="text"
-          placeholder="고유 코드 번호를 입력하세요."
-          value={code}
-          onChange={handleChange}
-        />
-        {/* isCodeCorrect가 false면 코드가 틀렸다고 알려주는 부분*/}
-        <p className={styles["error-message"]}>
-          {isCodeCorrect === false && "코드가 틀렸습니다. 다시 시도하세요."}
+        <div className={styles["inputSchool"]}>
+          <input
+            className={styles["schoolName"]}
+            type="text"
+            placeholder="학교명을 입력하세요."
+            value={schoolName}
+            onChange={handleSchoolNameChange}
+          />
+          <button
+            type="button"
+            className={styles["validButton"]}
+            onClick={handleSchoolVerification}
+          >
+            인증 가능 여부
+          </button>
+        </div>
+        <p style={{display: hasVaildSchool === true ? 'block' : 'none'}} className={styles[isVaildSchool ? "success-message" : "error-message"]}>
+          {nameMessage}
         </p>
+        <div className={styles["inputSchool"]}>
+          <input
+            className={styles["schoolName"]}
+            type="text"
+            placeholder="학교 메일을 입력하세요."
+            value={schoolEmail}
+            onChange={handleSchoolEmailChange}
+          />
+          <button
+            type="button"
+            className={styles["validButton"]}
+            onClick={handleEmailVerification}
+          >
+            인증 메일 전송
+          </button>
+        </div>
+        <p style={{display: hasVaildMail === true ? 'block' : 'none'}} className={styles[isVaildMail ? "success-message" : "error-message"]}>
+          {mailMessage}
+        </p>
+        <input
+          className={styles["schoolEmail"]}
+          type="text"
+          placeholder="메일 인증 코드를 입력하세요."
+          value={schoolCode}
+          onChange={handleSchoolCodeChange}
+        />
         <button
           type="button"
           className={styles["button"]}
-          onClick={handleSubmit}
+          onClick={handleCodeVerification}
         >
-          접속
+          메일 인증
         </button>
       </div>
       <HelpIcon />

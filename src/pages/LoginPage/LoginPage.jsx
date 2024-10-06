@@ -1,14 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 import { BusIcon } from "assets/images";
-import { AppleIcon, GoogleIcon, MicrosoftIcon } from "assets/logos";
+import { GoogleIcon } from "assets/logos";
+import useFetchData from "hooks/useFetchData";
+import { useEffect, useState } from "react";
+import axios from "axios";
 // import HelpIcon from '../../components/HelpIcon/HelpIcon';
 
 function LoginPage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const handleLogin = () => {
-    navigate("/enter-code");
+  const handleLogin = async () => {
+    window.location.href = 'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/oauth2/authorization/google';
+    // window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+
   };
 
   return (
@@ -20,15 +25,7 @@ function LoginPage() {
         <div className={styles["title"]}>내 버스 찾아죠</div>
         <div className={styles["loginButtons"]}>
           <button onClick={handleLogin}>
-            <GoogleIcon className={styles["logo"]} /> Continue with Google
-          </button>
-          <button onClick={handleLogin}>
-            <MicrosoftIcon className={styles["logo"]} /> Continue with Microsoft
-            Account
-          </button>
-          <button onClick={handleLogin}>
-            <AppleIcon className={styles["logo"]} />
-            Continue with Apple
+            <GoogleIcon className={styles["logo"]} /> 구글 계정으로 로그인
           </button>
         </div>
       </div>
