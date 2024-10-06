@@ -1,0 +1,11 @@
+.body {
+  display: flex;
+}
+
+.map {
+  min-width: 320px;
+  width: 100vw;
+  height: 50vh;
+  /* position: fixed;
+  top: 20px; */
+}
