@@ -2,6 +2,7 @@ import { Map, MapMarker, MapTypeId } from "react-kakao-maps-sdk";
 import "./KakaoMap.css";
 import { useEffect, useState } from "react";
 import { BusStopIcon } from "assets/images";
+import useFetchData from "hooks/useFetchData";
 // import useGeoLocation from "../hooks/useGeoLocation";
 
 function KakaoMap() {

@@ -171,7 +171,7 @@
 
 
 import React, { useState } from 'react';
-import './SerchModal.css';
+import './SearchStationModal.css';
 
 const SerchModal = ({ isOpen, toggleModal, stations, toggleFavorite }) => {
   const [searchTerm, setSearchTerm] = useState('');
