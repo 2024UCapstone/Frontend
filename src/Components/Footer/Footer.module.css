@@ -1,25 +1,27 @@
 .Footer {
+  position: fixed;
   background-color: whitesmoke;
   bottom: 0;
   width: 100vw;
   height: 6vh;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   z-index: 999;
-  padding: 3em
+  padding: 3em;
 }
 
 .Footer > button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
+  justify-content: center;
 }
 
 .Footer button > img {
-  width: 3rem;
+  width: 2.5rem;
   height: auto;
-  filter: drop-shadow(1px 1px 2px #000);
+  filter: drop-shadow(1px 1px 1px #525252);
 }
 
 .Footer button > p {
