@@ -2,9 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 
 const usePostData = (url) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(false);
+  const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const postData = async (payload) => {
     setLoading(true);
@@ -13,16 +13,19 @@ const usePostData = (url) => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true, // 이 옵션을 추가하여 쿠키를 포함시킵니다
       });
-      setData(response.data);
+      setData(response.data.data);
+      setMessage(response.data.message);
     } catch (error) {
-      setError(error);
+      setData(false);
+      setMessage(error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  return { data, loading, error, postData };
+  return { data, loading, message, postData };
 };
 
 export default usePostData;

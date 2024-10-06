@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./MyInfoModal.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
   const navigate = useNavigate();
@@ -23,6 +24,22 @@ const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
 
   if (!showModal) return null;
 
+  const handleLogout = async() => {
+    try {
+      const response = await axios.post('http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/auth/logout', {}, {
+        withCredentials: true
+      });
+
+      if (response.data) {
+        navigate("/");
+      } else {
+        console.error('로그아웃 실패:', response.data.message);
+      }
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+    }
+  };
+
   return (
     <div className="MyInfoModal" onClick={onClose}>
       <div
@@ -35,7 +52,7 @@ const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
         <div className="modal-header">안녕하세요</div>
         <div className="modal-body">
           <p>[{"울산과학대"}] 접속 상태</p>
-          <button className="logout-button" onClick={onClose}>
+          <button className="logout-button" onClick={()=>handleLogout()}>
             로그아웃
           </button>
           {isAdmin && (

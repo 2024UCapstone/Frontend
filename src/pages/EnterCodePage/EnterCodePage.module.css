@@ -3,35 +3,51 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 .enterCodePage .bus-icon {
   width: 100px;
   height: auto;
+  margin-bottom: 20px;
 }
 
 .title {
   font-size: 24px;
   font-weight: bold;
+  margin-bottom: 30px;
 }
 
 .inputContainer {
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.inputSchool {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+  gap: 10px;
 }
 
 .enterCodePage input[type="text"] {
-  display: flex;
+  flex: 1;
   border: 1px solid #ddd;
   box-shadow: 0 2px 3px #ddd;
-  padding: 14px 16px;
+  padding: 12px;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 14px;
   transition: all 0.3s ease;
   outline: none;
   background-color: #fbfbfb;
+}
+
+.enterCodePage .schoolEmail {
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 .enterCodePage input[type="text"]:focus {
@@ -46,31 +62,54 @@
   transition: color 0.3s ease;
 }
 
-.enterCodePage input[type="text"]::placeholder:focus {
+.enterCodePage input[type="text"]:focus::placeholder {
   color: #ccc;
 }
 
-.enterCodePage .inputContainer .button {
+.validButton{
   background-color: #80cbc4;
   box-shadow: 0 2px 3px #ddd;
   border: none;
-  padding: 12px 24px;
-  margin-top: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.enterCodePage .button {
+  background-color: #80cbc4;
+  box-shadow: 0 2px 3px #ddd;
+  border: none;
+  padding: 12px;
   border-radius: 12px;
   cursor: pointer;
   color: #fff;
   font-size: 16px;
   font-weight: 600;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
-.enterCodePage .inputContainer .button:hover {
+.enterCodePage .inputSchool .button {
+  flex-shrink: 0;
+}
+
+.enterCodePage .button:last-child {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.enterCodePage .button:hover {
   background-color: #6fb9b2;
   box-shadow: 0 3px 5px #ccc;
   transform: translateY(-1px);
 }
 
-.enterCodePage .inputContainer .button:active {
+.enterCodePage .button:active {
   background-color: #80cbc4;
   box-shadow: 0 2px 3px #ddd;
   transform: translateY(0);
@@ -78,8 +117,16 @@
 
 .enterCodePage .error-message {
   color: red;
-  margin-top: 10px;
+  margin-bottom: 1em;
   font-size: 14px;
   font-weight: 600;
-  height: 20px;
+  text-align: center;
+}
+
+.enterCodePage .success-message {
+  color: green;
+  margin-bottom: 1em;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
 }
