@@ -476,7 +476,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import SerchModal from "components/SerchModal/SerchModal";
+import SerchModal from "components/SearchStationModal/SearchStationModal";
 import "./ViewBusComponent.css";
 
 function ViewBusComponent() {
