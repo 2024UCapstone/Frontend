@@ -1,17 +1,17 @@
 import React from "react";
-import './AdminBusStationPage.css'
+import './AdminBusStationCreatePage.css'
 import { useNavigate } from "react-router-dom";
 import Footer from "components/Footer/Footer";
 import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk"
 import { useState } from "react"
 
-function AdminBusStationPage() {
+function AdminBusStationCreatePage() {
   const navigate = useNavigate();
   const [busStationTitle, setBusStationTitle] = useState();
   // useKakaoLoader()
   const [data, setData] = useState()
   return (
-    <div className="AdminBusStationPage">
+    <div className="AdminBusStationCreatePage">
       <Map // 지도를 표시할 Container
         id="map"
         className="map"
@@ -51,4 +51,4 @@ function AdminBusStationPage() {
   );
 }
 
-export default AdminBusStationPage;
+export default AdminBusStationCreatePage;
