@@ -1,6 +1,6 @@
 import create from 'zustand';
 
-const useStore = create((set) => ({
+const useStore = create((set, get) => ({
   user: null,
   setUser: (user) => set({ user }),
   favoriteStops: [],
@@ -11,11 +11,14 @@ const useStore = create((set) => ({
   setSearchModalOpen: (isOpen) => set({ isSearchModalOpen: isOpen }),
 
   // ScrollBar 관련 State
-  viewBusHeight: window.innerHeight / 2, // 초기 ViewBusComponent 높이 (50%)
-  mapHeight: window.innerHeight / 2,     // 초기 KakaoMap 높이 (50%),
-  
-  setViewBusHeight: (height) => set({ viewBusHeight: height }),
+  mapHeight: window.innerHeight - window.innerHeight * 0.1,
+  tabHeight: window.innerHeight * 0.1,
   setMapHeight: (height) => set({ mapHeight: height }),
+  setTabHeight: (height) => set({ tabHeight: height }),
+  updateMapHeight: () => set((state) => ({
+    mapHeight: window.innerHeight - state.tabHeight
+  })),
+  getViewBusComponentHeight: () => get().tabHeight - 24, // 드래그 핸들의 높이(24px)를 뺀 값
 }));
 
 export default useStore;

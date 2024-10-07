@@ -1,16 +1,16 @@
 import React from "react";
-import KakaoMap from "../../components/KakaoMap/KakaoMap";
 import Footer from "components/Footer/Footer";
 import styles from "./HomePage.module.css";
 import SearchBar from "components/SearchBar/SearchBar";
-import ViewBusComponent from "components/ViewBusComponent/ViewBusComponent";
+import StationList from "components/StationList/StationList";
+import MapView from "../../components/MapView/MapView";
 
 function HomePage() {
   return (
     <div className={styles.body}>
       <div className={styles.searchBar}><SearchBar /></div>
-      <div className={styles.kakaomap}><KakaoMap /></div>
-      <ViewBusComponent />
+      <div className={styles.kakaomap}><MapView /></div>
+      <StationList />
       <Footer />
     </div>
   );
