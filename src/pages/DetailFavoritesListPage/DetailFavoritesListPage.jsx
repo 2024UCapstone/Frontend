@@ -1,7 +1,7 @@
-import KakaoMap from 'components/KakaoMap/KakaoMap'
 import './DetailFavoritesListPage.css'
 import Footer from 'components/Footer/Footer'
 import { useEffect, useState } from 'react';
+import MapView from 'components/MapView/MapView';
 
 function DetailFavoritesListPage() {
     const [stations, setStations] = useState([]);
@@ -21,7 +21,7 @@ function DetailFavoritesListPage() {
 
     return(
         <div className="DetailFavoritesListPage">
-            <KakaoMap />
+            <MapView />
             <div className="station-list">
                 <div className="station-header">
                     {

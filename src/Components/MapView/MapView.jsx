@@ -1,12 +1,11 @@
 import { Map, MapMarker, MapTypeId } from "react-kakao-maps-sdk";
-import styles from "./KakaoMap.module.css";
+import styles from "./MapView.module.css";
 import { useEffect, useState } from "react";
-import useStore from "store/UseStore"; // Zustand로 상태 관리
+import useStore from "store/UseStore";
 import { BusStopIcon } from "assets/images";
 
-export default function KakaoMap() {
-  const { mapHeight } = useStore(); // Zustand로 상태 관리
-
+export default function MapView() {
+  const { mapHeight, updateMapHeight } = useStore();
   const [state, setState] = useState({
     center: {
       lat: 35.495789,
@@ -15,6 +14,12 @@ export default function KakaoMap() {
     errMsg: null,
     isLoading: true,
   });
+
+  useEffect(() => {
+    updateMapHeight();
+    window.addEventListener('resize', updateMapHeight);
+    return () => window.removeEventListener('resize', updateMapHeight);
+  }, [updateMapHeight]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -54,10 +59,9 @@ export default function KakaoMap() {
   ];
 
   return (
-    <div className={styles.body}>
+    <div className={styles.mapViewContainer} style={{ height: `${mapHeight}px` }}>
       <Map
-        className={styles.map}
-        style={{ height: `${mapHeight}px` }}
+        className={styles.mapView}
         center={state.center}
         level={4}
       >
@@ -68,15 +72,15 @@ export default function KakaoMap() {
             </div>
           </MapMarker>
         )}
-        {busStopList.map((busStopList, index) => (
+        {busStopList.map((busStop, index) => (
           <MapMarker
-            key={`${busStopList.title}-${busStopList.latlng}`}
-            position={busStopList.latlng}
+            key={`${busStop.title}-${busStop.latlng.lat}-${busStop.latlng.lng}`}
+            position={busStop.latlng}
             image={{
               src: BusStopIcon,
               size: { width: 35, height: 35 },
             }}
-            title={busStopList.title}
+            title={busStop.title}
           />
         ))}
         <MapTypeId type={"TRAFFIC"} />

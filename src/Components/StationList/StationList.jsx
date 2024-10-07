@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import SearchStationModal from "components/SearchStationModal/SearchStationModal";
-import styles from "./ViewBusComponent.module.css";
-import ScrollHandler from "./ScrollHandler/ScrollHandler";
+import styles from "./StationList.module.css";
+import DraggablePanel from "../DraggablePanel/DraggablePanel";
+import useStore from "store/UseStore";
 
-export default function ViewBusComponent() {
+export default function StationList() {
+  const { getViewBusComponentHeight } = useStore();
   const [stations, setStations] = useState([
     { name: "중부경찰서", favorite: true, id: 1 },
     { name: "동부캠퍼스 로터리", favorite: true, id: 2 },
@@ -12,9 +14,8 @@ export default function ViewBusComponent() {
     { name: "태화로터리", favorite: false, id: 4 },
     { name: "우정동", favorite: false, id: 5 },
   ]);
-
   const [selectedStation, setSelectedStation] = useState(null);
-  const [serchmodalOpen, setSerchModalOpen] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const toggleFavorite = (stopName) => {
@@ -26,21 +27,19 @@ export default function ViewBusComponent() {
 
   const favoriteStations = stations.filter((station) => station.favorite);
   const emptySlots = Array.from({ length: Math.max(4 - favoriteStations.length, 0) });
-
-  const toggleModal = () => setSerchModalOpen(!serchmodalOpen);
+  const toggleModal = () => setSearchModalOpen(!searchModalOpen);
 
   return (
-    <ScrollHandler>
-      <div className={styles.body}>
+    <DraggablePanel>
+      <div className={styles.stationListBody} style={{ height: `${getViewBusComponentHeight()}px` }}>
         <div className={styles.stationListContainer}>
-          <div className={styles.stationListHeaderContainer}>
+          <div className={styles.stationListHeader}>
             <span className={styles.stationListTitle}>정류장</span>
             <span className={styles.searchIcon} onClick={toggleModal}>
               🔍
             </span>
           </div>
-
-          <div className={styles.stationListItemContainer}>
+          <div className={styles.stationListItems}>
             {favoriteStations.length === 0 ? (
               <div className={styles.stationListItem}>즐겨찾는 정류장이 없습니다. 정류장을 등록해 주세요.</div>
             ) : (
@@ -72,12 +71,12 @@ export default function ViewBusComponent() {
           </div>
         </div>
         <SearchStationModal
-          isOpen={serchmodalOpen}
+          isOpen={searchModalOpen}
           toggleModal={toggleModal}
           stations={stations}
           toggleFavorite={toggleFavorite}
         />
       </div>
-    </ScrollHandler>
+    </DraggablePanel>
   );
 }
