@@ -3,16 +3,25 @@
     flex-direction: column;
     height: 100vh;
     position: relative;
+    align-items: center;
 }
 
 .searchBar {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+    top: 5em;
+    position: fixed;
+    z-index: 999;
 }
 
-.kakaomap {
-    flex-grow: 1;
+.mapView {
+
+}
+
+.stationList {
+    z-index: 998;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
 }
