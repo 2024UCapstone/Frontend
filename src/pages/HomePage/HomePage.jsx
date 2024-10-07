@@ -28,8 +28,8 @@ function HomePage() {
   return (
     <div className={styles.body}>
       <div className={styles.searchBar}><SearchBar /></div>
-      <div className={styles.kakaomap}><MapView /></div>
-      <StationList />
+      <div className={styles.mapView}><MapView /></div>
+      <div className={styles.stationList}><StationList /></div>
       <Footer />
     </div>
   );

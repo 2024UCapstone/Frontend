@@ -15,7 +15,7 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className={styles.Footer}>
+    <footer className={styles.footer}>
       <button onClick={handleModal}>
         <img src={HamburgerIcon} alt="마이페이지" />
         <p>내 정보</p>
