@@ -11,7 +11,7 @@ const DraggablePanel = ({ children }) => {
 
   const minHeight = window.innerHeight * 0.1;
   const midHeight = window.innerHeight * 0.5;
-  const maxHeight = window.innerHeight * 0.9;
+  const maxHeight = window.innerHeight * 0.88;
 
   const handleDragStart = (clientY) => {
     isDragging.current = true;
