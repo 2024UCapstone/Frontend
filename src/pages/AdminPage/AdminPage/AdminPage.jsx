@@ -8,7 +8,7 @@ function AdminPage() {
 
   return (
     <div className="AdminPage">
-        <div className="busStopButton" onClick={() => navigate("bus-stop")}>
+        <div className="busStopButton" onClick={() => navigate("bus-station")}>
             정류장
         </div>
         <div className="busButton" onClick={() => navigate("bus")}>

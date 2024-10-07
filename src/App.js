@@ -39,7 +39,7 @@ function App() {
         <Route path="/bus-list" element={<BusListPage />} />
         <Route path="/bus-route" element={<BusRoutePage />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin/bus-stop" element={<AdminBusStationPage />} />
+        {/* <Route path="/admin/bus-station/create" element={<AdminBusStationPage />} /> */}
       </Routes>
     </div>
   );

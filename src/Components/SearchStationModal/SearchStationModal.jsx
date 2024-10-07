@@ -171,7 +171,7 @@
 
 
 import React, { useState } from 'react';
-import './SearchStationModal.css';
+import styles from './SearchStationModal.module.css';
 
 const SerchModal = ({ isOpen, toggleModal, stations, toggleFavorite }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -183,8 +183,8 @@ const SerchModal = ({ isOpen, toggleModal, stations, toggleFavorite }) => {
   );
 
   return (
-    <div className="SerchModal" onClick={toggleModal}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className={styles.SearchModal} onClick={toggleModal}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <h3>정류장 검색</h3>
         <input
           type="text"
@@ -193,12 +193,12 @@ const SerchModal = ({ isOpen, toggleModal, stations, toggleFavorite }) => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
-        <ul className="bus-stop-list">
+        <ul className={styles.busStopList}>
           {filteredStations.map((station) => (
-            <li key={station.name} className="bus-stop-item">
+            <li key={station.name} className={styles.busStopItem}>
               {station.name}
               <button
-                className={`favorite-button ${station.favorite ? 'active' : ''}`}
+                className={`favoriteButton ${station.favorite ? 'active' : ''}`}
                 onClick={() => toggleFavorite(station.name)}
               >
                 {station.favorite ? '★' : '☆'}
@@ -207,7 +207,7 @@ const SerchModal = ({ isOpen, toggleModal, stations, toggleFavorite }) => {
           ))}
         </ul>
 
-        <button onClick={toggleModal} className="close-modal">닫기</button>
+        <button onClick={toggleModal} className={styles.closeModal}>닫기</button>
       </div>
     </div>
   );
