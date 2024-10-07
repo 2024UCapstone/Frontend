@@ -26,11 +26,13 @@ function HomePage() {
     }
   }, [location, navigate]);
   return (
-    <div className={styles.body}>
-      <div className={styles.searchBar}><SearchBar /></div>
-      <div className={styles.mapView}><MapView /></div>
-      <div className={styles.stationList}><StationList /></div>
-      <Footer />
+    <div className={styles}>
+      <div className={styles.body}>
+        <SearchBar />
+        <div className={styles.mapView}><MapView /></div>
+        <div className={styles.stationList}><StationList /></div>
+        <Footer />
+      </div>
     </div>
   );
 }

@@ -3,11 +3,12 @@
   bottom: 0;
   z-index: 999;
   background-color: whitesmoke;
-  width: 100vw;
-  height: 6vh;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 3em;
+  padding: 0.5em 0.5em;
+  height: 80px; /* 높이 증가 */
+  box-sizing: border-box;
 }
 
 .footer > button {
@@ -16,18 +17,23 @@
   align-items: center;
   flex: 1;
   justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 .footer button > img {
-  width: 2.5rem;
-  height: auto;
+  width: 28px; /* 아이콘 크기 약간 증가 */
+  height: 28px;
   filter: drop-shadow(1px 1px 1px #525252);
 }
 
 .footer button > p {
-  flex: 1;
-  font-size: 1.4rem;
-  font-weight: 800;
-  width: 100%;
-  margin-top: 1rem;
+  font-size: 12px; /* 글자 크기 약간 증가 */
+  font-weight: 600;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; /* 버튼 너비에 맞춤 */
 }
