@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import SearchStationModal from "components/SearchStationModal/SearchStationModal";
 import styles from "./StationList.module.css";
@@ -6,7 +6,7 @@ import DraggablePanel from "../DraggablePanel/DraggablePanel";
 import useStore from "store/UseStore";
 
 export default function StationList() {
-  const { getViewBusComponentHeight } = useStore();
+  const { tabHeight } = useStore();
   const [stations, setStations] = useState([
     { name: "중부경찰서", favorite: true, id: 1 },
     { name: "동부캠퍼스 로터리", favorite: true, id: 2 },
@@ -29,9 +29,12 @@ export default function StationList() {
   const emptySlots = Array.from({ length: Math.max(4 - favoriteStations.length, 0) });
   const toggleModal = () => setSearchModalOpen(!searchModalOpen);
 
+  // 드래그 핸들의 높이: 12px
+  const contentHeight = tabHeight - 12;
+
   return (
     <DraggablePanel>
-      <div className={styles.stationListBody} style={{ height: `${getViewBusComponentHeight()}px` }}>
+      <div className={styles.stationListBody} style={{ height: `${contentHeight}px` }}>
         <div className={styles.stationListContainer}>
           <div className={styles.stationListHeader}>
             <span className={styles.stationListTitle}>정류장</span>

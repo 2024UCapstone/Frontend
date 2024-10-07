@@ -3,15 +3,13 @@ import styles from './DraggablePanel.module.css';
 import useStore from 'store/UseStore';
 
 const DraggablePanel = ({ children }) => {
-  const { tabHeight, setTabHeight, updateMapHeight } = useStore();
+  const { footerHeight, minHeight, midHeight, maxHeight, tabHeight, setTabHeight, updateMapHeight } = useStore();
   const panelRef = useRef(null);
   const dragStartY = useRef(0);
   const dragStartHeight = useRef(0);
   const isDragging = useRef(false);
 
-  const minHeight = window.innerHeight * 0.1;
-  const midHeight = window.innerHeight * 0.5;
-  const maxHeight = window.innerHeight * 0.88;
+
 
   const handleDragStart = (clientY) => {
     isDragging.current = true;
@@ -21,24 +19,22 @@ const DraggablePanel = ({ children }) => {
 
   const handleDrag = (clientY) => {
     if (!isDragging.current) return;
-    
     const delta = dragStartY.current - clientY;
     let newHeight = dragStartHeight.current + delta;
     newHeight = Math.max(minHeight, Math.min(newHeight, maxHeight));
-    
     setTabHeight(newHeight);
     updateMapHeight();
   };
 
   const handleDragEnd = () => {
     isDragging.current = false;
-    
+
     // Snap to nearest position
     const snapPositions = [minHeight, midHeight, maxHeight];
-    const closestPosition = snapPositions.reduce((prev, curr) => 
+    const closestPosition = snapPositions.reduce((prev, curr) =>
       Math.abs(curr - tabHeight) < Math.abs(prev - tabHeight) ? curr : prev
     );
-    
+
     setTabHeight(closestPosition);
     updateMapHeight();
   };
@@ -90,9 +86,10 @@ const DraggablePanel = ({ children }) => {
       style={{
         height: `${tabHeight}px`,
         transition: isDragging.current ? 'none' : 'height 0.3s ease-out',
+        bottom: `${footerHeight}px`,
       }}
     >
-      <div 
+      <div
         className={styles.draggableHandle}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}

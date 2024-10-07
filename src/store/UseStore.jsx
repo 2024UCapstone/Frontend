@@ -10,15 +10,23 @@ const useStore = create((set, get) => ({
   isSearchModalOpen: false,
   setSearchModalOpen: (isOpen) => set({ isSearchModalOpen: isOpen }),
 
-  // ScrollBar 관련 State
-  mapHeight: window.innerHeight - window.innerHeight * 0.1,
-  tabHeight: window.innerHeight * 0.1,
-  setMapHeight: (height) => set({ mapHeight: height }),
-  setTabHeight: (height) => set({ tabHeight: height }),
+  // Draggable 관련 State
+  footerHeight: 60, 
+  minHeight: window.innerHeight * 0.03,
+  midHeight: window.innerHeight * 0.4,
+  maxHeight: window.innerHeight * 0.75,
+  tabHeight: window.innerHeight * 0.3, // default
+
+  setTabHeight: (height) => {
+    const footerHeight = get().footerHeight;
+    const maxAllowedHeight = window.innerHeight - footerHeight - 20; // 20px는 상단 여백
+    const newHeight = Math.min(Math.max(height, get().minHeight), maxAllowedHeight);
+    set({ tabHeight: newHeight });
+  },
+
   updateMapHeight: () => set((state) => ({
-    mapHeight: window.innerHeight - state.tabHeight
+    mapHeight: window.innerHeight - state.tabHeight - state.footerHeight
   })),
-  getViewBusComponentHeight: () => get().tabHeight - 24, // 드래그 핸들의 높이(24px)를 뺀 값
 }));
 
 export default useStore;
