@@ -1,3 +1,24 @@
+/* 기본 스타일 (모바일) */
+.container {
+    width: 100%;
+    padding: 15px;
+  }
+  
+  /* 태블릿 */
+  @media screen and (min-width: 768px) {
+    .container {
+      width: 750px;
+      margin: 0 auto;
+    }
+  }
+  
+  /* 데스크톱 */
+  @media screen and (min-width: 1024px) {
+    .container {
+      width: 970px;
+    }
+  }
+
 .body {
     display: flex;
     flex-direction: column;
@@ -7,9 +28,6 @@
 }
 
 .searchBar {
-    top: 5em;
-    position: fixed;
-    z-index: 999;
 }
 
 .mapView {
