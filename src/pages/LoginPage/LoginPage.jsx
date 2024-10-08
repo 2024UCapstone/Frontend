@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 import { BusIcon } from "assets/images";
 import { GoogleIcon } from "assets/logos";
@@ -8,8 +8,9 @@ import axios from "axios";
 // import HelpIcon from '../../components/HelpIcon/HelpIcon';
 
 function LoginPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
+  
   const handleLogin = async () => {
     window.location.href = 'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/oauth2/authorization/google';
     // window.location.href = 'http://localhost:8080/oauth2/authorization/google';

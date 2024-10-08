@@ -2,9 +2,17 @@ import React, { useEffect } from "react";
 import "./MyInfoModal.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import useFetchData from "hooks/useFetchData";
 
 const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
+  const {data: userData, loading: userLoad, error: userError, fetchData} = useFetchData(`http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/auth/user`);
+  // const {data: userData, loading: userLoad, error: userError, fetchData} = useFetchData("http://localhost:8080/api/auth/user");
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    fetchData();
+    console.log(userData?.data);
+  }, [showModal])
 
   // 뒤로가기를 감지하는 useEffect
   useEffect(() => {
@@ -27,6 +35,8 @@ const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
   const handleLogout = async() => {
     try {
       const response = await axios.post('http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/auth/logout', {}, {
+      // const response = await axios.post('http://localhost:8080/api/auth/logout', {}, {
+
         withCredentials: true
       });
 
@@ -49,9 +59,16 @@ const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
         <button className="close-button" onClick={onClose}>
           ×
         </button>
-        <div className="modal-header">안녕하세요</div>
+        <div className="modal-header">환영합니다 <br/>{userData?.data?.name}님!</div>
+        <div className="profile-image-container">
+            <img 
+              src={userData?.data?.picture} 
+              alt="프로필 이미지" 
+              className="profile-image"
+            />
+          </div>
         <div className="modal-body">
-          <p>[{"울산과학대"}] 접속 상태</p>
+          <p>[{userData?.data?.school}] 접속 상태</p>
           <button className="logout-button" onClick={()=>handleLogout()}>
             로그아웃
           </button>
