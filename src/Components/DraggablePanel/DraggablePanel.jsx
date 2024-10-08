@@ -1,83 +1,97 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import styles from './DraggablePanel.module.css';
 import useStore from 'store/UseStore';
 
 const DraggablePanel = ({ children }) => {
   const { footerHeight, minHeight, midHeight, maxHeight, tabHeight, setTabHeight, updateMapHeight } = useStore();
   const panelRef = useRef(null);
+  const handleRef = useRef(null);
   const dragStartY = useRef(0);
   const dragStartHeight = useRef(0);
   const isDragging = useRef(false);
 
-
-
-  const handleDragStart = (clientY) => {
+  const handleDragStart = useCallback((clientY) => {
     isDragging.current = true;
     dragStartY.current = clientY;
     dragStartHeight.current = tabHeight;
-  };
+  }, [tabHeight]);
 
-  const handleDrag = (clientY) => {
+  const handleDrag = useCallback((clientY) => {
     if (!isDragging.current) return;
     const delta = dragStartY.current - clientY;
     let newHeight = dragStartHeight.current + delta;
     newHeight = Math.max(minHeight, Math.min(newHeight, maxHeight));
     setTabHeight(newHeight);
     updateMapHeight();
-  };
+  }, [minHeight, maxHeight, setTabHeight, updateMapHeight]);
 
-  const handleDragEnd = () => {
+  const handleDragEnd = useCallback(() => {
+    if (!isDragging.current) return;
     isDragging.current = false;
-
-    // Snap to nearest position
     const snapPositions = [minHeight, midHeight, maxHeight];
     const closestPosition = snapPositions.reduce((prev, curr) =>
       Math.abs(curr - tabHeight) < Math.abs(prev - tabHeight) ? curr : prev
     );
-
     setTabHeight(closestPosition);
     updateMapHeight();
-  };
-
-  // Touch event handlers
-  const handleTouchStart = (e) => handleDragStart(e.touches[0].clientY);
-  const handleTouchMove = (e) => {
-    e.preventDefault();
-    handleDrag(e.touches[0].clientY);
-  };
-  const handleTouchEnd = () => handleDragEnd();
-
-  // Mouse event handlers
-  const handleMouseDown = (e) => handleDragStart(e.clientY);
-  const handleMouseMove = (e) => {
-    if (isDragging.current) {
-      e.preventDefault();
-      handleDrag(e.clientY);
-    }
-  };
-  const handleMouseUp = () => handleDragEnd();
+  }, [minHeight, midHeight, maxHeight, tabHeight, setTabHeight, updateMapHeight]);
 
   useEffect(() => {
+    const handle = handleRef.current;
+    if (!handle) return;
+
+    let lastCallTime = 0;
+    const throttleInterval = 16; // ~60fps
+
+    const throttledHandleDrag = (clientY) => {
+      const now = Date.now();
+      if (now - lastCallTime >= throttleInterval) {
+        handleDrag(clientY);
+        lastCallTime = now;
+      }
+    };
+
+    const handleTouchStart = (e) => {
+      e.preventDefault(); // Prevent scrolling when starting drag
+      handleDragStart(e.touches[0].clientY);
+    };
+    const handleTouchMove = (e) => {
+      e.preventDefault(); // Prevent scrolling during drag
+      throttledHandleDrag(e.touches[0].clientY);
+    };
+    const handleMouseDown = (e) => {
+      e.preventDefault(); // Prevent default selection
+      handleDragStart(e.clientY);
+    };
+
+    handle.addEventListener('touchstart', handleTouchStart, { passive: false });
+    handle.addEventListener('mousedown', handleMouseDown);
+
+    const handleGlobalTouchMove = (e) => {
+      if (isDragging.current) {
+        throttledHandleDrag(e.touches[0].clientY);
+      }
+    };
     const handleGlobalMouseMove = (e) => {
       if (isDragging.current) {
-        handleDrag(e.clientY);
+        throttledHandleDrag(e.clientY);
       }
     };
 
-    const handleGlobalMouseUp = () => {
-      if (isDragging.current) {
-        handleDragEnd();
-      }
-    };
-
+    window.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
     window.addEventListener('mousemove', handleGlobalMouseMove);
-    window.addEventListener('mouseup', handleGlobalMouseUp);
+    window.addEventListener('touchend', handleDragEnd);
+    window.addEventListener('mouseup', handleDragEnd);
 
     return () => {
+      handle.removeEventListener('touchstart', handleTouchStart);
+      handle.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('touchmove', handleGlobalTouchMove);
       window.removeEventListener('mousemove', handleGlobalMouseMove);
-      window.removeEventListener('mouseup', handleGlobalMouseUp);
+      window.removeEventListener('touchend', handleDragEnd);
+      window.removeEventListener('mouseup', handleDragEnd);
     };
-  }, []);
+  }, [handleDragStart, handleDrag, handleDragEnd]);
 
   return (
     <div
@@ -89,13 +103,7 @@ const DraggablePanel = ({ children }) => {
         bottom: `${footerHeight}px`,
       }}
     >
-      <div
-        className={styles.draggableHandle}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDown}
-      >
+      <div ref={handleRef} className={styles.draggableHandler}>
         <div className={styles.draggableIcon}></div>
       </div>
       <div className={styles.draggablePanelContent}>
