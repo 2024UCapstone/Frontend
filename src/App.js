@@ -9,8 +9,21 @@ import BusRoutePage from "pages/BusRoutePage/BusRoutePage";
 import BusDirectionPage from "pages/BusDirectionPage/BusDirectionPage";
 import AdminPage from "pages/AdminPage/AdminPage/AdminPage";
 import AdminBusStationPage from "pages/AdminPage/BusStationPage/AdminBusStopPage";
+import axios from "axios";
 
 function App() {
+  axios.interceptors.request.use(
+    config => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        config.headers['Authorization'] = 'Bearer ' + token;
+      }
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    }
+  );
   return (
     <div>
       <Routes>
