@@ -65,7 +65,7 @@ export default function SearchBar() {
   }, [stationName]); // stationName이 변경될 때마다 효과 실행
 
   return (
-    <div className={styles.body} style={{ top: `${searchBarTop}px` }}>
+    <div className={styles.body} style={{ top: `${searchBarTop}px` }} >
       {/* Text Input Area */}
       <input
         className={styles.textInputArea}
@@ -74,7 +74,7 @@ export default function SearchBar() {
         onChange={(e) => setStationName(e.target.value)} // 입력값을 state로 관리
       />
       {/* Search Button */}
-      <button className={styles.searchBtn} onClick={onSearch}>
+      <button className={styles.searchBtn} onClick={onSearch} >
         검색
       </button>
     </div>
