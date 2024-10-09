@@ -1,0 +1,71 @@
+/* CommonSearchBarModule.module.css */
+
+.searchBarWrapper {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    width: 85vw;
+    align-items: center;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 5px 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    z-index: 1000;
+  }
+  
+  .searchInput {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    padding: 10px 5px;
+    font-size: 16px;
+    outline: none;
+    color: #333;
+  }
+  
+  .searchInput::placeholder {
+    color: #999;
+  }
+  
+  .searchButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .searchIcon {
+    width: 24px;
+    height: 24px;
+    color: #666;
+    transition: color 0.3s ease;
+  }
+  
+  .searchButton:hover .searchIcon,
+  .searchButton:focus .searchIcon {
+    color: #333;
+  }
+  
+  /* 모바일 반응형 */
+  @media (max-width: 768px) {
+    .searchBarWrapper {
+      margin: 8px;
+      padding: 4px 12px;
+    }
+  
+    .searchInput {
+      font-size: 14px;
+      padding: 8px 4px;
+    }
+  
+    .searchIcon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
