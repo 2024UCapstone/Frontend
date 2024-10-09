@@ -37,34 +37,37 @@ export default function SearchBar() {
     setIsModalOpen(false);
   };
 
-  const handleSearch = async (term) => {
+  const handleSearch = async (stationName) => {
     setIsLoading(true);
     setError(null);
+
     try {
-      const endpoint = term
-        ? "http://localhost:8085/api/station/search"
-        : "http://localhost:8085/api/station/all";
-      const requestBody = term ? { name: term } : {};
+      const endpoint = "http://localhost:8080/api/station";
+
       const response = await fetch(endpoint, {
-        method: term ? "POST" : "GET",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        ...(term && { body: JSON.stringify(requestBody) }),
       });
+
       if (!response.ok) {
         throw new Error("정류장 검색에 실패했습니다.");
       }
+
       const data = await response.json();
-      setSearchResults(data);
-      setSearchTerm(term);
-      setIsModalOpen(false);
+      console.log(data)
+
+      setSearchResults(data);  // 검색 결과를 상태에 저장
+      setSearchTerm(stationName);     // 검색어 저장
+      setIsModalOpen(false);   // 모달 닫기
     } catch (error) {
-      setError(error.message);
+      setError(error.message); // 에러 메시지 처리
     } finally {
-      setIsLoading(false);
+      setIsLoading(false);     // 로딩 상태 종료
     }
   };
+
 
   return (
     <>
