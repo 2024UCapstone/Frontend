@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5); /* 배경 투명도 조절 */
-    z-index: 1000;
+    z-index: 999;
 }
 
 .SearchModal .modalContent {

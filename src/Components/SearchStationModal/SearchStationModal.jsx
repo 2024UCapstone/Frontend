@@ -173,14 +173,10 @@
 import React, { useState } from 'react';
 import styles from './SearchStationModal.module.css';
 
-const SerchModal = ({ isOpen, toggleModal, stations, toggleFavorite }) => {
+const SearchStationModal = ({ isOpen, toggleModal, stations, favoriteStations, toggleFavorite }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   if (!isOpen) return null;
-
-  const filteredStations = stations.filter((station) =>
-    station.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div className={styles.SearchModal} onClick={toggleModal}>
@@ -194,14 +190,14 @@ const SerchModal = ({ isOpen, toggleModal, stations, toggleFavorite }) => {
         />
 
         <ul className={styles.busStopList}>
-          {filteredStations.map((station) => (
+          {stations && stations?.map((station) => (
             <li key={station.name} className={styles.busStopItem}>
               {station.name}
               <button
-                className={`favoriteButton ${station.favorite ? 'active' : ''}`}
-                onClick={() => toggleFavorite(station.name)}
+                className={`favoriteButton ${favoriteStations && favoriteStations?.find((item)=> item.id === station.id) ? 'active' : ''}`}
+                onClick={() => toggleFavorite(station.id)}
               >
-                {station.favorite ? '★' : '☆'}
+                {favoriteStations && favoriteStations?.find((item)=> item.id === station.id) ? '★' : '☆'}
               </button>
             </li>
           ))}
@@ -213,4 +209,4 @@ const SerchModal = ({ isOpen, toggleModal, stations, toggleFavorite }) => {
   );
 };
 
-export default SerchModal;
+export default SearchStationModal;
