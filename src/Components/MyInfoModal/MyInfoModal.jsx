@@ -41,6 +41,7 @@ const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
       });
 
       if (response.data) {
+        localStorage.removeItem('token');
         navigate("/");
       } else {
         console.error('로그아웃 실패:', response.data.message);

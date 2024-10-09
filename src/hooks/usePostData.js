@@ -5,6 +5,7 @@ const usePostData = (url) => {
   const [data, setData] = useState(false);
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
 
   const postData = async (payload) => {
     setLoading(true);
@@ -12,6 +13,7 @@ const usePostData = (url) => {
       const response = await axios.post(url, payload, {
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`
         },
         withCredentials: true, // 이 옵션을 추가하여 쿠키를 포함시킵니다
       });
