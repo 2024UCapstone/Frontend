@@ -37,11 +37,11 @@
 }
 
 .stationList {
-    z-index: 998;
+    z-index: 100;
 }
 
 .footer {
     position: fixed;
     bottom: 0;
-    z-index: 999;
+    z-index: 100;
 }
