@@ -33,7 +33,7 @@ function BusStationPage() {
         const fetchStations = async () => {
             try {
                 const response = await axios.get('http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station');
-                
+                console.log(response.data)
                 // 응답 데이터에서 "data" 속성을 추출하여 사용
                 const stations = response.data.data;
                 
@@ -58,10 +58,23 @@ function BusStationPage() {
         setSelectedStation((prev) => (prev?.id === station.id ? null : station));
     };
 
+    // 정류장 삭제 핸들러
+    const handleDeleteStation = async (stationId) => {
+        try {
+        await axios.delete(`http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station/${stationId}`);
+        setBusStations(busStations.filter(station => station.id !== stationId));  // 삭제된 정류장 제외
+        setSelectedStation(null);  // 선택된 정류장 초기화
+        } catch (error) {
+        console.error("Error deleting station:", error);
+        }
+    };
+
     // 검색어에 맞게 정류장 목록 필터링
     const filteredStations = busStations.filter((station) =>
         station.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+
 
     return (
         <div className={styles["BusStationPage"]}>
@@ -97,7 +110,7 @@ function BusStationPage() {
                                     >
                                         수정
                                     </button>
-                                    <button className={styles["deleteButton"]}>삭제</button>
+                                    <button className={styles["deleteButton"]} onClick={() => handleDeleteStation(station.id)}>삭제</button>
                                 </div>
                             )}
                         </li>

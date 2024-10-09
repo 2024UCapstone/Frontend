@@ -9,7 +9,7 @@ import axios from "axios";
 
 function AdminBusStationCreatePage() {
   const navigate = useNavigate();
-  const [busStationName, setBusStationName] = useState();
+  const [busStationName, setBusStationName] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지 상태
   // useKakaoLoader()
   const [data, setData] = useState({
@@ -25,11 +25,13 @@ function AdminBusStationCreatePage() {
     try {
       const response = await axios.post("http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station", {
         name: busStationName,
-        location: {
-          type : "Point",
-          coordinate : [data.position.lat, data.position.lng]
-        }
+        coordinate : [data.position.lat, data.position.lng]
       });
+      console.log({
+        coordinate : [data.position.lat, data.position.lng]
+      })
+      console.log("data", data)
+      console.log("data.position", data.position)
       setBusStationName("");
       setErrorMessage(""); // 성공 후 오류 메시지 초기화
       navigate("/admin")
