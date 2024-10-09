@@ -8,7 +8,7 @@ import BusListPage from "pages/BusListPage/BusListPage";
 import BusRoutePage from "pages/BusRoutePage/BusRoutePage";
 import BusDirectionPage from "pages/BusDirectionPage/BusDirectionPage";
 import AdminPage from "pages/AdminPage/AdminPage/AdminPage";
-// import AdminBusStationPage from "pages/AdminPage/BusStationPage/AdminBusStopPage";
+import AdminBusStationCreatePage from "pages/AdminPage/BusStationCreatePage/AdminBusStationCreatePage";
 import axios from "axios";
 import BusStationPage from "pages/AdminPage/BusStationPage/BusStationPage";
 
@@ -41,7 +41,7 @@ function App() {
         <Route path="/bus-route" element={<BusRoutePage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/bus-station" element={<BusStationPage />} />
-        {/* <Route path="/admin/bus-station/create" element={<AdminBusStationPage />} /> */}
+        <Route path="/admin/bus-station/create" element={<AdminBusStationCreatePage />} />
       </Routes>
     </div>
   );
