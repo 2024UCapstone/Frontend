@@ -28,6 +28,8 @@
 }
 
 .searchBar {
+  position: fixed;
+  z-index: 1000;
 }
 
 .mapView {
