@@ -29,7 +29,7 @@
 
 .searchBar {
   position: fixed;
-  z-index: 1000;
+  z-index: 998;
 }
 
 .mapView {
