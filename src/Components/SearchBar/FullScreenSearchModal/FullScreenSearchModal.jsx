@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./FullScreenSearchModal.module.css";
 import CommonSearchBarModule from "../CommonSearchBarModule/CommonSearchBarModule";
+import { useCloseOnEsc } from "../../../hooks/useCloseOnEsc";
+import { useEnterKey } from "../../../hooks/useEnterKey"; 
 
 const FullScreenSearchModal = ({
   isOpen,
@@ -11,10 +13,14 @@ const FullScreenSearchModal = ({
   isLoading,
   error,
 }) => {
-  const [searchTerm, setSearchTerm] = useState(initialValue);
+  const [searchStationName, setSearchStationName] = useState(initialValue);
+  const searchInputRef = useRef(null);
+
+  useCloseOnEsc(onClose); // ESC로 모달 닫기
+  useEnterKey(searchInputRef, () => onSearch(searchStationName)); // Enter로 검색
 
   useEffect(() => {
-    setSearchTerm(initialValue);
+    setSearchStationName(initialValue);
   }, [initialValue]);
 
   if (!isOpen) return null;
@@ -22,13 +28,12 @@ const FullScreenSearchModal = ({
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        {/* SearchBar */}
         <CommonSearchBarModule
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
+          searchStationName={searchStationName}
+          setSearchStationName={setSearchStationName}
           onSearch={onSearch}
+          inputRef={searchInputRef} // inputRef 전달
         />
-        {/* Result */}
         <div className={styles.resultContainer}>
           {isLoading && <div className={styles.loadingMessage}>검색 중...</div>}
           {error && <div className={styles.errorMessage}>{error}</div>}
@@ -45,7 +50,6 @@ const FullScreenSearchModal = ({
             <div className={styles.noResults}>검색 결과가 없습니다.</div>
           )}
         </div>
-        {/* Close */}
         <button className={styles.closeButton} onClick={onClose}>
           닫기
         </button>

@@ -1,20 +1,27 @@
 import React from "react";
 import styles from "./CommonSearchBarModule.module.css";
 
-const CommonSearchBarModule = ({ searchTerm, setSearchTerm, onSearch, onFocus }) => {
+const CommonSearchBarModule = ({
+  searchStationName,
+  setSearchStationName,
+  onSearch,
+  onFocus,
+  inputRef, // inputRef prop 추가
+}) => {
   return (
     <div className={styles.searchBarWrapper}>
       <input
         className={styles.searchInput}
         placeholder="검색할 정류장을 입력해주세요."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onFocus={onFocus} // SearchBar가 활성화될 때 호출
+        value={searchStationName}
+        onChange={(e) => setSearchStationName(e.target.value)}
+        onFocus={onFocus}
+        ref={inputRef} // ref로 연결
       />
       <button
         className={styles.searchButton}
         aria-label="검색"
-        onClick={() => onSearch(searchTerm)}
+        onClick={() => onSearch(searchStationName)}
       >
         <svg
           className={styles.searchIcon}

@@ -5,18 +5,22 @@ const useDeleteData = (url) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const token = localStorage.getItem('token');
 
-  const deleteData = async () => {
+  const deleteData = async (payload) => {
     setLoading(true);
     try {
-      const response = await axios.delete(url, {
+      const response = await axios.delete(`${url}/${payload}`, {
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`
         },
       });
       setData(response.data);
+      setError(null);
     } catch (error) {
-      setError(error);
+      setData(null);
+      setError(error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
     }
