@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./EnterCodePage.module.css";
 import HelpIcon from "components/HelpIconComponents/HelpIcon";
 import { BusIcon } from "assets/images";
@@ -29,6 +29,24 @@ function EnterCodePage() {
     'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/school/code'
   );
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // URL에서 토큰 파라미터 확인
+    const params = new URLSearchParams(location.search);
+    const token = params.get('token');
+
+    if (token) {
+      // 토큰을 로컬 스토리지에 저장
+      localStorage.setItem('token', token);
+      
+      // 토큰 파라미터를 URL에서 제거
+      navigate(location.pathname, { replace: true });
+      
+      // 로그인 성공 후 처리
+      navigate('/enter-code');
+    }
+  }, [location, navigate]);
 
   useEffect(() => {
     if (nameData !== null) {
