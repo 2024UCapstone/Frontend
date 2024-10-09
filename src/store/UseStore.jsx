@@ -6,7 +6,11 @@ const useStore = create((set, get) => ({
   favoriteStops: [],
   setFavoriteStops: (stops) => set({ favoriteStops: stops }),
   busStations: [],
-  setbusStations: (stops) => set({ busStations: stops }),
+  setBusStations: (stops) => set({ busStations: stops }),
+  isLoading: false,  // 로딩 상태
+  setIsLoading: (loading) => set({ isLoading: loading }),  // 로딩 상태 설정 함수
+  errorMessage: null,  // 에러 메시지 상태
+  setErrorMessage: (message) => set({ errorMessage: message }),  // 에러 메시지 설정 함수
   isSearchModalOpen: false,
   setSearchModalOpen: (isOpen) => set({ isSearchModalOpen: isOpen }),
 
