@@ -42,7 +42,7 @@ export default function SearchBar() {
     setError(null);
 
     try {
-      const endpoint = "http://localhost:8080/api/station";
+      const endpoint = `http://localhost:8080/api/station?name=${stationName}`;
 
       const response = await fetch(endpoint, {
         method: "GET",
