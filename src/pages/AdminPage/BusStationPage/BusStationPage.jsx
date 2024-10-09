@@ -8,19 +8,45 @@ import axios from 'axios';
 
 function BusStationPage() {
     const navigate = useNavigate();
-    const busStations = useStore((state) => state.busStations);  // busStations 상태 가져오기
+    const busStations = useStore((state) => state.busStations) || [];  // busStations 상태 가져오기
     const setBusStations = useStore((state) => state.setBusStations); // Zustand로 상태 업데이트
     const [selectedStation, setSelectedStation] = useState(null); // 선택된 정류장 상태
     const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
+
+    // // 데이터 Fetching
+    // useEffect(() => {
+    //     const fetchStations = async () => {
+    //         try {
+    //             const response = await axios.get('http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station');
+    //             console.log("response", response)
+    //             setBusStations(response.data);
+    //             console.log(response.data)
+    //         } catch (error) {
+    //             console.error("Error fetching bus stations:", error);
+    //         }
+    //     };
+    //     fetchStations();
+    // }, [setBusStations]);
 
     // 데이터 Fetching
     useEffect(() => {
         const fetchStations = async () => {
             try {
-                const response = await axios.get('http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station/all');
-                setBusStations(response.data);
+                const response = await axios.get('http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station');
+                
+                // 응답 데이터에서 "data" 속성을 추출하여 사용
+                const stations = response.data.data;
+                
+                // 가져온 데이터가 배열인지 확인하고 상태 업데이트
+                if (Array.isArray(stations)) {
+                    setBusStations(stations);  // 상태 업데이트
+                } else {
+                    console.error("응답 데이터가 배열이 아닙니다.");
+                    setBusStations([]);  // 잘못된 데이터일 경우 빈 배열 설정
+                }
             } catch (error) {
                 console.error("Error fetching bus stations:", error);
+                setBusStations([]);  // 에러 발생 시 빈 배열 설정
             }
         };
         fetchStations();
