@@ -28,7 +28,7 @@ function HomePage() {
   return (
     <div className={styles}>
       <div className={styles.body}>
-        <SearchBar />
+        <div className={styles.searchBar}><SearchBar /></div>
         <div className={styles.mapView}><MapView /></div>
         <div className={styles.stationList}><StationList /></div>
         <Footer />
