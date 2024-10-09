@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CommonSearchBarModule from "./CommonSearchBarModule/CommonSearchBarModule";
 import FullScreenSearchModal from "./FullScreenSearchModal/FullScreenSearchModal";
+import { useCloseOnEsc } from "../../hooks/useCloseOnEsc";
+import { useEnterKey } from "../../hooks/useEnterKey"; 
 
 export default function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchStationName, setSearchStationName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchBarHeight, setSearchBarHeight] = useState(0);
+  const searchInputRef = useRef(null);
+
+  useCloseOnEsc(() => setIsModalOpen(false)); // ESC로 모달 닫기
+  useEnterKey(searchInputRef, () => handleSearch(searchStationName)); // Enter로 검색
 
   useEffect(() => {
     const updateSearchBarHeight = () => {
@@ -28,13 +34,13 @@ export default function SearchBar() {
     };
   }, []);
 
-  // SearchBar가 포커스될 때 모달을 활성화
   const handleSearchBarFocus = () => {
     setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    setSearchStationName("");
   };
 
   const handleSearch = async (stationName) => {
@@ -56,31 +62,29 @@ export default function SearchBar() {
       }
 
       const data = await response.json();
-      console.log(data)
-
-      setSearchResults(data);  // 검색 결과를 상태에 저장
-      setSearchTerm(stationName);     // 검색어 저장
-      setIsModalOpen(false);   // 모달 닫기
+      console.log(data);
+      setSearchResults(data.data);
+      setSearchStationName(stationName);
     } catch (error) {
-      setError(error.message); // 에러 메시지 처리
+      setError(error.message);
     } finally {
-      setIsLoading(false);     // 로딩 상태 종료
+      setIsLoading(false);
     }
   };
-
 
   return (
     <>
       <CommonSearchBarModule
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        searchStationName={searchStationName}
+        setSearchStationName={setSearchStationName}
         onSearch={handleSearch}
-        onFocus={handleSearchBarFocus} // 포커스 시 모달을 여는 함수 전달
+        onFocus={handleSearchBarFocus}
+        inputRef={searchInputRef} // inputRef 전달
       />
       <FullScreenSearchModal
         isOpen={isModalOpen}
         onClose={handleModalClose}
-        initialValue={searchTerm}
+        initialValue={searchStationName}
         onSearch={handleSearch}
         searchResults={searchResults}
         isLoading={isLoading}
