@@ -1,0 +1,60 @@
+.BusStationEditPage {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.map {
+    width: 100vw;
+    height: 60vh;
+}
+
+.input {
+    padding: 1rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    width: 80vw;
+}
+
+/* 저장 버튼 */
+.saveButton {
+    background-color: #4CAF50; /* 녹색 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+    margin-right: 10px;
+}
+
+/* 저장 버튼 hover 효과 */
+.saveButton:hover {
+    background-color: #45a049;
+}
+
+/* 취소 버튼 */
+.cancelButton {
+    background-color: #f44336; /* 빨간색 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+}
+
+/* 취소 버튼 hover 효과 */
+.cancelButton:hover {
+    background-color: #d32f2f;
+}
