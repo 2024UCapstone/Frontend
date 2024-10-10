@@ -13,21 +13,6 @@ function BusStationPage() {
     const [selectedStation, setSelectedStation] = useState(null); // 선택된 정류장 상태
     const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
 
-    // // 데이터 Fetching
-    // useEffect(() => {
-    //     const fetchStations = async () => {
-    //         try {
-    //             const response = await axios.get('http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station');
-    //             console.log("response", response)
-    //             setBusStations(response.data);
-    //             console.log(response.data)
-    //         } catch (error) {
-    //             console.error("Error fetching bus stations:", error);
-    //         }
-    //     };
-    //     fetchStations();
-    // }, [setBusStations]);
-
     // 데이터 Fetching
     useEffect(() => {
         const fetchStations = async () => {
@@ -74,8 +59,6 @@ function BusStationPage() {
         station.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-
-
     return (
         <div className={styles["BusStationPage"]}>
             <h2>정류장 목록</h2>
@@ -105,7 +88,7 @@ function BusStationPage() {
                                     <button
                                         className={styles["editButton"]}
                                         onClick={() =>
-                                            navigate(`/admin-station/edit/${station.id}`)
+                                            navigate(`edit/${station.id}`)
                                         }
                                     >
                                         수정

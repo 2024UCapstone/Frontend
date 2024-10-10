@@ -11,7 +11,6 @@ function AdminBusStationCreatePage() {
   const navigate = useNavigate();
   const [busStationName, setBusStationName] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지 상태
-  // useKakaoLoader()
   const [data, setData] = useState({
     position: {lat: 35.495789,lng: 129.415649} // 초기 값을 설정합니다.
   })
@@ -25,7 +24,10 @@ function AdminBusStationCreatePage() {
     try {
       const response = await axios.post("http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station", {
         name: busStationName,
-        coordinate : [data.position.lat, data.position.lng]
+        coordinate : {
+          x: data.position.lat,
+          y: data.position.lng
+        }
       });
       console.log({
         coordinate : [data.position.lat, data.position.lng]
@@ -43,6 +45,7 @@ function AdminBusStationCreatePage() {
 
   return (
     <div className={styles.AdminBusStationCreatePage}>
+      <h1>정류장 등록</h1>
       <Map // 지도를 표시할 Container
         id="map"
         className={styles.map}
