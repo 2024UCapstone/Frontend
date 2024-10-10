@@ -27,9 +27,23 @@
   border-bottom: 1px solid #ccc;
 }
 
-.search-icon {
-  font-size: 18px;
+.searchButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.searchIcon {
+  width: 24px;
+  height: 24px;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
 
 .station-info {
   padding: 10px 0;

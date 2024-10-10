@@ -17,7 +17,8 @@
 
 .stationListHeader {
   display: flex;
-  align-items: flex-end;
+  justify-content: space-between;
+  align-items: center;
   font-weight: bold;
   padding-bottom: 10px;
   font-size: 16px;
@@ -28,11 +29,23 @@
   font-size: 20px;
 }
 
-.searchIcon {
-  font-size: 24px;
-  margin-left: auto;
+.searchButton {
+  background: none;
+  border: none;
   cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.searchIcon {
+  width: 20px;
+  height: 24px;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
 
 .stationListItems {
   padding: 8px;

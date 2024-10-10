@@ -62,9 +62,25 @@ export default function StationPanel() {
         <div className={styles.stationListContainer}>
           <div className={styles.stationListHeader}>
             <span className={styles.stationListTitle}>{selectedStation ? selectedStation.name : '정류장'}</span>
-            <span className={styles.searchIcon} onClick={toggleModal}>
-              🔍
-            </span>
+            <button
+              className={styles.searchButton}
+              aria-label="검색"
+              onClick={toggleModal}
+            >
+              <svg
+                className={styles.searchIcon}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
           </div>
           {selectedStation ? (
               <StationDetail 
