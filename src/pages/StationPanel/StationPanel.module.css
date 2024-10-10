@@ -1,0 +1,68 @@
+.stationListBody {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #e0ebeb;
+  font-size: 16px;
+  gap: 1em;
+  overflow-y: auto;
+}
+
+.stationListContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px;
+}
+
+.stationListHeader {
+  display: flex;
+  align-items: flex-end;
+  font-weight: bold;
+  padding-bottom: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid #ccc;
+}
+
+.stationListTitle {
+  font-size: 20px;
+}
+
+.searchIcon {
+  font-size: 24px;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.stationListItems {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stationListItem {
+  display: flex;
+  justify-content: space-between;
+  height: 35px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #d0e0e3;
+}
+
+.stationListEmpty {
+  color: #999;
+}
+
+.star {
+  font-size: 24px;
+  color: gold;
+}
+
+@media (min-width: 320px) {
+  .stationList {
+    width: calc(100% - 10%);
+  }
+}

@@ -3,51 +3,39 @@ import styles from "./MapView.module.css";
 import { useEffect, useState } from "react";
 import useStore from "store/UseStore";
 import { BusStopIcon } from "assets/images";
+import { useMap, useMapActions } from "store/UseMapStore";
 
 export default function MapView() {
   const { mapHeight, updateMapHeight } = useStore();
-  const [state, setState] = useState({
-    center: {
-      lat: 35.495789,
-      lng: 129.415649,
-    },
-    errMsg: null,
-    isLoading: true,
-  });
 
+  const {center, errMsg, isLoading} = useMap();
+  const {setCenter, setErrMsg, setIsLoading, resetMapState} = useMapActions();
+
+  /**
+   * Map 사이즈 변동 관련 Effect
+   */
   useEffect(() => {
     updateMapHeight();
     window.addEventListener('resize', updateMapHeight);
     return () => window.removeEventListener('resize', updateMapHeight);
   }, [updateMapHeight]);
 
+  /**
+   * 현재 위치 불러와 데이터 받기
+   */
   useEffect(() => {
+    resetMapState();
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setState((prev) => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-            isLoading: false,
-          }));
-        },
-        (err) => {
-          setState((prev) => ({
-            ...prev,
-            errMsg: err.message,
-            isLoading: false,
-          }));
+      navigator.geolocation.getCurrentPosition((position) => 
+        {
+          setCenter(position.coords.latitude, position.coords.longitude);
         }
       );
+      console.log(center);
+      setIsLoading(false);
     } else {
-      setState((prev) => ({
-        ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
-        isLoading: false,
-      }));
+      setErrMsg("geolocation을 사용할수 없어요..");
+      setIsLoading(false)
     }
   }, []);
 
@@ -62,16 +50,18 @@ export default function MapView() {
     <div className={styles.mapViewContainer} style={{ height: `${mapHeight}px` }}>
       <Map
         className={styles.mapView}
-        center={state.center}
+        center={center}
         level={4}
       >
-        {!state.isLoading && (
-          <MapMarker position={state.center}>
+        {/* 현재 위치 마커 띄우기 */}
+        {!isLoading && (
+          <MapMarker position={center}>
             <div style={{ padding: "5px", color: "#000" }}>
-              {state.errMsg ? state.errMsg : "여기에 계신가요?!"}
+              {errMsg ? errMsg : "여기에 계신가요?!"}
             </div>
           </MapMarker>
         )}
+        {/* 버스 정류장 마커 띄우기 */}
         {busStopList.map((busStop, index) => (
           <MapMarker
             key={`${busStop.title}-${busStop.latlng.lat}-${busStop.latlng.lng}`}

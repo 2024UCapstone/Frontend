@@ -14,6 +14,7 @@ const useStore = create((set, get) => ({
   isSearchModalOpen: false,
   setSearchModalOpen: (isOpen) => set({ isSearchModalOpen: isOpen }),
 
+
   // Draggable 관련 State
   footerHeight: 60, 
   minHeight: window.innerHeight * 0.03,

@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "components/Footer/Footer";
 import styles from "./HomePage.module.css";
 import SearchBar from "components/SearchBar/SearchBar";
 import StationList from "components/StationList/StationList";
 import MapView from "../../components/MapView/MapView";
 import { useLocation, useNavigate } from "react-router";
+import DraggablePanel from "components/DraggablePanel/DraggablePanel";
+import StationDetail from "pages/StationDetail/StationDetail";
+import StationPanel from "pages/StationPanel/StationPanel";
 function HomePage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [selectedStation, setSelectedStation] = useState(null);
 
   useEffect(() => {
     // URL에서 토큰 파라미터 확인
@@ -25,12 +29,14 @@ function HomePage() {
       navigate('/home');
     }
   }, [location, navigate]);
+
+
   return (
     <div className={styles}>
       <div className={styles.body}>
         <div className={styles.searchBar}><SearchBar /></div>
         <div className={styles.mapView}><MapView /></div>
-        <div className={styles.stationList}><StationList /></div>
+        <div className={styles.stationList}><StationPanel/></div>
         <Footer />
       </div>
     </div>
