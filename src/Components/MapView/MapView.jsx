@@ -31,7 +31,6 @@ export default function MapView() {
           setCenter(position.coords.latitude, position.coords.longitude);
         }
       );
-      console.log(center);
       setIsLoading(false);
     } else {
       setErrMsg("geolocation을 사용할수 없어요..");
