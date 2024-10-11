@@ -1,0 +1,105 @@
+.AdminBusListPage {
+    padding: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h2 {
+    font-size: 2.5rem; /* 화면 크기에 맞춘 폰트 크기 */
+    margin-bottom: 2vh;
+}
+
+.searchBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 80vw;
+    margin-bottom: 2vh;
+}
+
+.searchBar input {
+    flex-grow: 1;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    font-size: 1.2rem;
+}
+
+.searchButton {
+    background-color: #28a745;
+    border: none;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-left: 1vw;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.busList {
+    max-height: 40vh; /* 전체 화면의 40% 높이로 고정 */
+    overflow-y: auto; /* 내부 스크롤을 추가 */
+    width: 100%;
+    max-width: 80vw;
+    margin-bottom: 2vh;
+}
+
+.busItem {
+    padding: 2vh;
+    background-color: #f9f9f9;
+    margin-bottom: 1vh;
+    border-radius: 0.5rem;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column; /* 수정: 수정/삭제 버튼이 아래에 위치하도록 */
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #d1e7dd; /* 선택된 아이템의 배경색 */
+}
+
+.buttonContainer {
+    display: flex;
+    gap: 1vw;
+    margin-top: 1vh; /* 수정: 버튼이 아래에 위치하도록 간격 추가 */
+}
+
+.editButton, .deleteButton {
+    background-color: #007bff;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.deleteButton {
+    background-color: #dc3545;
+}
+
+.registerButton {
+    padding: 1.5rem;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1.5rem;
+    width: 100%;
+    max-width: 80vw;
+    cursor: pointer;
+}
+
+.noBuses {
+    font-size: 2rem; /* 폰트 크기를 크게 조정 */
+    color: #dc3545; /* 눈에 띄는 빨간색 */
+    text-align: center;
+    margin-top: 5vh;
+}
