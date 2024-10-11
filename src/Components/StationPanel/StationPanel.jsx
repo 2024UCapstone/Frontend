@@ -7,7 +7,7 @@ import useFetchData from "hooks/useFetchData";
 import usePostData from "hooks/usePostData";
 import useDeleteData from "hooks/useDeleteData";
 import LoadingPage from "pages/LoadingPage/LoadingPage";
-import StationDetail from "pages/StationDetail/StationDetail";
+import StationDetail from "components/StationDetail/StationDetail";
 import StationList from "components/StationList/StationList";
 import DraggablePanel from "components/DraggablePanel/DraggablePanel";
 import { useMapActions } from "store/UseMapStore";
