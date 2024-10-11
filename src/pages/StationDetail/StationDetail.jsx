@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 /**
  * 즐겨찾기 등록한 정류장을 누르면 해당 정류장으로 마커 -> 정류장위치(도착), 버스위치로 하여 남은 시간 출력
  */
-function StationDetail({ selectedStation }) {
+function StationDetail({ selectedStation, onBack }) {
 const [busInfo, setBusInfo] = useState([]);
 
   // 예제 데이터를 가져오는 useEffect

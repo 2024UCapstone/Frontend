@@ -10,6 +10,7 @@ import LoadingPage from "pages/LoadingPage/LoadingPage";
 import StationDetail from "pages/StationDetail/StationDetail";
 import StationList from "components/StationList/StationList";
 import DraggablePanel from "components/DraggablePanel/DraggablePanel";
+import { useMapActions } from "store/UseMapStore";
 
 export default function StationPanel() {
   const { tabHeight } = useStore();
@@ -17,7 +18,7 @@ export default function StationPanel() {
   const { data: myStationData, load: myStationLoad, error: myStationError, fetchData: myStationFetchData } = useFetchData("http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/user/my-station");
   const { postData: myStationPostData } = usePostData("http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/user/my-station");
   const { deleteData: stationDel } = useDeleteData("http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/user/my-station");
-
+  const {resetMapState} = useMapActions();
   const [selectedStation, setSelectedStation] = useState(null);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -61,6 +62,13 @@ export default function StationPanel() {
       <div className={styles.stationListBody} style={{ height: `${contentHeight}px` }}>
         <div className={styles.stationListContainer}>
           <div className={styles.stationListHeader}>
+            {selectedStation !== null &&
+            <button onClick={()=>{
+              setSelectedStation(null);
+              resetMapState();
+              window.location.reload();
+            }}>back</button>
+            }
             <span className={styles.stationListTitle}>{selectedStation ? selectedStation.name : '정류장'}</span>
             <button
               className={styles.searchButton}
@@ -85,7 +93,6 @@ export default function StationPanel() {
           {selectedStation ? (
               <StationDetail 
                 station={selectedStation} 
-                onBack={() => setSelectedStation(null)}
               />
             ) : (
               <StationList 

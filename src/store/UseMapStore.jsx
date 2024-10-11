@@ -25,14 +25,14 @@ const useMapStore = create(set => ({
         }
       })),
     resetMapState : () =>
-      set(state => ({
+      set({
         center: {
           lat: 35.495789,
           lng: 129.415649,
         },
         errMsg: null,
         isLoading: true,
-      }))
+      })
   }
 }))
 
