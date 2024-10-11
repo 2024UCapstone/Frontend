@@ -4,7 +4,7 @@ import styles from "./HomePage.module.css";
 import SearchBar from "components/SearchBar/SearchBar";
 import MapView from "../../components/MapView/MapView";
 import { useLocation, useNavigate } from "react-router";
-import StationPanel from "pages/StationPanel/StationPanel";
+import StationPanel from "../../components/StationPanel/StationPanel";
 function HomePage() {
   const navigate = useNavigate();
   const location = useLocation();
