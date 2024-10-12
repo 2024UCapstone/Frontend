@@ -21,7 +21,6 @@ export default function StationPanel() {
   const {resetMapState} = useMapActions();
   const [selectedStation, setSelectedStation] = useState(null);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     stationFetchData();

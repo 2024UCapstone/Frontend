@@ -52,15 +52,11 @@ const DraggablePanel = ({ children }) => {
     };
 
     const handleTouchStart = (e) => {
-      e.preventDefault(); // Prevent scrolling when starting drag
+      e.preventDefault();
       handleDragStart(e.touches[0].clientY);
     };
-    const handleTouchMove = (e) => {
-      e.preventDefault(); // Prevent scrolling during drag
-      throttledHandleDrag(e.touches[0].clientY);
-    };
     const handleMouseDown = (e) => {
-      e.preventDefault(); // Prevent default selection
+      e.preventDefault();
       handleDragStart(e.clientY);
     };
 
