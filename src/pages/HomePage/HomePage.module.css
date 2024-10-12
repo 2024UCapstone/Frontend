@@ -1,30 +1,9 @@
-/* 기본 스타일 (모바일) */
-.container {
-    width: 100%;
-    padding: 15px;
-  }
-  
-  /* 태블릿 */
-  @media screen and (min-width: 768px) {
-    .container {
-      width: 750px;
-      margin: 0 auto;
-    }
-  }
-  
-  /* 데스크톱 */
-  @media screen and (min-width: 1024px) {
-    .container {
-      width: 970px;
-    }
-  }
-
 .body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    position: relative;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  align-items: center;
 }
 
 .searchBar {
@@ -33,15 +12,24 @@
 }
 
 .mapView {
-
-}
-
-.stationList {
-    z-index: 100;
+  z-index: -1;
 }
 
 .footer {
-    position: fixed;
-    bottom: 0;
-    z-index: 100;
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    width: 750px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    width: 970px;
+  }
 }

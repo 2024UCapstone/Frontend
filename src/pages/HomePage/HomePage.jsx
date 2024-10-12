@@ -5,36 +5,48 @@ import SearchBar from "components/SearchBar/SearchBar";
 import MapView from "../../components/MapView/MapView";
 import { useLocation, useNavigate } from "react-router";
 import StationPanel from "../../components/StationPanel/StationPanel";
+import SearchStationModal from "../../components/SearchStationModal/SearchStationModal";
+
 function HomePage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isSearchStationModalOpen, setIsSearchStationModalOpen] = useState(false);
+  const [stations, setStations] = useState([]);
+  const [favoriteStations, setFavoriteStations] = useState([]);
 
   useEffect(() => {
-    // URL에서 토큰 파라미터 확인
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
-
     if (token) {
-      // 토큰을 로컬 스토리지에 저장
       localStorage.setItem('token', token);
-      
-      // 토큰 파라미터를 URL에서 제거
       navigate(location.pathname, { replace: true });
-      
-      // 로그인 성공 후 처리 (예: 홈 페이지로 리다이렉트)
       navigate('/home');
     }
+    // 여기에 stations와 favoriteStations를 가져오는 로직 추가
   }, [location, navigate]);
 
+  const toggleFavorite = (stationId) => {
+    // 즐겨찾기 토글 로직 구현
+  };
 
   return (
-    <div className={styles}>
-      <div className={styles.body}>
-        <div className={styles.searchBar}><SearchBar /></div>
-        <div className={styles.mapView}><MapView /></div>
-        <div className={styles.stationList}><StationPanel/></div>
-        <Footer />
-      </div>
+    <div className={styles.body}>
+      <div className={styles.searchBar}><SearchBar /></div>
+      <div className={styles.mapView}><MapView /></div>
+      <StationPanel 
+        openSearchStationModal={() => setIsSearchStationModalOpen(true)}
+        stations={stations}
+        favoriteStations={favoriteStations}
+        toggleFavorite={toggleFavorite}
+      />
+      <SearchStationModal
+        isOpen={isSearchStationModalOpen}
+        toggleModal={() => setIsSearchStationModalOpen(false)}
+        stations={stations}
+        favoriteStations={favoriteStations}
+        toggleFavorite={toggleFavorite}
+      />
+      <Footer />
     </div>
   );
 }
