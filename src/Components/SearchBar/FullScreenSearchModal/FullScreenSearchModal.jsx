@@ -14,6 +14,7 @@ const FullScreenSearchModal = ({
   isLoading,
   error,
   toggleFavorite,
+  setSelectedStation
 }) => {
   const [searchStationName, setSearchStationName] = useState(initialValue);
   const searchInputRef = useRef(null);
@@ -28,7 +29,7 @@ const FullScreenSearchModal = ({
   }, [initialValue]);
 
   const handleStationClick = (station) => {
-    setCenter(station.location.x, station.location.y);
+    setSelectedStation(station);
     onClose(); // 모달 닫기
   };
 

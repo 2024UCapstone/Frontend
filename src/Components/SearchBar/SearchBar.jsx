@@ -4,7 +4,7 @@ import FullScreenSearchModal from "./FullScreenSearchModal/FullScreenSearchModal
 import { useCloseOnEsc } from "../../hooks/useCloseOnEsc";
 import { useEnterKey } from "../../hooks/useEnterKey"; 
 
-export default function SearchBar() {
+export default function SearchBar({selectedStation, setSelectedStation}) {
   const [searchStationName, setSearchStationName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -86,6 +86,7 @@ export default function SearchBar() {
         onClose={handleModalClose}
         initialValue={searchStationName}
         onSearch={handleSearch}
+        setSelectedStation={setSelectedStation}
         searchResults={searchResults}
         isLoading={isLoading}
         error={error}
