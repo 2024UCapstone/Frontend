@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./FullScreenSearchModal.module.css";
 import CommonSearchBarModule from "../CommonSearchBarModule/CommonSearchBarModule";
 import { useCloseOnEsc } from "../../../hooks/useCloseOnEsc";
-import { useEnterKey } from "../../../hooks/useEnterKey"; 
+import { useEnterKey } from "../../../hooks/useEnterKey";
 
 const FullScreenSearchModal = ({
   isOpen,
