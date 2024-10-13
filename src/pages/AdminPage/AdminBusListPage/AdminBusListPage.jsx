@@ -14,16 +14,15 @@ function AdminBusListPage() {
   useEffect(() => {
     const fetchBusList = async () => {
       try {
-        const response = await axios.get('http://DevSe.gonetis.com:12599/api/bus');
+        const response = await axios.get('http://DevSe.gonetis.com:12599/api/bus/');
         setBusList(response.data); // 서버에서 받은 데이터를 상태에 저장
+        console.log("response.data", response.data)
       } catch (error) {
         console.error('버스 목록을 가져오는 중 오류 발생:', error);
       }
     };
-
     fetchBusList();
   }, []);
-
   // 버스 수정 페이지로 이동
   const handleBusEdit = (busNumber) => {
     navigate(`edit/${busNumber}`);
@@ -57,20 +56,21 @@ function AdminBusListPage() {
         <button className={styles["searchButton"]}>🔍</button>
       </div>
       <div className={styles.busList}>
-        {busList.length === 0 ? (
-          <p className={styles.noBuses}>등록된 버스가 없습니다.</p>
-        ) : (
-          busList.map((bus) => (
-            <div key={bus.number} className={styles.busItem} onClick={() => toggleBusButtons(bus)}>
-              {bus.number}번 버스
+        {/* busList가 존재하고, data 속성이 배열인지 확인한 후에 map을 실행 */}
+        {busList.data && Array.isArray(busList.data) && busList.data.length > 0 ? (
+          busList.data.map((bus) => (
+            <div key={bus.busNumber} className={styles.busItem} onClick={() => toggleBusButtons(bus)}>
+              {bus.busNumber}번 버스
               {showBusButtons === bus && (
                 <div className={styles.busButtons}>
-                  <button onClick={() => handleBusEdit(bus.number)} className={styles.editButton}>수정</button>
-                  <button onClick={() => handleBusDelete(bus.number)} className={styles.deleteButton}>삭제</button>
+                  <button onClick={() => handleBusEdit(bus.busNumber)} className={styles.editButton}>수정</button>
+                  <button onClick={() => handleBusDelete(bus.busNumber)} className={styles.deleteButton}>삭제</button>
                 </div>
               )}
             </div>
           ))
+        ) : (
+          <p className={styles.noBuses}>등록된 버스가 없습니다.</p>
         )}
       </div>
       <button onClick={() => navigate('create')} className={styles.registerButton}>
