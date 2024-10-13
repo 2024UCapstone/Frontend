@@ -10,11 +10,11 @@ function StationDetail({ station }) {
   const [busInfo, setBusInfo] = useState([]);
 
   const { data: busStationData, fetchData: busStationFetch, loading: stationLoading, error: stationError } = useFetchData(
-    `http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/bus/stations/${station.id}`
+    `http://DevSe.gonetis.com:12599/api/bus/stations/${station.id}`
   );
 
   const { data: busDestinationData, fetchData: busDestinationFetch, loading: destinationLoading, error: destinationError } = useFetchData(
-    `http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/kakao-api/arrival-time/single?origin=${busStationData?.location?.x},${busStationData?.location?.y}&destination=${station.location.x},${station.location.y}`
+    `http://DevSe.gonetis.com:12599/api/kakao-api/arrival-time/single?origin=${busStationData?.location?.x},${busStationData?.location?.y}&destination=${station.location.x},${station.location.y}`
   );
 
   useEffect(() => {

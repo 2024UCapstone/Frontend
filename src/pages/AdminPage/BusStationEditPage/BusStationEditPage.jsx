@@ -47,7 +47,7 @@ function BusStationEditPage() {
   const handleSave = async () => {
     try {
       // API 요청 경로를 명세서에 맞게 설정 (stationId 제외)
-      await axios.put(`http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station`, {
+      await axios.put(`http://DevSe.gonetis.com:12599/api/station`, {
         name: stationName,
         location: {
           x :locationData.lng,
