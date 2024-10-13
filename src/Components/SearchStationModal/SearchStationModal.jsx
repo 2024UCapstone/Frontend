@@ -15,7 +15,6 @@ const SearchStationModal = ({ isOpen, toggleModal, favoriteStations, toggleFavor
   if (stationLoad) return <LoadingPage/>;
   if (stationError) return <div>에러가 발생했습니다.</div>;
 
-
   return (
     <div className={styles.SearchModal} onClick={toggleModal}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>

@@ -20,7 +20,6 @@ function HomePage() {
   const { data: myStationData, load: myStationLoad, error: myStationError, fetchData: myStationFetchData } = useFetchData("http://devse.gonetis.com:12599/api/user/my-station");
   const { postData: myStationPostData } = usePostData("http://devse.gonetis.com:12599/api/user/my-station");
   const { deleteData: stationDel } = useDeleteData("http://devse.gonetis.com:12599/api/user/my-station");
-
   const { modalName, isModal } = useModalState();
 
   useEffect(() => {
