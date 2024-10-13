@@ -18,6 +18,7 @@ function HomePage() {
   const { data: myStationData, load: myStationLoad, error: myStationError, fetchData: myStationFetchData } = useFetchData("http://devse.gonetis.com:12599/api/user/my-station");
   const { postData: myStationPostData } = usePostData("http://devse.gonetis.com:12599/api/user/my-station");
   const { deleteData: stationDel } = useDeleteData("http://devse.gonetis.com:12599/api/user/my-station");
+  const [selectedStation, setSelectedStation] = useState(null);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -55,18 +56,26 @@ function HomePage() {
 
   return (
     <div className={styles.body}>
-      <div className={styles.searchBar}><SearchBar /></div>
+      <div className={styles.searchBar}>
+        <SearchBar         
+        selectedStation={selectedStation}
+        setSelectedStation={setSelectedStation}/>
+      </div>
       <div className={styles.mapView}><MapView /></div>
       <StationPanel
         openSearchStationModal={() => setIsSearchStationModalOpen(true)}
         favoriteStations={myStationData.data}
         toggleFavorite={toggleFavorite}
+        selectedStation={selectedStation}
+        setSelectedStation={setSelectedStation}
       />
       <SearchStationModal
         isOpen={isSearchStationModalOpen}
         toggleModal={() => setIsSearchStationModalOpen(false)}
         favoriteStations={myStationData.data}
         toggleFavorite={toggleFavorite}
+        selectedStation={selectedStation}
+        setSelectedStation={setSelectedStation}
       />
       <Footer />
     </div>

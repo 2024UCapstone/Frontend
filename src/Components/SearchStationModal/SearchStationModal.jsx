@@ -3,15 +3,16 @@ import styles from './SearchStationModal.module.css';
 import useFetchData from 'hooks/useFetchData';
 import LoadingPage from 'pages/LoadingPage/LoadingPage';
 import { useEnterKey } from 'hooks/useEnterKey';
+import { useModalActions } from 'store/UseModalStore';
 
-const SearchStationModal = ({ isOpen, toggleModal, favoriteStations, toggleFavorite }) => {
+const SearchStationModal = ({ selectedStation, setSelectedStation, isOpen, toggleModal, favoriteStations, toggleFavorite }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { data: stationData, load: stationLoad, error: stationError, fetchData: stationFetchData } = useFetchData("http://devse.gonetis.com:12599/api/station");
   const searchInputRef = useRef(null);
-
+  const {selectedModalClose} = useModalActions();
   useEnterKey(searchInputRef, () => handleSearch(searchTerm));
 
   const handleSearch = async (stationName) => {
@@ -65,7 +66,10 @@ const SearchStationModal = ({ isOpen, toggleModal, favoriteStations, toggleFavor
         <ul className={styles.busStopList}>
           {searchResults && searchResults.length > 0 ? (
             searchResults.map((station) => (
-              <li key={station.id} className={styles.busStopItem}>
+              <li key={station.id} className={styles.busStopItem} onClick={()=>{
+                setSelectedStation(station)
+                toggleModal();
+                }}>
                 {station.name}
                 <button
                   className={`${styles.favoriteButton} ${favoriteStations?.some(fs => fs.id === station.id) ? styles.active : ''}`}
