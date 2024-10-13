@@ -6,7 +6,7 @@ import StationList from "components/StationList/StationList";
 import DraggablePanel from "components/DraggablePanel/DraggablePanel";
 import { useMapActions } from "store/UseMapStore";
 
-export default function StationPanel({ openSearchStationModal, stations, favoriteStations, toggleFavorite }) {
+export default function StationPanel({ openSearchStationModal, favoriteStations, toggleFavorite }) {
   const { tabHeight } = useHeightState();
   const { resetMapState } = useMapActions();
   const [selectedStation, setSelectedStation] = useState(null);
