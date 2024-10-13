@@ -23,6 +23,7 @@ function AdminBusListPage() {
     };
     fetchBusList();
   }, []);
+  
   // 버스 수정 페이지로 이동
   const handleBusEdit = (busNumber) => {
     navigate(`edit/${busNumber}`);
