@@ -18,16 +18,18 @@
   --main-green-bright: #267d88;
   --main-green-bright-more: #35aebe;
   /* 취소 혹은 부정적인 요소에 적용 */
+  --main-red-dark-more: #5c0f17;
+  --main-red-dark: #871722;
   --main-red: #c82333;
-  --main-red-bright: #dc3545;
-  --main-red-bright-more: #e4606d;
+  --main-red-bright: #e84f5f;
+  --main-red-bright-more: #ed848f;
   /* 닫기 혹은 중립적인 요소에 적용 */
   --main-gray: #5a6268;
   --main-gray-bright: #6c757d;
   --main-gray-bright-more: #868e96;
   /* 배경 혹은 밑작업으로 사용할 요소에 적용 */
-  --main-white: #ececec;
-  --main-white-bright: #f1f1f1;
+  --main-white: #e3e3e3;
+  --main-white-bright: #efefef;
   --main-white-bright-more: #f8f8f8;
 }
 
