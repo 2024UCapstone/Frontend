@@ -6,8 +6,6 @@ import MapView from "../../components/MapView/MapView";
 import { useLocation, useNavigate } from "react-router";
 import StationPanel from "../../components/StationPanel/StationPanel";
 import SearchStationModal from "../../components/SearchStationModal/SearchStationModal";
-import { useModalState } from "store/UseModalStore";
-import MyInfoModal from "components/MyInfoModal/MyInfoModal";
 import useFetchData from "hooks/useFetchData";
 import usePostData from "hooks/usePostData";
 import useDeleteData from "hooks/useDeleteData";
@@ -20,7 +18,6 @@ function HomePage() {
   const { data: myStationData, load: myStationLoad, error: myStationError, fetchData: myStationFetchData } = useFetchData("http://devse.gonetis.com:12599/api/user/my-station");
   const { postData: myStationPostData } = usePostData("http://devse.gonetis.com:12599/api/user/my-station");
   const { deleteData: stationDel } = useDeleteData("http://devse.gonetis.com:12599/api/user/my-station");
-  const { modalName, isModal } = useModalState();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -71,8 +68,6 @@ function HomePage() {
         favoriteStations={myStationData.data}
         toggleFavorite={toggleFavorite}
       />
-      {isModal && modalName === "myInfoModal" && <MyInfoModal/>}
-
       <Footer />
     </div>
   );

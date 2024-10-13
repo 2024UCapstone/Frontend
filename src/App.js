@@ -13,8 +13,12 @@ import BusStationPage from "pages/AdminPage/BusStationPage/BusStationPage";
 import BusStationEditPage from "pages/AdminPage/BusStationEditPage/BusStationEditPage";
 import AdminBusListPage from "pages/AdminPage/AdminBusListPage/AdminBusListPage";
 import AdminBusCreatePage from "pages/AdminPage/AdminBusCreatePage/AdminBusCreatePage";
+import MyInfoModal from "components/MyInfoModal/MyInfoModal";
+import { useModalState } from "store/UseModalStore";
 
 function App() {
+  const { modalName, isModal } = useModalState();
+
   axios.interceptors.request.use(
     config => {
       const token = localStorage.getItem('token');
@@ -44,6 +48,7 @@ function App() {
         <Route path="/admin/bus" element={<AdminBusListPage />} />
         <Route path="/admin/bus/create" element={<AdminBusCreatePage />} />
       </Routes>
+      {isModal && modalName === "myInfoModal" && <MyInfoModal />}
     </div>
   );
 }
