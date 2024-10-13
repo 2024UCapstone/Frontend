@@ -65,7 +65,7 @@
 }
 
 .logoutButton {
-  background-color: var(--uc-color);
+  background-color: var(--main-green);
   color: white;
   padding: 12px 0;
   border-radius: 12px;
@@ -80,12 +80,12 @@
 }
 
 .logoutButton:hover {
-  background-color: var(--uc-color-emphasize-lv1);
+  background-color: var(--main-green-bright);
   box-shadow: 0 2px 5px var(--main-color4);
 }
 
 .logoutButton:focus {
-  background-color: var(--uc-color-emphasize-lv2);
+  background-color: var(--main-green-bright-more);
   box-shadow: 0 2px 3px var(--main-color4);
 }
 
