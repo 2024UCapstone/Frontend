@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 :root {
   --main-color1: #cde8e5;
   --main-color2: #eef7ff;
@@ -12,9 +13,22 @@
   --main-color4: #4d869c;
   --main-color5: #8cc2bf;
   --main-color6: #4caf50;
-  --uc-color: #124248;
-  --uc-color-emphasize-lv1: #267d88;
-  --uc-color-emphasize-lv2: #35aebe;
+  /* 적용, 확인, 로그인 등 긍정적인 요소에 적용 */
+  --main-green: #124248;
+  --main-green-bright: #267d88;
+  --main-green-bright-more: #35aebe;
+  /* 취소 혹은 부정적인 요소에 적용 */
+  --main-red: #c82333;
+  --main-red-bright: #dc3545;
+  --main-red-bright-more: #e4606d;
+  /* 닫기 혹은 중립적인 요소에 적용 */
+  --main-gary: #5a6268;
+  --main-gray-bright: #6c757d;
+  --main-gray-bright-more: #868e96;
+  /* 배경 혹은 밑작업으로 사용할 요소에 적용 */
+  --main-white: #ffffff;
+  --main-white-bright: #f8f9fa;
+  --main-white-bright-more: #f1f3f5;
 }
 
 button {
@@ -39,7 +53,8 @@ input:focus {
 }
 
 html {
-  font-size: 62.5%; /* 1rem을 10px로 변환 (원래는 16px) */
+  font-size: 62.5%;
+  /* 1rem을 10px로 변환 (원래는 16px) */
 }
 
 body {
