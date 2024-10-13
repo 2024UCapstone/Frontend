@@ -6,6 +6,8 @@ import MapView from "../../components/MapView/MapView";
 import { useLocation, useNavigate } from "react-router";
 import StationPanel from "../../components/StationPanel/StationPanel";
 import SearchStationModal from "../../components/SearchStationModal/SearchStationModal";
+import { useModalState } from "store/UseModalStore";
+import MyInfoModal from "components/MyInfoModal/MyInfoModal";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ function HomePage() {
   const [isSearchStationModalOpen, setIsSearchStationModalOpen] = useState(false);
   const [stations, setStations] = useState([]);
   const [favoriteStations, setFavoriteStations] = useState([]);
+  const { modalName, isModal } = useModalState();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -33,7 +36,7 @@ function HomePage() {
     <div className={styles.body}>
       <div className={styles.searchBar}><SearchBar /></div>
       <div className={styles.mapView}><MapView /></div>
-      <StationPanel 
+      <StationPanel
         openSearchStationModal={() => setIsSearchStationModalOpen(true)}
         stations={stations}
         favoriteStations={favoriteStations}
@@ -46,6 +49,8 @@ function HomePage() {
         favoriteStations={favoriteStations}
         toggleFavorite={toggleFavorite}
       />
+      {isModal && modalName === "myInfoModal" && <MyInfoModal/>}
+
       <Footer />
     </div>
   );
