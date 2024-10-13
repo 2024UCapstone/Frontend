@@ -1,42 +1,43 @@
-import React, { useEffect } from "react";
-import "./MyInfoModal.css";
+import React, { useEffect, useState } from "react";
+import styles from "./MyInfoModal.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useFetchData from "hooks/useFetchData";
+import { useModalActions, useModalState } from "store/UseModalStore";
 
-const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
-  const {data: userData, loading: userLoad, error: userError, fetchData} = useFetchData(`http://DevSe.gonetis.com:12599/api/auth/user`);
-  // const {data: userData, loading: userLoad, error: userError, fetchData} = useFetchData("http://localhost:8080/api/auth/user");
+const MyInfoModal = () => {
+  const { data: userData, loading: userLoad, error: userError, fetchData } = useFetchData(`http://DevSe.gonetis.com:12599/api/auth/user`);
   const navigate = useNavigate();
+  const { isModal, modalName } = useModalState();
+  const { selectedModalClose } = useModalActions();
+  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
     console.log(userData?.data);
-  }, [showModal])
+  }, [])
 
-  // 뒤로가기를 감지하는 useEffect
   useEffect(() => {
-    if (showModal) {
+    if (isModal && modalName === "myInfoModal") {
+      setIsVisible(true);
       const handlePopState = () => {
-        onClose(); // 뒤로가기를 눌렀을 때 모달 닫기
+        selectedModalClose(modalName);
       };
 
-      window.history.pushState(null, "", window.location.href); // 새로운 히스토리 추가
+      window.history.pushState(null, "", window.location.href);
       window.addEventListener("popstate", handlePopState);
 
       return () => {
         window.removeEventListener("popstate", handlePopState);
       };
+    } else {
+      setIsVisible(false);
     }
-  }, [showModal, onClose]);
+  }, [isModal, modalName, selectedModalClose]);
 
-  if (!showModal) return null;
-
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     try {
-      const response = await axios.post('http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/auth/logout', {}, {
-      // const response = await axios.post('http://localhost:8080/api/auth/logout', {}, {
-
+      const response = await axios.post('http://DevSe.gonetis.com:12599/api/auth/logout', {}, {
         withCredentials: true
       });
 
@@ -52,39 +53,26 @@ const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
   };
 
   return (
-    <div className="MyInfoModal" onClick={onClose}>
-      <div
-        className={`modal-content ${showModal ? "modal-slide-in" : ""}`}
-        onClick={(e) => e.stopPropagation()} // 모달 내부 클릭 시 닫히지 않게
-      >
-        <button className="close-button" onClick={onClose}>
+    <div className={`${styles.myInfoModal} ${isVisible ? styles.show : ''}`}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.closeButton} onClick={() => selectedModalClose(modalName)}>
           ×
         </button>
-        <div className="modal-header">환영합니다 <br/>{userData?.data?.name}님!</div>
-        <div className="profile-image-container">
-            <img 
-              src={userData?.data?.picture} 
-              alt="프로필 이미지" 
-              className="profile-image"
-            />
-          </div>
-        <div className="modal-body">
+        <div className={styles.modalHeader}>환영합니다 <br />{userData?.data?.name}님!</div>
+        <div className={styles.profileImageContainer}>
+          <img
+            src={userData?.data?.picture}
+            alt="프로필 이미지"
+            className={styles.profileImage}
+          />
+        </div>
+        <div className={styles.modalBody}>
           <p>[{userData?.data?.school}] 접속 상태</p>
-          <button className="logout-button" onClick={()=>handleLogout()}>
+          <button className={styles.logoutButton} onClick={handleLogout}>
             로그아웃
           </button>
-          {isAdmin && (
-            <button
-              className="admin-button"
-              onClick={() => {
-                navigate("/admin"); // 관리자 페이지로 이동
-              }}
-            >
-              관리자 페이지로 이동
-            </button>
-          )}
         </div>
-        <div className="modal-footer">
+        <div className={styles.modalFooter}>
           <p>
             잘 이용해주셔서 감사합니다. 버그, 문의, 개선사항 등은
             test123@gmail.com으로 보내주세요!
