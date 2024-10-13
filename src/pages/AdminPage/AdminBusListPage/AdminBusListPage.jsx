@@ -23,7 +23,7 @@ function AdminBusListPage() {
     };
     fetchBusList();
   }, []);
-  
+
   // 버스 수정 페이지로 이동
   const handleBusEdit = (busNumber) => {
     navigate(`edit/${busNumber}`);
@@ -66,7 +66,7 @@ function AdminBusListPage() {
         {busList.data && Array.isArray(busList.data) && busList.data.length > 0 ? (
           busList.data.map((bus) => (
             <div key={bus.busNumber} className={styles.busItem} onClick={() => toggleBusButtons(bus)}>
-              {bus.busNumber}번 버스
+              {bus.busNumber}
               {showBusButtons === bus && (
                 <div className={styles.busButtons}>
                   <button onClick={() => handleBusEdit(bus.busNumber)} className={styles.editButton}>수정</button>
