@@ -1,14 +1,8 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 import { BusIcon } from "assets/images";
 import { GoogleIcon } from "assets/logos";
-import useFetchData from "hooks/useFetchData";
-import { useEffect, useState } from "react";
-import axios from "axios";
-// import HelpIcon from '../../components/HelpIcon/HelpIcon';
 
 function LoginPage() {
-  const navigate = useNavigate();
 
   
   const handleLogin = async () => {

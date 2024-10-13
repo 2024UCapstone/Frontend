@@ -5,7 +5,7 @@ import axios from "axios";
 import useFetchData from "hooks/useFetchData";
 
 const MyInfoModal = ({ showModal, onClose, isAdmin }) => {
-  const {data: userData, loading: userLoad, error: userError, fetchData} = useFetchData(`http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/auth/user`);
+  const {data: userData, loading: userLoad, error: userError, fetchData} = useFetchData(`http://DevSe.gonetis.com:12599/api/auth/user`);
   // const {data: userData, loading: userLoad, error: userError, fetchData} = useFetchData("http://localhost:8080/api/auth/user");
   const navigate = useNavigate();
 

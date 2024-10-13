@@ -12,7 +12,7 @@ function AdminBusStationCreatePage() {
   const [busStationName, setBusStationName] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지 상태
   const [data, setData] = useState({
-    position: {lat: 35.495789,lng: 129.415649} // 초기 값을 설정합니다.
+    position: { lat: 35.495789, lng: 129.415649 } // 초기 값을 설정합니다.
   })
 
   const registerStation = async () => {
@@ -22,15 +22,15 @@ function AdminBusStationCreatePage() {
     }
 
     try {
-      const response = await axios.post("http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/station", {
+      const response = await axios.post("http://DevSe.gonetis.com:12599/api/station", {
         name: busStationName,
-        coordinate : {
+        coordinate: {
           x: data.position.lat,
           y: data.position.lng
         }
       });
       console.log({
-        coordinate : [data.position.lat, data.position.lng]
+        coordinate: [data.position.lat, data.position.lng]
       })
       console.log("data", data)
       console.log("data.position", data.position)
@@ -66,7 +66,7 @@ function AdminBusStationCreatePage() {
           })
         }}
       >
-        <MapMarker 
+        <MapMarker
           position={{
             // 마커가 표시될 위치입니다
             lat: data.position.lat,
