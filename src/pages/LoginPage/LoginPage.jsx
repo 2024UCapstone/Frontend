@@ -12,9 +12,7 @@ function LoginPage() {
 
   
   const handleLogin = async () => {
-    window.location.href = 'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/oauth2/authorization/google';
-    // window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-
+    window.location.href = 'http://DevSe.gonetis.com:12599/oauth2/authorization/google';
   };
 
   return (
