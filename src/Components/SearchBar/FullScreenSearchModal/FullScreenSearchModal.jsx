@@ -3,6 +3,7 @@ import styles from "./FullScreenSearchModal.module.css";
 import CommonSearchBarModule from "../CommonSearchBarModule/CommonSearchBarModule";
 import { useCloseOnEsc } from "../../../hooks/useCloseOnEsc";
 import { useEnterKey } from "../../../hooks/useEnterKey";
+import { useMapActions } from "store/UseMapStore";
 
 const FullScreenSearchModal = ({
   isOpen,
@@ -12,16 +13,24 @@ const FullScreenSearchModal = ({
   searchResults,
   isLoading,
   error,
+  toggleFavorite,
 }) => {
   const [searchStationName, setSearchStationName] = useState(initialValue);
   const searchInputRef = useRef(null);
+  const { setCenter } = useMapActions();
 
   useCloseOnEsc(onClose); // ESC로 모달 닫기
   useEnterKey(searchInputRef, () => onSearch(searchStationName)); // Enter로 검색
 
+
   useEffect(() => {
     setSearchStationName(initialValue);
   }, [initialValue]);
+
+  const handleStationClick = (station) => {
+    setCenter(station.location.x, station.location.y);
+    onClose(); // 모달 닫기
+  };
 
   if (!isOpen) return null;
 
@@ -39,8 +48,12 @@ const FullScreenSearchModal = ({
           {error && <div className={styles.errorMessage}>{error}</div>}
           {!isLoading && !error && searchResults.length > 0 && (
             <div className={styles.searchResults}>
-              {searchResults.map((result, index) => (
-                <div key={index} className={styles.searchResultItem}>
+              {searchResults.map((result) => (
+                <div
+                  key={result.id}
+                  className={styles.searchResultItem}
+                  onClick={() => handleStationClick(result)}
+                >
                   {result.name}
                 </div>
               ))}
