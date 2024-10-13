@@ -53,10 +53,6 @@ const Footer = () => {
           <p>관리자 페이지</p>
         </button>
       )}
-      {/* <button onClick={() => {}}>
-        <img src={BusIcon} alt="my" />
-        <p>즐겨찾기</p>
-      </button> */}
     </footer>
   );
 };

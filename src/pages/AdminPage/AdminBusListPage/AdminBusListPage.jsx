@@ -13,7 +13,7 @@ function AdminBusListPage() {
   useEffect(() => {
     const fetchBusList = async () => {
       try {
-        const response = await axios.get('http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/bus');
+        const response = await axios.get('http://DevSe.gonetis.com:12599/api/bus');
         setBusList(response.data); // 서버에서 받은 데이터를 상태에 저장
       } catch (error) {
         console.error('버스 목록을 가져오는 중 오류 발생:', error);
@@ -31,7 +31,7 @@ function AdminBusListPage() {
   // 버스 삭제 (DELETE 요청)
   const handleBusDelete = async (busNumber) => {
     try {
-      await axios.delete(`http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/bus/${busNumber}`);
+      await axios.delete(`http://DevSe.gonetis.com:12599/api/bus/${busNumber}`);
       setBusList(busList.filter(bus => bus.number !== busNumber)); // 삭제 후 목록에서 제거
     } catch (error) {
       console.error('버스 삭제 중 오류 발생:', error);

@@ -20,13 +20,13 @@ function EnterCodePage() {
   const [hasVaildCode, setHasVaildCode] = useState(false);
 
   const { data: nameData, loading: nameLoad, message: nameMessage, postData: namePost } = usePostData(
-    'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/school/validation'
+    'http://DevSe.gonetis.com:12599/api/school/validation'
   );
   const { data: mailData, loading: mailLoad, message: mailMessage, postData: mailPost } = usePostData(
-    'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/school/mail'
+    'http://DevSe.gonetis.com:12599/api/school/mail'
   );
   const { data: codeData, loading: codeLoad, message: codeMessage, postData: codePost } = usePostData(
-    'http://springboot-developer-env.eba-y8syvbmy.ap-northeast-2.elasticbeanstalk.com/api/school/code'
+    'http://DevSe.gonetis.com:12599/api/school/code'
   );
   const navigate = useNavigate();
   const location = useLocation();
