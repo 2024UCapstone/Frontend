@@ -1,23 +1,25 @@
 import { Map, MapMarker, MapTypeId } from "react-kakao-maps-sdk";
 import styles from "./MapView.module.css";
 import { useEffect, useState } from "react";
-import useStore from "store/UseStore";
 import { BusStopIcon } from "assets/images";
 import { useMap, useMapActions } from "store/UseMapStore";
+import { useHeightActions, useHeightState } from "store/UseHeightStore";
 
 export default function MapView() {
-  const { mapHeight, updateMapHeight } = useStore();
+  const { mapHeight } = useHeightState();
+  const { updateMapHeight } = useHeightActions();
 
-  const {center, errMsg, isLoading} = useMap();
-  const {setCenter, setErrMsg, setIsLoading, resetMapState} = useMapActions();
+  const { center, errMsg, isLoading } = useMap();
+  const { setCenter, setErrMsg, setIsLoading, resetMapState } = useMapActions();
 
   /**
    * Map 사이즈 변동 관련 Effect
    */
   useEffect(() => {
     updateMapHeight();
-    window.addEventListener('resize', updateMapHeight);
-    return () => window.removeEventListener('resize', updateMapHeight);
+    const handleResize = () => updateMapHeight();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [updateMapHeight]);
 
   /**
@@ -26,10 +28,9 @@ export default function MapView() {
   useEffect(() => {
     resetMapState();
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => 
-        {
-          setCenter(position.coords.latitude, position.coords.longitude);
-        }
+      navigator.geolocation.getCurrentPosition((position) => {
+        setCenter(position.coords.latitude, position.coords.longitude);
+      }
       );
       setIsLoading(false);
     } else {
