@@ -22,7 +22,6 @@ function StationDetail({ station }) {
   const [busDestinationData, setBusDestinationData] = useState([]);
   
   const busDestinationFetch = async (name, x, y) => {
-    setLoading(true);
     try {
       const response = await axios.get(`http://DevSe.gonetis.com:12599/api/kakao-api/arrival-time/single?origin=${name},${y},${x}&destination=${station.name},${station.location.y},${station.location.x}`, {
         headers: {
@@ -31,21 +30,14 @@ function StationDetail({ station }) {
         },
         withCredentials: true,
       });
-  
-      console.log('API Response:', response.data); // 응답 데이터 로깅
-  
+      console.log('API Response:', response.data);
       setBusDestinationData(prevData => {
         const newData = response.data.data;
-  
-        // newData가 배열이 아니면 배열로 변환
         const newDataArray = Array.isArray(newData) ? newData : [newData];
-  
         if (!Array.isArray(prevData)) {
           return newDataArray;
         }
-  
         const updatedData = [...prevData];
-  
         newDataArray.forEach(newItem => {
           if (newItem && newItem.name) {
             const existingItemIndex = updatedData.findIndex(item => item.name === newItem.name);
@@ -61,15 +53,11 @@ function StationDetail({ station }) {
             console.error('Invalid item in newData:', newItem);
           }
         });
-  
         return updatedData;
       });
-  
     } catch (error) {
       console.error('Error fetching bus destination data:', error);
       // 에러 처리 로직을 여기에 추가하세요
-    } finally {
-      setLoading(false);
     }
   };
   
@@ -82,15 +70,25 @@ function StationDetail({ station }) {
     if (busStationData.data && busStationData.data.length > 0) {
       const fetchAllDestinations = async () => {
         setLoading(true);
-        for (const item of busStationData.data) {
-          if (item.location && item.location.x && item.location.y) {
-            await busDestinationFetch(item.busNumber, item.location.x, item.location.y);
-          } else {
-            console.error('Invalid location data for item:', item);
-          }
+        try {
+          const fetchPromises = busStationData.data.map(item => {
+            if (item.location && item.location.x && item.location.y) {
+              return busDestinationFetch(item.busNumber, item.location.x, item.location.y);
+            } else {
+              console.error('Invalid location data for item:', item);
+              return Promise.resolve();
+            }
+          });
+  
+          await Promise.all(fetchPromises);
+        } catch (error) {
+          console.error('Error fetching all destinations:', error);
+          // 필요한 경우 여기에 추가적인 에러 처리를 할 수 있습니다.
+        } finally {
+          setLoading(false);
         }
-        setLoading(false);
       };
+  
       fetchAllDestinations();
     }
   }, [busStationData]);
