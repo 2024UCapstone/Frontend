@@ -23,25 +23,25 @@ function BusStationEditPage() {
     lng: 129.415649,
   }); // 위치 데이터 상태
 
-  // useEffect(() => {
-  //   // 전체 정류장 목록에서 station을 찾아 설정
-  //   const foundStation = busStations.find((s) => s.id === stationId);
+  useEffect(() => {
+    // 전체 정류장 목록에서 station을 찾아 설정
+    const foundStation = busStations.find((s) => s.id === stationId);
 
-  //   console.log("busStations", busStations)
-  //   if (foundStation) {
-  //     setStation(foundStation);
-  //     setStationName(foundStation.name);
-  //     console.log("foundStation", foundStation)
-  //     if (foundStation.location) {
-  //       setLocationData({
-  //         lat: foundStation.location.coordinates[1], // y 좌표 (위도)
-  //         lng: foundStation.location.coordinates[0], // x 좌표 (경도)
-  //       });
-  //     }
-  //   } else {
-  //     setErrorMessage('정류장을 찾을 수 없습니다.');
-  //   }
-  // }, [busStations, setErrorMessage]);
+    console.log("busStations", busStations)
+    if (foundStation) {
+      setStation(foundStation);
+      setStationName(foundStation.name);
+      console.log("foundStation", foundStation)
+      if (foundStation.location) {
+        setLocationData({
+          lat: foundStation.location.coordinates[0], // y 좌표 (위도)
+          lng: foundStation.location.coordinates[1], // x 좌표 (경도)
+        });
+      }
+    } else {
+      setErrorMessage('정류장을 찾을 수 없습니다.');
+    }
+  }, [busStations, setErrorMessage]);
 
   // 저장 버튼 클릭 시 처리
   const handleSave = async () => {
