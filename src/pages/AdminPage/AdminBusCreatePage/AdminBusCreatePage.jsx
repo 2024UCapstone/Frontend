@@ -85,7 +85,7 @@ function AdminBusCreatePage() {
         totalSeats: Number(totalSeats),
       });
       alert("버스가 성공적으로 등록되었습니다.");
-      navigate("/bus-list");
+      navigate(-1);
     } catch (error) {
       console.error("버스 등록 실패:", error);
       alert("버스 등록에 실패했습니다. 다시 시도해주세요.");
