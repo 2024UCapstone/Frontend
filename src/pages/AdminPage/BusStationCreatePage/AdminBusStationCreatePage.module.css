@@ -1,64 +1,151 @@
-.AdminBusStationCreatePage {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.AdminBusCreatePage {
+  padding: 2vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
-.busStationTitleInputBox {
-    margin-top: 20px;
+.busNumberInput, .totalSeatsInput {
+  font-size: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 2vh;
+  width: 80vw;
+  max-width: 600px;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
 }
 
-.busStationPostButton {
-    text-align: center;
-    width: calc(100% - 60%);
-    background-color: aqua;
-    border-radius: 16px;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
+.stationList {
+  width: 80vw;
+  max-width: 600px;
+  height: 40vh;
+  overflow-y: auto;
+  margin-bottom: 2vh;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
 }
 
-.map {
-    width: 100vw;
-    height: 60vh;
+.stationItem {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+  margin-bottom: 1vh;
+  border-radius: 0.5rem;
+  cursor: grab;
+  position: relative;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    background-color: #f0f4f8;
-    min-height: 100vh;
+.addStationButton {
+  font-size: 2rem;
+  padding: 1rem;
+  background-color: #007bff;
+  border: none;
+  border-radius: 50%;
+  height: 5rem;
+  width: 5rem;
+  color: white;
+  cursor: pointer;
 }
 
-.input {
-    padding: 1rem;
-    font-size: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid #ccc;
-    width: 80vw;
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 80vw;
+  max-width: 600px;
+  margin-top: 2vh;
 }
 
-.list {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 1rem;
+.saveButton, .cancelButton {
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 48%;
 }
 
-.listItem {
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 0.5rem;
-    margin-bottom: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 80vw;
+.saveButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.cancelButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* 모달 스타일 */
+.modalOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  max-width: 600px;
+  width: 80vw;
+}
+
+.modalSearchInput {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.modalStationList {
+  max-height: 40vh;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+}
+
+.modalStationList li {
+  padding: 1rem;
+  background-color: #f9f9f9;
+  margin-bottom: 1vh;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.closeModalButton {
+  margin-top: 1rem;
+  padding: 1rem;
+  font-size: 1.3rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+  text-align: center;
+}
+
+.editButton, .deleteButton {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.editButton {
+  background-color: #ffc107;
+  color: white;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
 }
