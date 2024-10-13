@@ -79,9 +79,6 @@ function AdminBusCreatePage() {
     setIsLoading(true);
 
     try {
-      console.log(stations.map((station) => station.name))
-      console.log("busNumber", busNumber)
-      console.log("totalSeats", Number(totalSeats))
       await axios.post(`http://devse.gonetis.com:12599/api/bus/`, {
         busNumber: busNumber,
         stationNames: stations.map((station) => station.name),
