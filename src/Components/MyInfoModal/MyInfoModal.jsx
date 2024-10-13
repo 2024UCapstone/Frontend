@@ -53,7 +53,7 @@ const MyInfoModal = () => {
   };
 
   return (
-    <div className={`${styles.myInfoModal} ${isVisible ? styles.show : ''}`}>
+    <div className={`${styles.myInfoModal} ${isVisible ? styles.show : ''}`} onClick={() => selectedModalClose(modalName)}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeButton} onClick={() => selectedModalClose(modalName)}>
           ×
