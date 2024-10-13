@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styles from "./StationPanel.module.css";
-import useStore from "store/UseStore";
+import useHeightStore, { useHeightState } from "store/UseHeightStore";
 import StationDetail from "components/StationDetail/StationDetail";
 import StationList from "components/StationList/StationList";
 import DraggablePanel from "components/DraggablePanel/DraggablePanel";
 import { useMapActions } from "store/UseMapStore";
 
 export default function StationPanel({ openSearchStationModal, stations, favoriteStations, toggleFavorite }) {
-  const { tabHeight } = useStore();
+  const { tabHeight } = useHeightState();
   const { resetMapState } = useMapActions();
   const [selectedStation, setSelectedStation] = useState(null);
 

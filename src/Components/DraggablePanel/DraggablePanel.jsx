@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import styles from './DraggablePanel.module.css';
-import useStore from 'store/UseStore';
+import { useHeightActions, useHeightState } from 'store/UseHeightStore';
 
 const DraggablePanel = ({ children }) => {
-  const { footerHeight, minHeight, midHeight, maxHeight, tabHeight, setTabHeight, updateMapHeight } = useStore();
+  const { footerHeight, minHeight, midHeight, maxHeight, tabHeight } = useHeightState();
+  const { setTabHeight, updateMapHeight } = useHeightActions();
   const panelRef = useRef(null);
   const handleRef = useRef(null);
   const dragStartY = useRef(0);

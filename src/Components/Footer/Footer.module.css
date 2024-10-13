@@ -1,7 +1,6 @@
 .footer {
   position: fixed;
   bottom: 0;
-  z-index: 100;
   background-color: whitesmoke;
   width: 100%;
   display: flex;
@@ -9,6 +8,7 @@
   padding: 0.5em 0.5em;
   height: 80px; /* 높이 증가 */
   box-sizing: border-box;
+  z-index: 100;
 }
 
 .footer > button {
