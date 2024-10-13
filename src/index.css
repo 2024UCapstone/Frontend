@@ -7,13 +7,9 @@
 }
 
 :root {
-  --main-color1: #cde8e5;
-  --main-color2: #eef7ff;
-  --main-color3: #7ab2b2;
-  --main-color4: #4d869c;
-  --main-color5: #8cc2bf;
-  --main-color6: #4caf50;
   /* 적용, 확인, 로그인 등 긍정적인 요소에 적용 */
+  --main-green-dark-more: #071b1e;
+  --main-green-dark: #0d2f34;
   --main-green: #124248;
   --main-green-bright: #267d88;
   --main-green-bright-more: #35aebe;
