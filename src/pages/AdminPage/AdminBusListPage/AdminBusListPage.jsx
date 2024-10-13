@@ -7,6 +7,7 @@ import Footer from 'components/Footer/Footer';
 function AdminBusListPage() {
   const [busList, setBusList] = useState([]); // 버스 목록
   const [showBusButtons, setShowBusButtons] = useState(null); // 수정/삭제 버튼 표시 여부
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const navigate = useNavigate();
 
   // 버스 목록 가져오기 (GET 요청)
@@ -46,9 +47,18 @@ function AdminBusListPage() {
   return (
     <div className={styles.AdminBusListPage}>
       <h2>버스 목록</h2>
+      <div className={styles["searchBar"]}>
+        <input
+              type="text"
+              placeholder="정류장을 검색하세요"
+              value={searchTerm} // 입력값을 상태와 연결
+              onChange={(e) => setSearchTerm(e.target.value)} // 검색어 업데이트
+        />
+        <button className={styles["searchButton"]}>🔍</button>
+      </div>
       <div className={styles.busList}>
         {busList.length === 0 ? (
-          <p>등록된 버스가 없습니다.</p>
+          <p className={styles.noBuses}>등록된 버스가 없습니다.</p>
         ) : (
           busList.map((bus) => (
             <div key={bus.number} className={styles.busItem} onClick={() => toggleBusButtons(bus)}>
@@ -63,7 +73,7 @@ function AdminBusListPage() {
           ))
         )}
       </div>
-      <button onClick={() => navigate('register')} className={styles.registerButton}>
+      <button onClick={() => navigate('create')} className={styles.registerButton}>
         버스 등록
       </button>
       <Footer />

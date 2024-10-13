@@ -20,15 +20,14 @@ function AdminBusStationCreatePage() {
       setErrorMessage("정류장 이름을 입력하세요.");
       return;
     }
-
+    
     try {
       const response = await axios.post("http://DevSe.gonetis.com:12599/api/station", {
         name: busStationName,
-        coordinate: {
-          x: data.position.lat,
-          y: data.position.lng
-        }
+        longitude: data.position.lng,
+        latitude: data.position.lat
       });
+      console.log(response)
       console.log({
         coordinate: [data.position.lat, data.position.lng]
       })

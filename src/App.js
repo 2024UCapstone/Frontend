@@ -12,6 +12,7 @@ import axios from "axios";
 import BusStationPage from "pages/AdminPage/BusStationPage/BusStationPage";
 import BusStationEditPage from "pages/AdminPage/BusStationEditPage/BusStationEditPage";
 import AdminBusListPage from "pages/AdminPage/AdminBusListPage/AdminBusListPage";
+import AdminBusCreatePage from "pages/AdminPage/AdminBusCreatePage/AdminBusCreatePage";
 
 function App() {
   axios.interceptors.request.use(
@@ -41,6 +42,7 @@ function App() {
         <Route path="/admin/bus-station/create" element={<AdminBusStationCreatePage />} />
         <Route path="/admin/bus-station/edit/:stationId" element={<BusStationEditPage />} />
         <Route path="/admin/bus" element={<AdminBusListPage />} />
+        <Route path="/admin/bus/create" element={<AdminBusCreatePage />} />
       </Routes>
     </div>
   );
