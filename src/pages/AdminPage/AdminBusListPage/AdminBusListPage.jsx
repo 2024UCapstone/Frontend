@@ -32,7 +32,12 @@ function AdminBusListPage() {
   const handleBusDelete = async (busNumber) => {
     try {
       await axios.delete(`http://DevSe.gonetis.com:12599/api/bus/${busNumber}`);
-      setBusList(busList.filter(bus => bus.number !== busNumber)); // 삭제 후 목록에서 제거
+      
+      // 삭제된 버스를 목록에서 바로 제거
+      setBusList((prevBusList) => ({
+        ...prevBusList,
+        data: prevBusList.data.filter(bus => bus.busNumber !== busNumber)
+      }));
     } catch (error) {
       console.error('버스 삭제 중 오류 발생:', error);
     }
