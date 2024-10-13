@@ -2,12 +2,14 @@ import useFetchData from "hooks/useFetchData";
 import styles from "./StationDetail.module.css";
 import { useEffect, useState } from "react";
 import LoadingPage from "pages/LoadingPage/LoadingPage";
+import { useMap, useMapActions } from "store/UseMapStore";
 
 /**
  * 즐겨찾기 등록한 정류장을 누르면 해당 정류장으로 마커 -> 정류장위치(도착), 버스위치로 하여 남은 시간 출력
  */
 function StationDetail({ station }) {
   const [busInfo, setBusInfo] = useState([]);
+  const {setCenter} = useMapActions();
 
   const { data: busStationData, fetchData: busStationFetch, loading: stationLoading, error: stationError } = useFetchData(
     `http://DevSe.gonetis.com:12599/api/bus/stations/${station.id}`
@@ -18,6 +20,8 @@ function StationDetail({ station }) {
   );
 
   useEffect(() => {
+    console.log(station);
+    setCenter(station.location.x, station.location.y);
     busStationFetch();
   }, []);
 
