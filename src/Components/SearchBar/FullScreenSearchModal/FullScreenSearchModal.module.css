@@ -8,14 +8,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: var(--main-white-bright-more);
   z-index: 400;
 }
 
 .modalContent {
   display: flex;
   flex-direction: column;
-  width: 90vw;
 }
 
 .resultContainer {
@@ -31,7 +30,7 @@
   width: 90vw;
   /* 검색창과 동일한 너비 */
   padding: 12px;
-  background-color: #6c757d;
+  background-color: var(--main-gray);
   color: white;
   border: none;
   border-radius: 8px;
@@ -42,7 +41,11 @@
 }
 
 .closeButton:hover {
-  background-color: #5a6268;
+  background-color: var(--main-gray-bright);
+}
+
+.closeButton:focus {
+  background-color: var(--main-gray-bright-more);
 }
 
 .loadingMessage,
@@ -51,27 +54,27 @@
   text-align: left;
   margin: 1em 0;
   padding: 1em;
-  background-color: #f8f9fa;
+  background-color: var(--main-white-bright-more);
+  border: 1px ;
   border-radius: 8px;
 }
 
 .errorMessage {
-  color: #721c24;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
+  color: var(--main-red-dark);
+  background-color: var(--main-red-bright-more);
 }
 
 .searchResults {
   max-height: 300px;
   overflow-y: auto;
-  background-color: #fff;
+  background-color: var(--main-white-bright);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .searchResultItem {
   padding: 10px 15px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--main-white-bright-more);
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -81,5 +84,9 @@
 }
 
 .searchResultItem:hover {
-  background-color: #f8f9fa;
+  background-color: var(--main-white-bright);
+}
+
+.searchResultItem:focus {
+  background-color: var(--main-white-bright-more);
 }

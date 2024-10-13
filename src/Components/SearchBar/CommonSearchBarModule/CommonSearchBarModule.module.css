@@ -3,7 +3,7 @@
 .searchBarWrapper {
     display: flex;
     justify-content: space-between;
-    background-color: white;
+    background-color: var(--main-white-bright-more);
     width: 85vw;
     align-items: center;
     border-radius: 20px;
