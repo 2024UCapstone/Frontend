@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { BusStopIcon } from "assets/images";
 import { useMap, useMapActions } from "store/UseMapStore";
 import { useHeightActions, useHeightState } from "store/UseHeightStore";
+import useGeolocation from "hooks/useGeoLocation";
 
 export default function MapView() {
   const { mapHeight } = useHeightState();
@@ -11,6 +12,8 @@ export default function MapView() {
 
   const { center, errMsg, isLoading } = useMap();
   const { setCenter, setErrMsg, setIsLoading, resetMapState } = useMapActions();
+
+  const location = useGeolocation();
 
   /**
    * Map 사이즈 변동 관련 Effect
@@ -26,18 +29,18 @@ export default function MapView() {
    * 현재 위치 불러와 데이터 받기
    */
   useEffect(() => {
-    resetMapState();
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setCenter(position.coords.latitude, position.coords.longitude);
+    if (location.loaded) {
+      if (location.coordinates) {
+        setCenter(location.coordinates.lat, location.coordinates.lng);
+        setIsLoading(false);
+      } else if (location.error) {
+        setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
+        setIsLoading(false);
       }
-      );
-      setIsLoading(false);
-    } else {
-      setErrMsg("geolocation을 사용할수 없어요..");
-      setIsLoading(false)
     }
-  }, []);
+  }, [location, setCenter, setErrMsg, setIsLoading]);
+
+
 
   const busStopList = [
     { title: "2대학관", latlng: { lat: 35.495299450684456, lng: 129.4172414821444 } },
