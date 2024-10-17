@@ -155,28 +155,38 @@ function StationDetail({ station }) {
   return (
     <div>
       <div className={styles["station-info"]}>
-        <div className={styles["bus-info"]}>
-          {busInfo && busInfo.length > 0 ? (
-            busInfo.map((bus, idx) => (
-              <div key={idx} className={styles["bus-item"]}>
-                <span className={styles["bus-id"]}>[{bus.busNumber}]</span>
-                <span className={styles["bus-status"]}>{bus.durationMessage}</span>
-                <div className={styles["progress-bar-container"]}>
-                  <div
-                    className={styles["progress-bar"]}
-                    style={{ width: `${(bus.occupiedSeats / 45) * 100}%` }}
-                  ></div>
+        <div className={styles["bus-info-container"]}>
+          <div className={styles["bus-info-header"]}>
+            <span className={styles["header-bus-id"]}>버스 번호</span>
+            <span className={styles["header-bus-status"]}>도착 예정</span>
+            <span className={styles["header-bus-seats"]}>남은 좌석</span>
+          </div>
+          <div className={styles["bus-info-list"]}>
+            {busInfo && busInfo.length > 0 ? (
+              busInfo.map((bus, idx) => (
+                <div key={idx} className={styles["bus-item"]}>
+                  <span className={styles["bus-id"]}>{bus.busNumber}</span>
+                  <span className={styles["bus-status"]}>{bus.durationMessage}</span>
+                  <div className={styles["seats-info"]}>
+                    <div className={styles["progress-bar-container"]}>
+                      <div
+                        className={styles["progress-bar"]}
+                        style={{ width: `${(bus.occupiedSeats / 45) * 100}%` }}
+                      ></div>
+                    </div>
+                    <span className={styles["bus-seats"]}>{bus.occupiedSeats}석</span>
+                  </div>
                 </div>
-                <span className={styles["bus-seats"]}>{bus.occupiedSeats}석</span>
-              </div>
-            ))
-          ) : (
-            <div>검색 결과가 없습니다.</div>
-          )}
+              ))
+            ) : (
+              <div className={styles["no-result"]}>검색 결과가 없습니다.</div>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
+  
 }
 
 export default StationDetail;
