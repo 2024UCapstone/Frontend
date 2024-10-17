@@ -43,6 +43,7 @@ const MyInfoModal = () => {
 
       if (response.data) {
         localStorage.removeItem('token');
+        selectedModalClose(modalName);
         navigate("/");
       } else {
         console.error('로그아웃 실패:', response.data.message);
