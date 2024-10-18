@@ -15,6 +15,7 @@ import AdminBusListPage from "pages/AdminPage/AdminBusListPage/AdminBusListPage"
 import AdminBusCreatePage from "pages/AdminPage/AdminBusCreatePage/AdminBusCreatePage";
 import MyInfoModal from "components/MyInfoModal/MyInfoModal";
 import { useModalState } from "store/UseModalStore";
+import AdminBusEditPage from "pages/AdminPage/AdminBusEditPage/AdminBusEditPage";
 
 function App() {
   const { modalName, isModal } = useModalState();
@@ -47,6 +48,7 @@ function App() {
         <Route path="/admin/bus-station/edit/:stationId" element={<BusStationEditPage />} />
         <Route path="/admin/bus" element={<AdminBusListPage />} />
         <Route path="/admin/bus/create" element={<AdminBusCreatePage />} />
+        <Route path="/admin/bus/edit/:busNumber" element={<AdminBusEditPage />} />
       </Routes>
       {isModal && modalName === "myInfoModal" && <MyInfoModal />}
     </div>
