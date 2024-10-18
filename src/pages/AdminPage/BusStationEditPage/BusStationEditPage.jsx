@@ -8,26 +8,18 @@ import Footer from "components/Footer/Footer";
 
 function BusStationEditPage() {
   const { stationId } = useParams(); // URL에서 stationId를 가져옴
-  // const [stationName, setStationName] = useState("");
   const navigate = useNavigate();
   const [stations, setStations] = useState([]);
-  // const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지 상태
   const setIsLoading = useStore((state) => state.setIsLoading); // 로딩 상태 관리
   const setErrorMessage = useStore((state) => state.setErrorMessage); // 에러 메시지 상태
   const busStations = useStore((state) => state.busStations); // 전체 정류장 목록
   const [station, setStation] = useState(null); // 특정 정류장 상태
   const [stationName, setStationName] = useState(''); // 정류장 이름 상태
-  // const [locationData, setLocationData] = useState(null); // 위치 데이터 상태
-  const [locationData, setLocationData] = useState({
-    lat: 35.495789,
-    lng: 129.415649,
-  }); // 위치 데이터 상태
+  const [locationData, setLocationData] = useState(null); // 위치 데이터 상태
 
   useEffect(() => {
     // 전체 정류장 목록에서 station을 찾아 설정
     const foundStation = busStations.find((s) => s.id === stationId);
-
-    console.log("busStations", busStations)
     if (foundStation) {
       setStation(foundStation);
       setStationName(foundStation.name);
@@ -45,14 +37,15 @@ function BusStationEditPage() {
 
   // 저장 버튼 클릭 시 처리
   const handleSave = async () => {
+    console.log("locationData",locationData)
+    console.log("stationId",stationId)
+    console.log("stationName",stationName)
     try {
       // API 요청 경로를 명세서에 맞게 설정 (stationId 제외)
-      await axios.put(`http://DevSe.gonetis.com:12599/api/station`, {
+      await axios.put(`http://DevSe.gonetis.com:12599/api/station/${stationId}`, {
         name: stationName,
-        location: {
-          x :locationData.lng,
-          y: locationData.lat
-        },
+        longitude: locationData.lng,
+        latitude: locationData.lat
       });
       alert('정류장 정보가 성공적으로 수정되었습니다.');
       navigate('/admin/bus-station');
