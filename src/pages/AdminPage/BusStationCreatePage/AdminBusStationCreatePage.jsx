@@ -47,7 +47,7 @@ function AdminBusStationCreatePage() {
           lat: data.position.lat,
           lng: data.position.lng,
         }}
-        level={3} // 지도의 확대 레벨
+        level={4} // 지도의 확대 레벨
         onCenterChanged={(map) => {
           const level = map.getLevel()
           const latlng = map.getCenter()
