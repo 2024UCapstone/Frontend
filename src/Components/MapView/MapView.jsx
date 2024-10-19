@@ -57,11 +57,17 @@ export default function MapView() {
           lng: station.location.y,
         },
       }));
+      console.log(stationData)
       setStationPositions(stationData); // 정류장 위치 상태 업데이트
     } catch (error) {
       console.error("정류장 위치를 불러오는 중 오류 발생:", error);
     }
   };
+
+  // 정류장 위치는 초기 렌더링 시 한 번만 불러옴
+  useEffect(() => {
+    fetchStationLocations();
+  }, []);
 
   // 서버에서 모든 버스 위치 불러오기
   const fetchBusLocations = async () => {
@@ -87,15 +93,6 @@ export default function MapView() {
   //   const intervalId = setInterval(fetchBusLocations, 300);
   //   return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 interval 해제
   // }, []);
-
-
-
-  const busStopList = [
-    { title: "2대학관", latlng: { lat: 35.495299450684456, lng: 129.4172414821444 } },
-    { title: "1대학관", latlng: { lat: 35.49491121578819, lng: 129.4163814699469 } },
-    { title: "3대학관", latlng: { lat: 35.49574107312693, lng: 129.41678645417534 } },
-    { title: "행정본관", latlng: { lat: 35.49547208702291, lng: 129.416045699906 } },
-  ];
 
   return (
     <div className={styles.mapViewContainer} style={{ height: `${mapHeight}px` }}>
