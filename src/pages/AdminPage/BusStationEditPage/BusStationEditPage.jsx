@@ -72,7 +72,7 @@ function BusStationEditPage() {
       <Map
         className={styles.map}
         center={{ lat: locationData.lat, lng: locationData.lng }} // 지도의 초기 중심 좌표 설정
-        level={3} // 확대 레벨
+        level={4} // 확대 레벨
         onCenterChanged={(map) => {
           // 지도 중심 좌표가 변경될 때마다 위치 데이터를 업데이트
           const latlng = map.getCenter();
