@@ -27,12 +27,6 @@ function AdminBusStationCreatePage() {
         longitude: data.position.lng,
         latitude: data.position.lat
       });
-      console.log(response)
-      console.log({
-        coordinate: [data.position.lat, data.position.lng]
-      })
-      console.log("data", data)
-      console.log("data.position", data.position)
       setBusStationName("");
       setErrorMessage(""); // 성공 후 오류 메시지 초기화
       navigate("/admin")
@@ -53,7 +47,7 @@ function AdminBusStationCreatePage() {
           lat: data.position.lat,
           lng: data.position.lng,
         }}
-        level={3} // 지도의 확대 레벨
+        level={4} // 지도의 확대 레벨
         onCenterChanged={(map) => {
           const level = map.getLevel()
           const latlng = map.getCenter()
