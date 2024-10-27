@@ -57,8 +57,10 @@ export default function MapView() {
           lng: station.location.y,
         },
       }));
-      console.log(stationData)
       setStationPositions(stationData); // 정류장 위치 상태 업데이트
+      stationData.map((busstation) => {
+        console.log(busstation.location)
+      })
     } catch (error) {
       console.error("정류장 위치를 불러오는 중 오류 발생:", error);
     }
@@ -73,12 +75,12 @@ export default function MapView() {
   const fetchBusLocations = async () => {
     try {
       const response = await axios.get(`http://devse.gonetis.com:12599/api/bus`);
-      const busData = response.data.data.map((bus) => ({
-        busNumber: bus.busNumber,
-        location: bus.location,
-      }));
-      console.log(busData)
-      setBusPositions(busData); // 여러 버스의 위치를 상태로 저장
+      console.log("busData", response.data.data)
+      // console.log("location", busData.location)
+      setBusPositions(response.data.data); // 여러 버스의 위치를 상태로 저장
+      response.data.data.map((bus) => {
+        console.log(bus.location.coordinates)
+      })
     } catch (error) {
       console.error("버스 위치를 불러오는 중 오류 발생:", error);
     }
@@ -87,6 +89,10 @@ export default function MapView() {
   useEffect(() => {
     fetchBusLocations()
   }, [])
+
+  useEffect(() => {
+    console.log("Bus List:", busPositions); // 버스 리스트 확인용 로그 추가
+  }, [busPositions]);
 
   // // 0.3초마다 버스 위치 업데이트
   // useEffect(() => {
@@ -122,21 +128,23 @@ export default function MapView() {
           />
         ))}
         {/* 여러 버스 위치 마커 */}
-        {!isBusLoading &&
-          busPositions.map((bus, index) => (
-          <MapMarker
-            key={bus.busNumber}
-            position={bus.location}
-            title={bus.busNumber} // 버스 번호를 마커에 표시
-            image={{
-              src: BusIcon,
-              size: { width: 35, height: 35 },
-            }}
-          >
-          <div style={{ padding: "5px", color: "#000" }}>{`버스 번호: ${bus.busNumber}`}</div>
-          </MapMarker>
-        ))}
-        <MapTypeId type={"TRAFFIC"} />
+        {busPositions.map((bus) => (
+            <MapMarker
+              key={bus.busNumber}
+              position={{
+                lat: bus.location.coordinates[0],
+                lng: bus.location.coordinates[1],
+              }}
+              title={`버스 번호: ${bus.busNumber}`}
+              image={{
+                src: BusIcon,
+                size: { width: 35, height: 35 },
+              }}
+            >
+              <div style={{ padding: "5px", color: "#000" }}>{`버스 번호: ${bus.busNumber}`}</div>
+            </MapMarker>
+          ))}
+        {/* <MapTypeId type={"TRAFFIC"} /> */}
       </Map>
     </div>
   );
