@@ -1,16 +1,15 @@
-.loadingPage .bus-icon {
+.bus-icon {
     display: flex;
+    align-items: center;
     justify-content: center;
+    width: 17rem;
+    height: 17rem;
     font-size: 3rem;
-}
-
-.loadingPage .logo .bus-icon {
-    width: 20rem;
-    height: 20rem;
-    animation: busMove 0.3s linear infinite;
+    animation: busMove 1.2s linear infinite;
+    overflow-x: hidden;
 }
 
 @keyframes busMove {
     0% { transform: translateX(-30%); }
-    100% { transform: translateX(150%); }
+    100% { transform: translateX(700%); }
 }
