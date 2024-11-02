@@ -1,9 +1,15 @@
 import styles from "./LoginPage.module.css";
 import { BusIcon } from "assets/images";
 import { GoogleIcon } from "assets/logos";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 function LoginPage() {
-
+  const navigate = useNavigate();
+  useEffect(()=>{
+    const isToken = sessionStorage.getItem('token');
+    if(isToken) navigate('/home');
+  }, [])
   
   const handleLogin = async () => {
     window.location.href = 'http://DevSe.gonetis.com:12599/oauth2/authorization/google';
