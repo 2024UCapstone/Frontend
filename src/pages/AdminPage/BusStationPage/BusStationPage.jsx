@@ -46,7 +46,7 @@ function BusStationPage() {
     // 정류장 삭제 핸들러
     const handleDeleteStation = async (stationId) => {
         try {
-        await axios.delete(`http://DevSe.gonetis.com:12599/api/station/${stationId}`);
+        await axios.delete(`https://DevSe.gonetis.com/api/station/${stationId}`);
         setBusStations(busStations.filter(station => station.id !== stationId));  // 삭제된 정류장 제외
         setSelectedStation(null);  // 선택된 정류장 초기화
         } catch (error) {

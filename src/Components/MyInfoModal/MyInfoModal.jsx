@@ -6,7 +6,7 @@ import useFetchData from "hooks/useFetchData";
 import { useModalActions, useModalState } from "store/UseModalStore";
 
 const MyInfoModal = () => {
-  const { data: userData, loading: userLoad, error: userError, fetchData } = useFetchData(`http://DevSe.gonetis.com:12599/api/auth/user`);
+  const { data: userData, loading: userLoad, error: userError, fetchData } = useFetchData(`https://DevSe.gonetis.com/api/auth/user`);
   const navigate = useNavigate();
   const { isModal, modalName } = useModalState();
   const { selectedModalClose } = useModalActions();

@@ -32,7 +32,7 @@ function AdminBusListPage() {
   // 버스 삭제 (DELETE 요청)
   const handleBusDelete = async (busNumber) => {
     try {
-      await axios.delete(`http://DevSe.gonetis.com:12599/api/bus/${busNumber}`);
+      await axios.delete(`https://DevSe.gonetis.com/api/bus/${busNumber}`);
       
       // 삭제된 버스를 목록에서 바로 제거
       setBusList((prevBusList) => ({
