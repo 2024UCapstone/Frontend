@@ -66,8 +66,7 @@ export default function MapView() {
     } catch (error) {
       console.error("정류장 위치를 불러오는 중 오류 발생:", error);
     }
-  };
-
+  }
   // 정류장 위치는 초기 렌더링 시 한 번만 불러옴
   useEffect(() => {
     fetchStationLocations();
