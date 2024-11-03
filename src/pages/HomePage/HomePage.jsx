@@ -10,30 +10,42 @@ import useFetchData from "hooks/useFetchData";
 import usePostData from "hooks/usePostData";
 import useDeleteData from "hooks/useDeleteData";
 import LoadingPage from "pages/LoadingPage/LoadingPage";
+import useSelectedStationStore from "store/UseSelectedStationStore";
 
 function HomePage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSearchStationModalOpen, setIsSearchStationModalOpen] = useState(false);
-  const { data: myStationData, load: myStationLoad, error: myStationError, fetchData: myStationFetchData } = useFetchData("https://devse.gonetis.com/api/user/my-station");
-  const { postData: myStationPostData } = usePostData("https://devse.gonetis.com/api/user/my-station");
-  const { deleteData: stationDel } = useDeleteData("https://devse.gonetis.com/api/user/my-station");
-  const [selectedStation, setSelectedStation] = useState(null);
+  const [isSearchStationModalOpen, setIsSearchStationModalOpen] =
+    useState(false);
+  const {
+    data: myStationData,
+    load: myStationLoad,
+    error: myStationError,
+    fetchData: myStationFetchData,
+  } = useFetchData("https://devse.gonetis.com/api/user/my-station");
+  const { postData: myStationPostData } = usePostData(
+    "https://devse.gonetis.com/api/user/my-station"
+  );
+  const { deleteData: stationDel } = useDeleteData(
+    "https://devse.gonetis.com/api/user/my-station"
+  );
+  // const [selectedStation, setSelectedStation] = useState(null);
+  const { selectedStation, setSelectedStation } = useSelectedStationStore();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const token = params.get('token');
+    const token = params.get("token");
     if (token) {
-      sessionStorage.setItem('token', token);
+      sessionStorage.setItem("token", token);
       navigate(location.pathname, { replace: true });
-      navigate('/home');
+      navigate("/home");
     }
     // 여기에 stations와 favoriteStations를 가져오는 로직 추가
   }, [location, navigate]);
 
-  useEffect(()=>{
+  useEffect(() => {
     myStationFetchData();
-  }, [])
+  }, []);
 
   const toggleFavorite = async (id) => {
     try {
@@ -51,17 +63,20 @@ function HomePage() {
     }
   };
 
-  if (myStationLoad) return <LoadingPage/>;
+  if (myStationLoad) return <LoadingPage />;
   if (myStationError) return <div>에러가 발생했습니다.</div>;
 
   return (
     <div className={styles.body}>
       <div className={styles.searchBar}>
-        <SearchBar         
-        selectedStation={selectedStation}
-        setSelectedStation={setSelectedStation}/>
+        <SearchBar
+          selectedStation={selectedStation}
+          setSelectedStation={setSelectedStation}
+        />
       </div>
-      <div className={styles.mapView}><MapView /></div>
+      <div className={styles.mapView}>
+        <MapView />
+      </div>
       <StationPanel
         openSearchStationModal={() => setIsSearchStationModalOpen(true)}
         favoriteStations={myStationData.data}
