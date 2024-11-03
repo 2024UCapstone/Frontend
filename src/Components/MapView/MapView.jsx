@@ -77,7 +77,7 @@ export default function MapView() {
    */
   useEffect(() => {
     // WebSocket 연결
-    websocket.current = new WebSocket("ws://devse.gonetis.com:12555");
+    websocket.current = new WebSocket("ws://devse.gonetis.com:12555/ws");
 
     // WebSocket 이벤트 핸들러
     websocket.current.onopen = () => {
