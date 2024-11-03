@@ -1,12 +1,14 @@
+/* BusRoutePage.module.css */
+
+/* 페이지 스타일 */
 .BusRoutePage {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 .BusRoutePage h3 {
-  background-color: var(--main-color5);
+  background-color: var(--main-green-bright);
   border: solid 1px #000;
   width: 34rem;
   height: 4.8rem;
@@ -17,43 +19,91 @@
   align-items: center;
   box-shadow: 0px 4px 4px 0px #00000040;
   margin-bottom: 2rem;
+  color: white;
 }
 
-.BusRoutePage ul {
+/* 정류장 목록 스타일 */
+.stationList {
   border-radius: 1rem;
   border: solid 1px #000;
   height: 35rem;
   width: 34rem;
   overflow-y: auto;
   box-shadow: 0px 4px 4px 0px #00000040;
+  list-style-type: none;
+  padding: 0;
 }
 
-.BusRoutePage li {
+.stationItem {
   background-color: #f5f9271a;
   border-bottom: solid 1px #d0c9df;
   height: 6rem;
   display: flex;
   align-items: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding-left: 2rem;
 }
 
-.BusRoutePage .circle {
-  width: 10px;
-  height: 10px;
-  background-color: #333;
+.stationItem:hover {
+  background-color: var(--main-green-bright-more);
+  color: white;
+}
+
+.dot {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
-  position: relative;
-  margin: 0 2rem;
-}
-
-.BusRoutePage .bus-stop-list {
-  font-size: 1.5rem;
+  background-color: black;
   margin-right: 1rem;
 }
 
-.BusRoutePage .favorite-button {
-  background-color: transparent;
+/* 모달 오버레이 */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달 콘텐츠 */
+.modalContent {
+  background-color: var(--main-white-bright);
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 닫기 버튼 */
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--main-red-bright);
   border: none;
-  font-size: 2rem;
-  color: #f39c12;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.closeButton:hover {
+  background-color: var(--main-red-bright-more);
 }
