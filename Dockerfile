@@ -3,6 +3,9 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
+# 먼저 .env 파일 복사
+COPY .env ./
+
 # Install dependencies
 COPY package.json package-lock.json ./
 RUN npm install
@@ -26,7 +29,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose ports
-EXPOSE 80 3001
+EXPOSE 80 12555
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
