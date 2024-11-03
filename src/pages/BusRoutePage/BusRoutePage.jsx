@@ -1,51 +1,44 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./BusRoutePage.css";
-import { BusIcon } from "assets/images";
-import Footer from "components/Footer/Footer";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import styles from "./BusRoutePage.module.css";
 
 function BusRoutePage() {
-  const [favorites, setFavorites] = useState([
-    { id: 1, name: "울산과학대 서부캠퍼스", isFavorite: false },
-    { id: 2, name: "집에갈래요", isFavorite: true },
-    { id: 3, name: "집에보내줄까", isFavorite: false },
-    { id: 4, name: "어림도 없지", isFavorite: false },
-    { id: 5, name: "ㅠㅠ", isFavorite: false },
-    { id: 6, name: "울산과학대 동부캠퍼스", isFavorite: false },
-  ]);
+  const { busNumber } = useParams(); // URL 파라미터에서 busNumber 가져오기
+  const [stations, setStations] = useState([]); // 정류장 목록
+  const [loading, setLoading] = useState(true); // 로딩 상태 관리
 
-  const toggleFavorite = (id) => {
-    setFavorites(
-      favorites.map((stop) =>
-        stop.id === id ? { ...stop, isFavorite: !stop.isFavorite } : stop
-      )
-    );
-  };
+  useEffect(() => {
+    // 버스 정류장 목록 가져오기
+    const fetchBusStations = async () => {
+      try {
+        const response = await axios.get(`http://DevSe.gonetis.com:12599/api/bus/${busNumber}`);
+        setStations(response.data.data?.stations || []); // 정류장 목록 저장
+      } catch (error) {
+        console.error("정류장 목록을 가져오는 중 오류 발생:", error);
+      } finally {
+        setLoading(false); // 로딩 완료
+      }
+    };
+
+    fetchBusStations();
+  }, [busNumber]);
+
+  // 로딩 중일 때
+  if (loading) return <p>로딩 중입니다...</p>;
 
   return (
-    <div className="BusRoutePage">
-      {/* 현 34rem으로 지정 */}
-      <h3>{"울산과학대의 버스 목록"}</h3>
+    <div className={styles.BusRoutePage}>
+      <h2>{busNumber}번 버스 정류장 목록</h2>
       <ul>
-        {favorites.map((stop, index) => (
-          <li
-            key={stop.id}
-            className={`bus-stop-item ${
-              index !== favorites.length - 1 ? "connected" : ""
-            }`}
-          >
-            <div className="circle"></div>
-            <p className="bus-stop-list">{stop.name}</p>
-            <button
-              className="favorite-button"
-              onClick={() => toggleFavorite(stop.id)}
-            >
-              {stop.isFavorite ? "★" : "☆"}
-            </button>
-          </li>
-        ))}
+        {stations && stations.length > 0 ? (
+          stations.map((station, index) => (
+            <li key={index}>{station.stationName}</li>
+          ))
+        ) : (
+          <p>정류장 정보가 없습니다.</p>
+        )}
       </ul>
-      <Footer />
     </div>
   );
 }
