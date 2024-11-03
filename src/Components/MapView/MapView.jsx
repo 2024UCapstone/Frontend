@@ -76,21 +76,32 @@ export default function MapView() {
    * WebSocket 연결 및 데이터 처리 - 버스 위치 파싱
    */
   useEffect(() => {
+    let retryCount = 0;
+    const MAX_RETRIES = 5;
+    let retryTimeoutId;
+
     const connectWebSocket = () => {
+        // 최대 재시도 횟수 체크
+        if (retryCount >= MAX_RETRIES) {
+            console.log(`최대 재연결 시도 횟수(${MAX_RETRIES}회)를 초과했습니다.`);
+            return;
+        }
+
         // Spring 웹소켓 서버 연결
-        websocket.current = new WebSocket("ws://devse.gonetis.com:12599/ws");
-        
+        websocket.current = new WebSocket("ws://localhost/ws");
+
         websocket.current.onopen = () => {
             console.log("WebSocket Connected to Spring Server");
-            
-            // Spring 서버에 구독 메시지 전송 (필요한 경우)
-            // const subscribeMsg = {
-            //     type: "SUBSCRIBE",
-            //     destination: "/topic/bus-locations"
-            // };
-            // websocket.current.send(JSON.stringify(subscribeMsg));
+            // 연결 성공시 재시도 카운트 초기화
+            retryCount = 0;
+
+            const subscribeMsg = {
+                type: "SUBSCRIBE",
+                destination: "/topic/bus-locations"
+            };
+            websocket.current.send(JSON.stringify(subscribeMsg));
         };
-        
+
         websocket.current.onmessage = (event) => {
             try {
                 // CSV 데이터 파싱
@@ -106,11 +117,11 @@ export default function MapView() {
                             },
                         };
                     })
-                    .filter(pos => 
-                        !isNaN(pos.location.coordinates[0]) && 
+                    .filter(pos =>
+                        !isNaN(pos.location.coordinates[0]) &&
                         !isNaN(pos.location.coordinates[1])
                     );
-                
+
                 if (newBusPositions.length > 0) {
                     setBusPositions(newBusPositions);
                 }
@@ -118,23 +129,39 @@ export default function MapView() {
                 console.error("Data parsing error:", error);
             }
         };
-        
+
         websocket.current.onerror = (error) => {
             console.error("WebSocket Error:", error);
-            // 3초 후 재연결 시도
-            setTimeout(connectWebSocket, 3000);
+            retryCount++;
+            console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
+            
+            if (retryCount < MAX_RETRIES) {
+                retryTimeoutId = setTimeout(connectWebSocket, 3000);
+            } else {
+                console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
+            }
         };
-        
+
         websocket.current.onclose = () => {
             console.log("WebSocket Disconnected from Spring Server");
-            // 3초 후 재연결 시도
-            setTimeout(connectWebSocket, 3000);
+            retryCount++;
+            console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
+            
+            if (retryCount < MAX_RETRIES) {
+                retryTimeoutId = setTimeout(connectWebSocket, 3000);
+            } else {
+                console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
+            }
         };
     };
-    
+
     connectWebSocket();
-    
+
+    // 클린업 함수
     return () => {
+        if (retryTimeoutId) {
+            clearTimeout(retryTimeoutId);
+        }
         if (websocket.current) {
             websocket.current.close();
         }

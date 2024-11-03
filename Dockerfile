@@ -3,33 +3,25 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# 먼저 .env 파일 복사
-COPY .env ./
-
-# Install dependencies
+# 의존성 설치
 COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy source code
+# 소스 복사
 COPY . .
 
-# Build the app
+# Build
 RUN npm run build
 
 # Production stage
 FROM nginx:alpine
 
-# 기존 설정 파일 제거
-RUN rm /etc/nginx/conf.d/default.conf
-
-# nginx.conf 파일 복사
+# nginx 설정 수정
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy built assets from build stage
+# 빌드 결과물 복사
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Expose ports
 EXPOSE 80 12555
 
-# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
