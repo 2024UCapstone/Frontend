@@ -196,7 +196,10 @@ export default function MapView() {
 
   return (
     isLoading ?
-      <LoadingPage />
+      // 로딩 페이지 스타일
+      <div style={{ height: `${mapHeight}px`, width: "100vw", display: "flex", padding: "3em", alignItems: "center", backgroundColor: "lightgrey" }}>
+        <LoadingPage />
+      </div>
       :
       center && (
         <div
@@ -245,4 +248,5 @@ export default function MapView() {
             ))}
           </Map>
         </div>
-      ));}
+      ));
+}
