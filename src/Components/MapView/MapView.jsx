@@ -6,6 +6,7 @@ import { useMap, useMapActions } from "store/UseMapStore";
 import { useHeightActions, useHeightState } from "store/UseHeightStore";
 import useGeolocation from "hooks/useGeoLocation";
 import axios from "axios";
+import LoadingPage from "pages/LoadingPage/LoadingPage";
 
 export default function MapView() {
   const { mapHeight } = useHeightState();
@@ -60,9 +61,6 @@ export default function MapView() {
         },
       }));
       setStationPositions(stationData); // 정류장 위치 상태 업데이트
-      stationData.map((busstation) => {
-        console.log(busstation.location);
-      });
     } catch (error) {
       console.error("정류장 위치를 불러오는 중 오류 발생:", error);
     }
@@ -81,93 +79,93 @@ export default function MapView() {
     let retryTimeoutId;
 
     const connectWebSocket = () => {
-        // 최대 재시도 횟수 체크
-        if (retryCount >= MAX_RETRIES) {
-            console.log(`최대 재연결 시도 횟수(${MAX_RETRIES}회)를 초과했습니다.`);
-            return;
+      // 최대 재시도 횟수 체크
+      if (retryCount >= MAX_RETRIES) {
+        console.log(`최대 재연결 시도 횟수(${MAX_RETRIES}회)를 초과했습니다.`);
+        return;
+      }
+
+      // Spring 웹소켓 서버 연결
+      // websocket.current = new WebSocket("wss://devse.gonetis.com/bus-location");
+      websocket.current = new WebSocket("http://localhost:3000/bus-location");
+
+      websocket.current.onopen = () => {
+        console.log("WebSocket Connected to Spring Server");
+        // 연결 성공시 재시도 카운트 초기화
+        retryCount = 0;
+
+        const subscribeMsg = {
+          type: "SUBSCRIBE",
+          destination: "/topic/bus-locations"
+        };
+        websocket.current.send(JSON.stringify(subscribeMsg));
+      };
+
+      websocket.current.onmessage = (event) => {
+        try {
+          // CSV 데이터 파싱
+          const rows = event.data.split("\n");
+          const newBusPositions = rows
+            .filter(row => row.trim())
+            .map((row) => {
+              const [busNumber, lat, lng] = row.split(",");
+              return {
+                busNumber: busNumber.trim(),
+                location: {
+                  coordinates: [parseFloat(lat), parseFloat(lng)],
+                },
+              };
+            })
+            .filter(pos =>
+              !isNaN(pos.location.coordinates[0]) &&
+              !isNaN(pos.location.coordinates[1])
+            );
+
+          if (newBusPositions.length > 0) {
+            setBusPositions(newBusPositions);
+          }
+        } catch (error) {
+          console.error("Data parsing error:", error);
         }
+      };
 
-        // Spring 웹소켓 서버 연결
-        // websocket.current = new WebSocket("wss://devse.gonetis.com/bus-location");
-        websocket.current = new WebSocket("http://localhost:3000/bus-location");
+      websocket.current.onerror = (error) => {
+        console.error("WebSocket Error:", error);
+        retryCount++;
+        console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
 
-        websocket.current.onopen = () => {
-            console.log("WebSocket Connected to Spring Server");
-            // 연결 성공시 재시도 카운트 초기화
-            retryCount = 0;
+        if (retryCount < MAX_RETRIES) {
+          retryTimeoutId = setTimeout(connectWebSocket, 3000);
+        } else {
+          console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
+        }
+      };
 
-            const subscribeMsg = {
-                type: "SUBSCRIBE",
-                destination: "/topic/bus-locations"
-            };
-            websocket.current.send(JSON.stringify(subscribeMsg));
-        };
+      websocket.current.onclose = () => {
+        console.log("WebSocket Disconnected from Spring Server");
+        retryCount++;
+        console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
 
-        websocket.current.onmessage = (event) => {
-            try {
-                // CSV 데이터 파싱
-                const rows = event.data.split("\n");
-                const newBusPositions = rows
-                    .filter(row => row.trim())
-                    .map((row) => {
-                        const [busNumber, lat, lng] = row.split(",");
-                        return {
-                            busNumber: busNumber.trim(),
-                            location: {
-                                coordinates: [parseFloat(lat), parseFloat(lng)],
-                            },
-                        };
-                    })
-                    .filter(pos =>
-                        !isNaN(pos.location.coordinates[0]) &&
-                        !isNaN(pos.location.coordinates[1])
-                    );
-
-                if (newBusPositions.length > 0) {
-                    setBusPositions(newBusPositions);
-                }
-            } catch (error) {
-                console.error("Data parsing error:", error);
-            }
-        };
-
-        websocket.current.onerror = (error) => {
-            console.error("WebSocket Error:", error);
-            retryCount++;
-            console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
-            
-            if (retryCount < MAX_RETRIES) {
-                retryTimeoutId = setTimeout(connectWebSocket, 3000);
-            } else {
-                console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
-            }
-        };
-
-        websocket.current.onclose = () => {
-            console.log("WebSocket Disconnected from Spring Server");
-            retryCount++;
-            console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
-            
-            if (retryCount < MAX_RETRIES) {
-                retryTimeoutId = setTimeout(connectWebSocket, 3000);
-            } else {
-                console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
-            }
-        };
+        if (retryCount < MAX_RETRIES) {
+          retryTimeoutId = setTimeout(connectWebSocket, 3000);
+        } else {
+          console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
+        }
+      };
     };
 
     connectWebSocket();
 
     // 클린업 함수
     return () => {
-        if (retryTimeoutId) {
-            clearTimeout(retryTimeoutId);
-        }
-        if (websocket.current) {
-            websocket.current.close();
-        }
+      if (retryTimeoutId) {
+        clearTimeout(retryTimeoutId);
+      }
+      if (websocket.current) {
+        websocket.current.close();
+      }
     };
-}, []);
+  }, []);
   // const fetchBusLocations = async () => {
   //   try {
   //     const response = await axios.get(`http://devse.gonetis.com:12599/api/bus`);
@@ -197,52 +195,54 @@ export default function MapView() {
   // }, []);
 
   return (
-    <div
-      className={styles.mapViewContainer}
-      style={{ height: `${mapHeight}px` }}
-    >
-      <Map className={styles.mapView} center={center} level={3}>
-        {/* 현재 위치 마커 띄우기 */}
-        {!isLoading && (
-          <MapMarker position={center}>
-            <div style={{ padding: "5px", color: "#000" }}>
-              {errMsg ? errMsg : "여기에 계신가요?!"}
-            </div>
-          </MapMarker>
-        )}
-        {/* 버스 정류장 마커 띄우기 */}
-        {stationPositions.map((station, index) => (
-          <MapMarker
-            key={station.id}
-            position={station.location}
-            image={{
-              src: BusStopIcon,
-              size: { width: 30, height: 30 },
-            }}
-            title={station.title}
-          />
-        ))}
-        {/* 여러 버스 위치 마커 */}
-        {busPositions.length > 0 && busPositions.map((bus) => (
-          <MapMarker
-            key={bus.busNumber}
-            position={{
-              lat: bus.location.coordinates[0],
-              lng: bus.location.coordinates[1],
-            }}
-            title={`버스 번호: ${bus.busNumber}`}
-            image={{
-              src: BusIcon,
-              size: { width: 30, height: 30 },
-            }}
-          >
-            <div
-              style={{ padding: "5px", color: "#000" }}
-            >{`버스 번호: ${bus.busNumber}`}</div>
-          </MapMarker>
-        ))}
-        {/* <MapTypeId type={"TRAFFIC"} /> */}
-      </Map>
-    </div>
+    center ?
+      <div
+        className={styles.mapViewContainer}
+        style={{ height: `${mapHeight}px` }}
+      >
+        <Map className={styles.mapView} center={center} level={3}>
+          {/* 현재 위치 마커 띄우기 */}
+          {!isLoading && (
+            <MapMarker position={center}>
+              <div style={{ padding: "5px", color: "#000" }}>
+                {errMsg ? errMsg : "여기에 계신가요?!"}
+              </div>
+            </MapMarker>
+          )}
+          {/* 버스 정류장 마커 띄우기 */}
+          {stationPositions.map((station, index) => (
+            <MapMarker
+              key={station.id}
+              position={station.location}
+              image={{
+                src: BusStopIcon,
+                size: { width: 30, height: 30 },
+              }}
+              title={station.title}
+            />
+          ))}
+          {/* 여러 버스 위치 마커 */}
+          {busPositions.length > 0 && busPositions.map((bus) => (
+            <MapMarker
+              key={bus.busNumber}
+              position={{
+                lat: bus.location.coordinates[0],
+                lng: bus.location.coordinates[1],
+              }}
+              title={`버스 번호: ${bus.busNumber}`}
+              image={{
+                src: BusIcon,
+                size: { width: 30, height: 30 },
+              }}
+            >
+              <div
+                style={{ padding: "5px", color: "#000" }}
+              >{`버스 번호: ${bus.busNumber}`}</div>
+            </MapMarker>
+          ))}
+        </Map>
+      </div>
+      :
+      <LoadingPage />
   );
 }

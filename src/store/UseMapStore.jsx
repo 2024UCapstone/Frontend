@@ -2,8 +2,8 @@ import { create } from 'zustand';
 
 const useMapStore = create(set => ({
   center: {
-    lat: 35.495789,
-    lng: 129.415649,
+    lat: null,
+    lng: null,
   },
   errMsg: null,
   isLoading: true,
@@ -27,8 +27,8 @@ const useMapStore = create(set => ({
     resetMapState : () =>
       set({
         center: {
-          lat: 35.495789,
-          lng: 129.415649,
+          lat: null,
+          lng: null,
         },
         errMsg: null,
         isLoading: true,
