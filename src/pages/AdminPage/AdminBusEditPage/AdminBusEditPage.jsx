@@ -7,7 +7,7 @@ import styles from "./AdminBusEditPage.module.css";
 function AdminBusEditPage() {
   const { busNumber } = useParams(); // URL 파라미터에서 busNumber 가져옴
   const navigate = useNavigate();
-  
+
   const [busDetails, setBusDetails] = useState(null); // 버스 세부 정보 상태
   const [busNumberInput, setBusNumberInput] = useState(""); // 버스 번호 입력 상태
   const [stations, setStations] = useState([]); // 정류장 리스트
@@ -17,7 +17,7 @@ function AdminBusEditPage() {
   const [totalSeats, setTotalSeats] = useState(""); // 좌석 수
   const [searchTerm, setSearchTerm] = useState(""); // 모달 내 검색어 상태
   const [editingIndex, setEditingIndex] = useState(null); // 수정할 정류장의 인덱스
-  
+
   const BASE_URL = "https://devse.gonetis.com";
 
   // 페이지가 로드되면 해당 버스 데이터를 서버에서 가져옴
@@ -30,14 +30,16 @@ function AdminBusEditPage() {
         setBusDetails(busData);
 
         // 입력 필드에 서버로부터 받은 데이터를 세팅
-        setBusNumberInput(busData.busNumber); 
-        setTotalSeats(busData.totalSeats); 
-        
+        setBusNumberInput(busData.busNumber);
+        setTotalSeats(busData.totalSeats);
+
         // 정류장 데이터를 변환해 설정
-        setStations(busData.stations.map(station => ({
-          id: station.stationRef.id, // stationRef에서 id 추출
-          name: station.stationName,  // stationName 사용
-        })));
+        setStations(
+          busData.stations.map((station) => ({
+            id: station.stationRef.id, // stationRef에서 id 추출
+            name: station.stationName, // stationName 사용
+          }))
+        );
 
         // 모든 정류장 데이터를 가져옴 (모달에서 사용)
         const stationResponse = await axios.get(`${BASE_URL}/api/station`);
@@ -47,7 +49,7 @@ function AdminBusEditPage() {
         console.error("버스 데이터를 가져오는 중 오류 발생:", error);
       }
     };
-    
+
     fetchBusDetails();
   }, [busNumber]);
 
@@ -110,13 +112,16 @@ function AdminBusEditPage() {
     }
 
     try {
-      await axios.put(`${BASE_URL}/api/bus/${busNumber}`, {
+      // 전송 데이터 확인용 콘솔 출력
+      const stationNames = stations.map((station) => station.name);
+      console.log("Sending stationNames:", stationNames); // 리스트 형태 확인용
+      await axios.put(`https://devse.gonetis.com/api/bus`, {
         busNumber: busNumberInput,
-        stationNames: stations.map((station) => station.name), // 정류장 이름 배열 전송
         totalSeats: Number(totalSeats), // 좌석 수 전송
+        stationsNames: stations.map((station) => station.name), // 정류장 이름 배열 전송
       });
       alert("버스가 성공적으로 수정되었습니다.");
-      navigate(-1); // 수정 후 버스 목록 페이지로 이동
+      navigate(-1);
     } catch (error) {
       console.error("버스 수정 실패:", error);
       alert("버스 수정에 실패했습니다. 다시 시도해주세요.");
@@ -166,12 +171,24 @@ function AdminBusEditPage() {
             ))}
           </div>
 
-          <button onClick={() => setModalIsOpen(true)} className={styles.addStationButton}>+</button>
+          <button
+            onClick={() => setModalIsOpen(true)}
+            className={styles.addStationButton}
+          >
+            +
+          </button>
 
           {/* 저장 및 취소 버튼 */}
           <div className={styles.buttonContainer}>
-            <button className={styles.saveButton} onClick={handleSubmit}>저장</button>
-            <button className={styles.cancelButton} onClick={() => navigate(-1)}>취소</button>
+            <button className={styles.saveButton} onClick={handleSubmit}>
+              저장
+            </button>
+            <button
+              className={styles.cancelButton}
+              onClick={() => navigate(-1)}
+            >
+              취소
+            </button>
           </div>
 
           <Footer />
@@ -191,7 +208,10 @@ function AdminBusEditPage() {
                 <ul className={styles.modalStationList}>
                   {filteredStations.length > 0 ? (
                     filteredStations.map((station) => (
-                      <li key={station.id} onClick={() => handleAddStation(station)}>
+                      <li
+                        key={station.id}
+                        onClick={() => handleAddStation(station)}
+                      >
                         {station.name}
                       </li>
                     ))
@@ -199,7 +219,12 @@ function AdminBusEditPage() {
                     <li>검색된 정류장이 없습니다.</li>
                   )}
                 </ul>
-                <button onClick={() => setModalIsOpen(false)} className={styles.closeModalButton}>닫기</button>
+                <button
+                  onClick={() => setModalIsOpen(false)}
+                  className={styles.closeModalButton}
+                >
+                  닫기
+                </button>
               </div>
             </div>
           )}

@@ -19,32 +19,41 @@ function EnterCodePage() {
   const [isVaildCode, setIsVaildCode] = useState(null);
   const [hasVaildCode, setHasVaildCode] = useState(false);
 
-  const { data: nameData, loading: nameLoad, message: nameMessage, postData: namePost } = usePostData(
-    'https://DevSe.gonetis.com/api/school/validation'
-  );
-  const { data: mailData, loading: mailLoad, message: mailMessage, postData: mailPost } = usePostData(
-    'https://DevSe.gonetis.com/api/school/mail'
-  );
-  const { data: codeData, loading: codeLoad, message: codeMessage, postData: codePost } = usePostData(
-    'https://DevSe.gonetis.com/api/school/code'
-  );
+  const {
+    data: nameData,
+    loading: nameLoad,
+    message: nameMessage,
+    postData: namePost,
+  } = usePostData("https://DevSe.gonetis.com/api/school/validation");
+  const {
+    data: mailData,
+    loading: mailLoad,
+    message: mailMessage,
+    postData: mailPost,
+  } = usePostData("https://DevSe.gonetis.com/api/school/mail");
+  const {
+    data: codeData,
+    loading: codeLoad,
+    message: codeMessage,
+    postData: codePost,
+  } = usePostData("https://DevSe.gonetis.com/api/school/code");
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     // URL에서 토큰 파라미터 확인
     const params = new URLSearchParams(location.search);
-    const token = params.get('token');
+    const token = params.get("token");
 
     if (token) {
       // 토큰을 로컬 스토리지에 저장
-      localStorage.setItem('token', token);
-      
+      localStorage.setItem("token", token);
+
       // 토큰 파라미터를 URL에서 제거
       navigate(location.pathname, { replace: true });
-      
+
       // 로그인 성공 후 처리
-      navigate('/enter-code');
+      navigate("/enter-code");
     }
   }, [location, navigate]);
 
@@ -81,38 +90,39 @@ function EnterCodePage() {
     setSchoolCode(event.target.value);
   };
 
-  const handleSchoolVerification = async() => {
-    await namePost({schoolName: schoolName});
+  const handleSchoolVerification = async () => {
+    await namePost({ schoolName: schoolName });
     setHasVaildSchool(true);
-    if(nameData) setIsVaildSchool(true)
+    if (nameData) setIsVaildSchool(true);
     else setIsVaildSchool(false);
   };
 
   const handleEmailVerification = async () => {
-    if(isVaildSchool === false) return alert("학교명을 인증 후 메일을 인증해주세요!");
+    if (isVaildSchool === false)
+      return alert("학교명을 인증 후 메일을 인증해주세요!");
     await mailPost({
       schoolName: schoolName,
-      schoolEmail: schoolEmail
+      schoolEmail: schoolEmail,
     });
     setHasVaildMail(true);
-    if(mailData) setIsVaildMail(true)
+    if (mailData) setIsVaildMail(true);
     else setIsVaildMail(false);
   };
 
-  const handleCodeVerification = async() => {
+  const handleCodeVerification = async () => {
     // if(isVaildMail === false) return alert("학교 메일 전송 후 코드를 입력해주세요!");
 
     // 인증 코드 로직 구현
     await codePost({
       schoolName: schoolName,
       schoolEmail: schoolEmail,
-      code: schoolCode
+      code: schoolCode,
     });
     setHasVaildCode(true);
-    if(mailData) setIsVaildCode(true)
+    if (mailData) setIsVaildCode(true);
     else setIsVaildCode(false);
 
-    if(isVaildCode) {
+    if (isVaildCode) {
       alert(codeMessage);
       navigate("/home");
     }
@@ -141,7 +151,12 @@ function EnterCodePage() {
             인증 가능 여부
           </button>
         </div>
-        <p style={{display: hasVaildSchool === true ? 'block' : 'none'}} className={styles[isVaildSchool ? "success-message" : "error-message"]}>
+        <p
+          style={{ display: hasVaildSchool === true ? "block" : "none" }}
+          className={
+            styles[isVaildSchool ? "success-message" : "error-message"]
+          }
+        >
           {nameMessage}
         </p>
         <div className={styles["inputSchool"]}>
@@ -160,7 +175,10 @@ function EnterCodePage() {
             인증 메일 전송
           </button>
         </div>
-        <p style={{display: hasVaildMail === true ? 'block' : 'none'}} className={styles[isVaildMail ? "success-message" : "error-message"]}>
+        <p
+          style={{ display: hasVaildMail === true ? "block" : "none" }}
+          className={styles[isVaildMail ? "success-message" : "error-message"]}
+        >
           {mailMessage}
         </p>
         <input
