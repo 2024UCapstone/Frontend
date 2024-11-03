@@ -8,7 +8,6 @@ const LoadingPage = () => {
       <div className={styles["logo"]}>
         <img className={styles["bus-icon"]} src={BusIcon} alt="Bus Logo" />
       </div>
-      <div className={styles["bus-icon"]}>로딩중....</div>
     </div>
   );
 };

@@ -15,7 +15,6 @@ function BusRoutePage() {
 
   //주소창 입력된 busNumber값 받아오기
   let { busNumber } = useParams();
-
   // 정류장 목록 불러오기
   useEffect(() => {
     const fetchStationList = async () => {
@@ -47,7 +46,6 @@ function BusRoutePage() {
       console.error("정류장 목록을 불러오는 중 오류 발생:", error);
     }
   };
-
 
   return (
     <div className={styles.BusRoutePage}>
