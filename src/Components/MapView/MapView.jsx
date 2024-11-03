@@ -49,7 +49,7 @@ export default function MapView() {
   const fetchStationLocations = async () => {
     try {
       const response = await axios.get(
-        `http://devse.gonetis.com:12599/api/station`
+        `https://devse.gonetis.com/api/station`
       );
       const stationData = response.data.data.map((station) => ({
         id: station.id,

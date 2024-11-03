@@ -79,7 +79,7 @@ function AdminBusCreatePage() {
     setIsLoading(true);
 
     try {
-      await axios.post(`http://devse.gonetis.com:12599/api/bus`, {
+      await axios.post(`https://devse.gonetis.com/api/bus`, {
         busNumber: busNumber,
         stationNames: stations.map((station) => station.name),
         totalSeats: Number(totalSeats),
