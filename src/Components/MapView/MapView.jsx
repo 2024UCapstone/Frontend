@@ -88,7 +88,7 @@ export default function MapView() {
         }
 
         // Spring 웹소켓 서버 연결
-        websocket.current = new WebSocket("ws://localhost/ws");
+        websocket.current = new WebSocket("ws://devse.gonetis.com:12599/bus-location");
 
         websocket.current.onopen = () => {
             console.log("WebSocket Connected to Spring Server");
