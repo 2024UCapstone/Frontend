@@ -79,15 +79,10 @@ function AdminBusEditPage() {
     setModalIsOpen(false); // 모달 닫기
   };
 
-  // 정류장 삭제 핸들러 (인덱스로 삭제)
+  // 정류장 삭제 핸들러 (인덱스를 통해 삭제)
   const handleDeleteStation = (index) => {
-    setStations((prevStations) => {
-      const updatedStations = prevStations.filter((_, i) => i !== index);
-  
-      console.log("Remaining stations after delete:", updatedStations); // 삭제 후 남은 정류장 출력
-  
-      return updatedStations; // 상태를 업데이트
-    });
+    const updatedStations = stations.filter((_, i) => i !== index);
+    setStations(updatedStations);
   };
 
   // 정류장 수정 핸들러 (수정할 정류장의 인덱스를 저장하고 모달 열기)
@@ -121,7 +116,7 @@ function AdminBusEditPage() {
         totalSeats: Number(totalSeats), // 좌석 수 전송
       });
       alert("버스가 성공적으로 수정되었습니다.");
-      navigate("/bus-list"); // 수정 후 버스 목록 페이지로 이동
+      navigate(-1); // 수정 후 버스 목록 페이지로 이동
     } catch (error) {
       console.error("버스 수정 실패:", error);
       alert("버스 수정에 실패했습니다. 다시 시도해주세요.");
@@ -131,50 +126,89 @@ function AdminBusEditPage() {
   return (
     <div className={styles.AdminBusEditPage}>
       <h2>버스 수정하기</h2>
-  
-      {/* 현재 stations 리스트 출력 */}
-      {/* <div className={styles.remainingStations}>
-        <h3>남아 있는 정류장 리스트:</h3>
-        {stations.length > 0 ? (
-          <ul>
-            {stations.map((station, index) => (
-              <li key={index}>{station.name}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>정류장이 없습니다.</p>
-        )}
-      </div> */}
-  
-      {/* 기존 삭제 및 수정 코드 */}
-      <div className={styles.stationList}>
-        {stations.length > 0 ? (
-          stations.map((station, index) => (
-            <div key={station.id} className={styles.stationItem}>
-              {station.name}
-              <button className={styles.editButton} onClick={() => handleEditStation(index)}>
-                수정
-              </button>
-              <button className={styles.deleteButton} onClick={() => handleDeleteStation(index)}>
-                삭제
-              </button>
-            </div>
-          ))
-        ) : (
-          <p>정류장이 없습니다.</p> // 정류장이 없을 때 메시지 출력
-        )}
-      </div>
+      {busDetails ? (
+        <>
+          <input
+            type="text"
+            placeholder="버스 번호를 입력하세요"
+            value={busNumberInput}
+            onChange={handleBusNumberChange}
+            className={styles.busNumberInput}
+          />
 
-  
-      <button onClick={() => setModalIsOpen(true)} className={styles.addStationButton}>+</button>
-  
-      {/* 저장 및 취소 버튼 */}
-      <div className={styles.buttonContainer}>
-        <button className={styles.saveButton} onClick={handleSubmit}>저장</button>
-        <button className={styles.cancelButton} onClick={() => navigate("/bus-list")}>취소</button>
-      </div>
+          <input
+            type="number"
+            placeholder="좌석 수를 입력하세요"
+            value={totalSeats}
+            onChange={handleTotalSeatsChange}
+            className={styles.totalSeatsInput}
+            min="1" // 최소 1 이상의 숫자 입력만 가능하게 설정
+          />
+
+          {/* 정류장 리스트 */}
+          <div className={styles.stationList}>
+            {stations.map((station, index) => (
+              <div key={station.id} className={styles.stationItem}>
+                {station.name}
+                <button
+                  className={styles.editButton}
+                  onClick={() => handleEditStation(index)}
+                >
+                  수정
+                </button>
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => handleDeleteStation(index)}
+                >
+                  삭제
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <button onClick={() => setModalIsOpen(true)} className={styles.addStationButton}>+</button>
+
+          {/* 저장 및 취소 버튼 */}
+          <div className={styles.buttonContainer}>
+            <button className={styles.saveButton} onClick={handleSubmit}>저장</button>
+            <button className={styles.cancelButton} onClick={() => navigate(-1)}>취소</button>
+          </div>
+
+          <Footer />
+
+          {/* 직접 구현한 모달 */}
+          {modalIsOpen && (
+            <div className={styles.modalOverlay}>
+              <div className={styles.modal}>
+                <h2>정류장 목록</h2>
+                <input
+                  type="text"
+                  placeholder="정류장을 검색하세요"
+                  value={searchTerm}
+                  onChange={handleModalSearch}
+                  className={styles.modalSearchInput}
+                />
+                <ul className={styles.modalStationList}>
+                  {filteredStations.length > 0 ? (
+                    filteredStations.map((station) => (
+                      <li key={station.id} onClick={() => handleAddStation(station)}>
+                        {station.name}
+                      </li>
+                    ))
+                  ) : (
+                    <li>검색된 정류장이 없습니다.</li>
+                  )}
+                </ul>
+                <button onClick={() => setModalIsOpen(false)} className={styles.closeModalButton}>닫기</button>
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        <p>버스 정보를 불러오는 중입니다...</p>
+      )}
     </div>
-  );  
+  );
 }
 
 export default AdminBusEditPage;
