@@ -4,6 +4,7 @@ import CommonSearchBarModule from "../CommonSearchBarModule/CommonSearchBarModul
 import { useCloseOnEsc } from "../../../hooks/useCloseOnEsc";
 import { useEnterKey } from "../../../hooks/useEnterKey";
 import { useMapActions } from "store/UseMapStore";
+import useSelectedStationStore from "store/UseSelectedStationStore";
 
 const FullScreenSearchModal = ({
   isOpen,
@@ -13,12 +14,12 @@ const FullScreenSearchModal = ({
   searchResults,
   isLoading,
   error,
-  toggleFavorite,
-  setSelectedStation
+  toggleFavorite
 }) => {
   const [searchStationName, setSearchStationName] = useState(initialValue);
   const searchInputRef = useRef(null);
   const { setCenter } = useMapActions();
+  const { setSelectedStation } = useSelectedStationStore();
 
   useCloseOnEsc(onClose); // ESC로 모달 닫기
   useEnterKey(searchInputRef, () => onSearch(searchStationName)); // Enter로 검색

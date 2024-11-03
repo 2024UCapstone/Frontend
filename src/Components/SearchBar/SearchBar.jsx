@@ -3,8 +3,9 @@ import CommonSearchBarModule from "./CommonSearchBarModule/CommonSearchBarModule
 import FullScreenSearchModal from "./FullScreenSearchModal/FullScreenSearchModal";
 import { useCloseOnEsc } from "../../hooks/useCloseOnEsc";
 import { useEnterKey } from "../../hooks/useEnterKey"; 
+import useSelectedStationStore from "store/UseSelectedStationStore";
 
-export default function SearchBar({selectedStation, setSelectedStation}) {
+export default function SearchBar() {
   const [searchStationName, setSearchStationName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -12,6 +13,7 @@ export default function SearchBar({selectedStation, setSelectedStation}) {
   const [error, setError] = useState(null);
   const [searchBarHeight, setSearchBarHeight] = useState(0);
   const searchInputRef = useRef(null);
+  const { selectedStation, setSelectedStation } = useSelectedStationStore();
 
   useCloseOnEsc(() => setIsModalOpen(false)); // ESC로 모달 닫기
   useEnterKey(searchInputRef, () => handleSearch(searchStationName)); // Enter로 검색

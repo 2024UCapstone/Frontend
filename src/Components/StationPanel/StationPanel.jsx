@@ -5,10 +5,12 @@ import StationDetail from "components/StationDetail/StationDetail";
 import StationList from "components/StationList/StationList";
 import DraggablePanel from "components/DraggablePanel/DraggablePanel";
 import { useMapActions } from "store/UseMapStore";
+import useSelectedStationStore from "store/UseSelectedStationStore";
 
-export default function StationPanel({ selectedStation, setSelectedStation, openSearchStationModal, favoriteStations, toggleFavorite }) {
+export default function StationPanel({ openSearchStationModal, favoriteStations, toggleFavorite }) {
   const { tabHeight } = useHeightState();
   const { resetMapState } = useMapActions();
+  const { selectedStation, setSelectedStation } = useSelectedStationStore();
 
   const handleStationSelect = (station) => {
     setSelectedStation(station);
@@ -49,12 +51,11 @@ export default function StationPanel({ selectedStation, setSelectedStation, open
               </svg>
             </button>
           </div>
-          {selectedStation ? (
-            <StationDetail station={selectedStation} />
+          {selectedStation !== null ? (
+            <StationDetail />
           ) : (
             <StationList 
               favoriteStations={favoriteStations}
-              selectedStation={selectedStation} 
               onStationSelect={handleStationSelect}
               toggleFavorite={toggleFavorite}
             />

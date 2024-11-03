@@ -4,8 +4,9 @@ import useFetchData from 'hooks/useFetchData';
 import LoadingPage from 'pages/LoadingPage/LoadingPage';
 import { useEnterKey } from 'hooks/useEnterKey';
 import { useModalActions } from 'store/UseModalStore';
+import useSelectedStationStore from 'store/UseSelectedStationStore';
 
-const SearchStationModal = ({ selectedStation, setSelectedStation, isOpen, toggleModal, favoriteStations, toggleFavorite }) => {
+const SearchStationModal = ({ isOpen, toggleModal, favoriteStations, toggleFavorite }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ const SearchStationModal = ({ selectedStation, setSelectedStation, isOpen, toggl
   const searchInputRef = useRef(null);
   const {selectedModalClose} = useModalActions();
   useEnterKey(searchInputRef, () => handleSearch(searchTerm));
+  const { selectedStation, setSelectedStation } = useSelectedStationStore();
 
   const handleSearch = async (stationName) => {
     setIsLoading(true);

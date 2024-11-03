@@ -69,10 +69,7 @@ function HomePage() {
   return (
     <div className={styles.body}>
       <div className={styles.searchBar}>
-        <SearchBar
-          selectedStation={selectedStation}
-          setSelectedStation={setSelectedStation}
-        />
+        <SearchBar/>
       </div>
       <div className={styles.mapView}>
         <MapView />
@@ -81,16 +78,12 @@ function HomePage() {
         openSearchStationModal={() => setIsSearchStationModalOpen(true)}
         favoriteStations={myStationData.data}
         toggleFavorite={toggleFavorite}
-        selectedStation={selectedStation}
-        setSelectedStation={setSelectedStation}
       />
       <SearchStationModal
         isOpen={isSearchStationModalOpen}
         toggleModal={() => setIsSearchStationModalOpen(false)}
         favoriteStations={myStationData.data}
         toggleFavorite={toggleFavorite}
-        selectedStation={selectedStation}
-        setSelectedStation={setSelectedStation}
       />
       <Footer />
     </div>

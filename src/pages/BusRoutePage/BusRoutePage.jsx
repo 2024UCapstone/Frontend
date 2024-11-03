@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import styles from "./BusRoutePage.module.css";
 import Footer from "components/Footer/Footer";
@@ -13,12 +13,15 @@ function BusRoutePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setSelectedStation } = useSelectedStationStore();
 
+  //주소창 입력된 busNumber값 받아오기
+  let { busNumber } = useParams();
+
   // 정류장 목록 불러오기
   useEffect(() => {
     const fetchStationList = async () => {
       try {
         const response = await axios.get(
-          "https://DevSe.gonetis.com/api/station"
+          `https://DevSe.gonetis.com/api/bus/stationNames/${busNumber}`
         );
         setStationList(response.data.data);
       } catch (error) {
@@ -29,30 +32,35 @@ function BusRoutePage() {
   }, []);
 
   // 정류장 클릭 시 위치 정보 가져와서 모달 열기
-  const handleStationClick = (station) => {
-    setCenter(station.location.x, station.location.y);
-    setSelectedStation(station);
-    navigate("/home");
+  const handleStationClick = async(station) => {
+    try {
+      const response = await axios.get(
+        `https://DevSe.gonetis.com/api/station?name=${station}`
+      );
+      const stationData = response.data.data;
+      console.log(stationData);
+
+      // Zustand 스토어에 저장
+      setSelectedStation(...stationData);
+      navigate("/home");
+    } catch (error) {
+      console.error("정류장 목록을 불러오는 중 오류 발생:", error);
+    }
   };
 
-  // 모달 닫기
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedStation(null);
-  };
 
   return (
     <div className={styles.BusRoutePage}>
       <h3>울산과학대의 정류장 목록</h3>
       <ul className={styles.stationList}>
-        {stationList.map((station) => (
+        {stationList.map((station, idx) => (
           <li
-            key={station.id}
+            key={idx}
             className={styles.stationItem}
             onClick={() => handleStationClick(station)}
           >
             <span className={styles.dot}></span>
-            <span>{station.name}</span>
+            <span>{station}</span>
           </li>
         ))}
       </ul>

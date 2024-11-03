@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./StationList.module.css";
 import { useMapActions } from "store/UseMapStore";
+import useSelectedStationStore from "store/UseSelectedStationStore";
 
-export default function StationList({favoriteStations, selectedStation, onStationSelect, toggleFavorite}) {
+export default function StationList({favoriteStations, onStationSelect, toggleFavorite}) {
   const {setCenter} = useMapActions();
+  const { selectedStation, setSelectedStation } = useSelectedStationStore();
 
   return (
     <div className={styles.stationListItems}>

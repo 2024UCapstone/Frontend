@@ -1,7 +1,6 @@
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 import { create } from "zustand";
 
-const useSelectedStationStore = create((set, get) => ({
+const useSelectedStationStore = create(set => ({
   selectedStation: null,
   setSelectedStation: (station) =>
     set({
