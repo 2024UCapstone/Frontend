@@ -20,7 +20,7 @@ export default function MapView() {
 
   const [stationPositions, setStationPositions] = useState([]); // 정류장 위치 상태
   const [busPositions, setBusPositions] = useState([]); // 여러 버스 위치 상태
-
+  const [myLocation, setMyLocation] = useState({lat: null, lng: null});
   /**
    * Map 사이즈 변동 관련 Effect
    */
@@ -37,14 +37,18 @@ export default function MapView() {
   useEffect(() => {
     if (location.loaded) {
       if (location.coordinates) {
-        setCenter(location.coordinates.lat, location.coordinates.lng);
+        setMyLocation({
+          lat: location.coordinates.lat,
+          lng: location.coordinates.lng
+        });
+        if(center.lat == null && center.lng == null) setCenter(location.coordinates.lat, location.coordinates.lng);
         setIsLoading(false);
       } else if (location.error) {
         setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
         setIsLoading(false);
       }
     }
-  }, [location]);
+  }, [location, setErrMsg, setIsLoading]);
 
   // 서버에서 모든 정류장 위치 불러오기
   const fetchStationLocations = async () => {
@@ -165,33 +169,10 @@ export default function MapView() {
       }
     };
   }, []);
-  // const fetchBusLocations = async () => {
-  //   try {
-  //     const response = await axios.get(`http://devse.gonetis.com:12599/api/bus`);
-  //     console.log("busData", response.data.data)
-  //     // console.log("location", busData.location)
-  //     setBusPositions(response.data.data); // 여러 버스의 위치를 상태로 저장
-  //     response.data.data.map((bus) => {
-  //       console.log(bus.location.coordinates)
-  //     })
-  //   } catch (error) {
-  //     console.error("버스 위치를 불러오는 중 오류 발생:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchBusLocations()
-  // }, [])
 
   useEffect(() => {
     console.log("Bus List:", busPositions); // 버스 리스트 확인용 로그 추가
   }, [busPositions]);
-
-  // // 0.3초마다 버스 위치 업데이트
-  // useEffect(() => {
-  //   const intervalId = setInterval(fetchBusLocations, 300);
-  //   return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 interval 해제
-  // }, []);
 
   return (
     isLoading ?
@@ -200,15 +181,15 @@ export default function MapView() {
         <LoadingPage />
       </div>
       :
-      center && (
+      (center.lng && center.lat) && (
         <div
           className={styles.mapViewContainer}
           style={{ height: `${mapHeight}px` }}
         >
           <Map className={styles.mapView} center={center} level={3}>
             {/* 현재 위치 마커 띄우기 */}
-            {!isLoading && (
-              <MapMarker position={center}>
+            {!isLoading && myLocation.lat && myLocation.lng && (
+              <MapMarker position={myLocation}>
                 <div style={{ padding: "5px", color: "#000" }}>
                   {errMsg ? errMsg : "여기에 계신가요?!"}
                 </div>
