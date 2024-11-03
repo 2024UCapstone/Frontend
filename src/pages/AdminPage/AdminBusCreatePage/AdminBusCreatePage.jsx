@@ -103,18 +103,20 @@ function AdminBusCreatePage() {
   };
 
   const handleUpdateStation = (id, newName) => {
-    setStations(stations.map(station => 
-      station.id === id ? { ...station, name: newName } : station
-    ));
+    setStations(
+      stations.map((station) =>
+        station.id === id ? { ...station, name: newName } : station
+      )
+    );
     setEditingStationId(null);
   };
 
   const handleRemoveStation = (id) => {
-    setStations(stations.filter(station => station.id !== id));
+    setStations(stations.filter((station) => station.id !== id));
   };
 
   const handleDragStart = (e, index) => {
-    e.dataTransfer.setData('text/plain', index);
+    e.dataTransfer.setData("text/plain", index);
   };
 
   const handleDragOver = (e) => {
@@ -123,7 +125,7 @@ function AdminBusCreatePage() {
 
   const handleDrop = (e, dropIndex) => {
     e.preventDefault();
-    const dragIndex = Number(e.dataTransfer.getData('text'));
+    const dragIndex = Number(e.dataTransfer.getData("text"));
     handleStationSort(dragIndex, dropIndex);
   };
 
@@ -148,8 +150,8 @@ function AdminBusCreatePage() {
 
       <ul className={styles.stationList}>
         {stations.map((station, index) => (
-          <li 
-            key={station.id} 
+          <li
+            key={station.id}
             className={styles.stationItem}
             draggable
             onDragStart={(e) => handleDragStart(e, index)}
@@ -160,7 +162,9 @@ function AdminBusCreatePage() {
               <input
                 type="text"
                 value={station.name}
-                onChange={(e) => handleUpdateStation(station.id, e.target.value)}
+                onChange={(e) =>
+                  handleUpdateStation(station.id, e.target.value)
+                }
                 onBlur={() => setEditingStationId(null)}
                 autoFocus
               />
@@ -168,13 +172,13 @@ function AdminBusCreatePage() {
               <>
                 {station.name}
                 <div className={styles.stationActions}>
-                  <button 
+                  <button
                     onClick={() => handleEditStation(station.id)}
                     className={styles.editButton}
                   >
                     수정
                   </button>
-                  <button 
+                  <button
                     onClick={() => handleRemoveStation(station.id)}
                     className={styles.deleteButton}
                   >
@@ -187,7 +191,9 @@ function AdminBusCreatePage() {
         ))}
       </ul>
 
-      <button onClick={openModal} className={styles.addStationButton}>+</button>
+      <button onClick={openModal} className={styles.addStationButton}>
+        +
+      </button>
 
       <div className={styles.buttonContainer}>
         <button
@@ -197,10 +203,7 @@ function AdminBusCreatePage() {
         >
           {isLoading ? "저장 중..." : "저장"}
         </button>
-        <button
-          className={styles.cancelButton}
-          onClick={() => navigate("/bus-list")}
-        >
+        <button className={styles.cancelButton} onClick={() => navigate(-1)}>
           취소
         </button>
       </div>
@@ -221,7 +224,10 @@ function AdminBusCreatePage() {
             <ul className={styles.modalStationList}>
               {filteredStations.length > 0 ? (
                 filteredStations.map((station) => (
-                  <li key={station.id} onClick={() => handleAddStation(station)}>
+                  <li
+                    key={station.id}
+                    onClick={() => handleAddStation(station)}
+                  >
                     {station.name}
                   </li>
                 ))
