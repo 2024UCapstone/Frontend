@@ -42,7 +42,6 @@ function App() {
         <Route path="/bus-direction" element={<BusDirectionPage />} />
         <Route path="/bus-list" element={<BusListPage />} />
         <Route path="/bus-list/:busNumber" element={<BusRoutePage />} /> {/* 버스 정류장 상세 페이지 */}
-        <Route path="/bus-route" element={<BusRoutePage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/bus-station" element={<BusStationPage />} />
         <Route path="/admin/bus-station/create" element={<AdminBusStationCreatePage />} />
