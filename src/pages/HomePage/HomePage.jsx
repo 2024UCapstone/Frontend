@@ -15,9 +15,9 @@ function HomePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSearchStationModalOpen, setIsSearchStationModalOpen] = useState(false);
-  const { data: myStationData, load: myStationLoad, error: myStationError, fetchData: myStationFetchData } = useFetchData("http://devse.gonetis.com:12599/api/user/my-station");
-  const { postData: myStationPostData } = usePostData("http://devse.gonetis.com:12599/api/user/my-station");
-  const { deleteData: stationDel } = useDeleteData("http://devse.gonetis.com:12599/api/user/my-station");
+  const { data: myStationData, load: myStationLoad, error: myStationError, fetchData: myStationFetchData } = useFetchData("https://devse.gonetis.com/api/user/my-station");
+  const { postData: myStationPostData } = usePostData("https://devse.gonetis.com/api/user/my-station");
+  const { deleteData: stationDel } = useDeleteData("https://devse.gonetis.com/api/user/my-station");
   const [selectedStation, setSelectedStation] = useState(null);
 
   useEffect(() => {

@@ -5,7 +5,7 @@ const useFetchData = (url) => {
   const [data, setData] = useState(false);
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
 
   const fetchData = async () => {
     setLoading(true);

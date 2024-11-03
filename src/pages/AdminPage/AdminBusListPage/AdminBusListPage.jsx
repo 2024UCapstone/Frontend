@@ -14,7 +14,7 @@ function AdminBusListPage() {
   useEffect(() => {
     const fetchBusList = async () => {
       try {
-        const response = await axios.get('http://DevSe.gonetis.com:12599/api/bus');
+        const response = await axios.get('https://DevSe.gonetis.com/api/bus');
         setBusList(response.data); // 서버에서 받은 데이터를 상태에 저장
         console.log("response.data", response.data)
       } catch (error) {
@@ -32,7 +32,7 @@ function AdminBusListPage() {
   // 버스 삭제 (DELETE 요청)
   const handleBusDelete = async (busNumber) => {
     try {
-      await axios.delete(`http://DevSe.gonetis.com:12599/api/bus/${busNumber}`);
+      await axios.delete(`https://DevSe.gonetis.com/api/bus/${busNumber}`);
       
       // 삭제된 버스를 목록에서 바로 제거
       setBusList((prevBusList) => ({

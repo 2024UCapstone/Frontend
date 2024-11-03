@@ -20,13 +20,13 @@ function EnterCodePage() {
   const [hasVaildCode, setHasVaildCode] = useState(false);
 
   const { data: nameData, loading: nameLoad, message: nameMessage, postData: namePost } = usePostData(
-    'http://DevSe.gonetis.com:12599/api/school/validation'
+    'https://DevSe.gonetis.com/api/school/validation'
   );
   const { data: mailData, loading: mailLoad, message: mailMessage, postData: mailPost } = usePostData(
-    'http://DevSe.gonetis.com:12599/api/school/mail'
+    'https://DevSe.gonetis.com/api/school/mail'
   );
   const { data: codeData, loading: codeLoad, message: codeMessage, postData: codePost } = usePostData(
-    'http://DevSe.gonetis.com:12599/api/school/code'
+    'https://DevSe.gonetis.com/api/school/code'
   );
   const navigate = useNavigate();
   const location = useLocation();

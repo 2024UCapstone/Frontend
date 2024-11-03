@@ -13,7 +13,7 @@ function BusListPage() {
   useEffect(() => {
     const fetchBusList = async () => {
       try {
-        const response = await axios.get('http://DevSe.gonetis.com:12599/api/bus');
+        const response = await axios.get('https://DevSe.gonetis.com/api/bus');
         setBusList(response.data); // 서버에서 받은 데이터를 상태에 저장
         console.log("response.data", response.data)
       } catch (error) {
@@ -24,25 +24,21 @@ function BusListPage() {
   }, []);
 
   console.log("busList", busList)
+  // 버스 상세 페이지로 이동
+  const goToBusDetail = (busNumber) => {
+    console.log(busNumber)
+    navigate(`/bus-list/${busNumber}`);
+  };
 
   return (
     <div className={styles.BusListPage}>
       {/* 현 34rem으로 지정 */}
       <h3>{"울산과학대의 버스 목록"}</h3>
       <ul>
-        {/* 여긴 나중에 li map 돌면 될 듯. */}
-        {/* <li onClick={() => navigate("/bus-route")}>
-          <img src={BusIcon} alt="bus icon" />
-          <p>[321아 1234]</p>
-        </li>
-        <li>
-          <img src={BusIcon} alt="bus icon" />
-          <p>[123가 1234]</p>
-        </li> */}
         <div className={styles.busList}>
         {busList.data && Array.isArray(busList.data) && busList.data.length > 0 ? (
           busList.data.map((bus) => (
-            <li>
+            <li onClick={() => goToBusDetail(bus.busNumber)}>
               <img src={BusIcon} alt="bus icon" />
               <div key={bus.busNumber} className={styles.busItem}>
                 {bus.busNumber}

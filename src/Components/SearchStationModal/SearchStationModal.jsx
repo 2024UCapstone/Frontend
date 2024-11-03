@@ -18,7 +18,7 @@ const SearchStationModal = ({ selectedStation, setSelectedStation, isOpen, toggl
   const handleSearch = async (stationName) => {
     setIsLoading(true);
     try {
-      const endpoint = `http://DevSe.gonetis.com:12599/api/station?name=${stationName}`;
+      const endpoint = `https://DevSe.gonetis.com/api/station?name=${stationName}`;
       const response = await fetch(endpoint, {
         method: "GET",
         headers: {

@@ -34,7 +34,7 @@ function AdminBusCreatePage() {
 
   const openModal = async () => {
     try {
-      const response = await axios.get(`http://devse.gonetis.com:12599/api/station`);
+      const response = await axios.get(`https://devse.gonetis.com/api/station`);
       setAllStations(response.data.data);
       setFilteredStations(response.data.data);
       setModalIsOpen(true);
@@ -79,7 +79,7 @@ function AdminBusCreatePage() {
     setIsLoading(true);
 
     try {
-      await axios.post(`http://devse.gonetis.com:12599/api/bus`, {
+      await axios.post(`https://devse.gonetis.com/api/bus`, {
         busNumber: busNumber,
         stationNames: stations.map((station) => station.name),
         totalSeats: Number(totalSeats),
