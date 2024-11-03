@@ -75,75 +75,71 @@ export default function MapView() {
   /**
    * WebSocket 연결 및 데이터 처리 - 버스 위치 파싱
    */
-  const MAX_RETRIES = 5;
-  const RETRY_DELAY = 3000; // 3초
-  
   useEffect(() => {
-      let retryCount = 0;
-      let reconnectTimeout;
-  
-      const connectWebSocket = () => {
-          try {
-              websocket.current = new WebSocket("ws://devse.gonetis.com:12555/ws");
-              
-              websocket.current.onopen = () => {
-                  console.log("WebSocket Connected");
-                  retryCount = 0; // 연결 성공시 재시도 카운트 리셋
-              };
-              
-              websocket.current.onmessage = (event) => {
-                  try {
-                      const rows = event.data.split("\n");
-                      const newBusPositions = rows
-                          .filter(row => row.trim())
-                          .map((row) => {
-                              const [busNumber, lat, lng] = row.split(",");
-                              return {
-                                  busNumber: busNumber.trim(),
-                                  location: {
-                                      coordinates: [parseFloat(lat), parseFloat(lng)],
-                                  },
-                              };
-                          });
-                      setBusPositions(newBusPositions);
-                  } catch (error) {
-                      console.error("Data parsing error:", error);
-                  }
-              };
-              
-              websocket.current.onerror = (error) => {
-                  console.error("WebSocket Error:", error);
-              };
-              
-              websocket.current.onclose = () => {
-                  console.log("WebSocket Disconnected");
-                  if (retryCount < MAX_RETRIES) {
-                      retryCount++;
-                      console.log(`Attempting to reconnect... (${retryCount}/${MAX_RETRIES})`);
-                      reconnectTimeout = setTimeout(connectWebSocket, RETRY_DELAY);
-                  }
-              };
-          } catch (error) {
-              console.error("WebSocket connection error:", error);
-              if (retryCount < MAX_RETRIES) {
-                  retryCount++;
-                  console.log(`Attempting to reconnect... (${retryCount}/${MAX_RETRIES})`);
-                  reconnectTimeout = setTimeout(connectWebSocket, RETRY_DELAY);
-              }
-          }
-      };
-      
-      connectWebSocket();
-      
-      return () => {
-          if (reconnectTimeout) {
-              clearTimeout(reconnectTimeout);
-          }
-          if (websocket.current) {
-              websocket.current.close();
-          }
-      };
-  }, []);
+    const connectWebSocket = () => {
+        // Spring 웹소켓 서버 연결
+        websocket.current = new WebSocket("ws://devse.gonetis.com:12599/ws");
+        
+        websocket.current.onopen = () => {
+            console.log("WebSocket Connected to Spring Server");
+            
+            // Spring 서버에 구독 메시지 전송 (필요한 경우)
+            // const subscribeMsg = {
+            //     type: "SUBSCRIBE",
+            //     destination: "/topic/bus-locations"
+            // };
+            // websocket.current.send(JSON.stringify(subscribeMsg));
+        };
+        
+        websocket.current.onmessage = (event) => {
+            try {
+                // CSV 데이터 파싱
+                const rows = event.data.split("\n");
+                const newBusPositions = rows
+                    .filter(row => row.trim())
+                    .map((row) => {
+                        const [busNumber, lat, lng] = row.split(",");
+                        return {
+                            busNumber: busNumber.trim(),
+                            location: {
+                                coordinates: [parseFloat(lat), parseFloat(lng)],
+                            },
+                        };
+                    })
+                    .filter(pos => 
+                        !isNaN(pos.location.coordinates[0]) && 
+                        !isNaN(pos.location.coordinates[1])
+                    );
+                
+                if (newBusPositions.length > 0) {
+                    setBusPositions(newBusPositions);
+                }
+            } catch (error) {
+                console.error("Data parsing error:", error);
+            }
+        };
+        
+        websocket.current.onerror = (error) => {
+            console.error("WebSocket Error:", error);
+            // 3초 후 재연결 시도
+            setTimeout(connectWebSocket, 3000);
+        };
+        
+        websocket.current.onclose = () => {
+            console.log("WebSocket Disconnected from Spring Server");
+            // 3초 후 재연결 시도
+            setTimeout(connectWebSocket, 3000);
+        };
+    };
+    
+    connectWebSocket();
+    
+    return () => {
+        if (websocket.current) {
+            websocket.current.close();
+        }
+    };
+}, []);
   // const fetchBusLocations = async () => {
   //   try {
   //     const response = await axios.get(`http://devse.gonetis.com:12599/api/bus`);
