@@ -32,7 +32,7 @@ const Footer = () => {
       </button>
       <button
         onClick={() => {
-          navigate("/bus-direction");
+          navigate("/bus-list");
         }}
       >
         <img src={BusStopIcon} alt="bus-icon" />
