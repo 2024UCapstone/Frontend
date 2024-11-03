@@ -49,9 +49,7 @@ export default function MapView() {
   // 서버에서 모든 정류장 위치 불러오기
   const fetchStationLocations = async () => {
     try {
-      const response = await axios.get(
-        `https://devse.gonetis.com/api/station`
-      );
+      const response = await axios.get(`https://devse.gonetis.com/api/station`);
       const stationData = response.data.data.map((station) => ({
         id: station.id,
         name: station.name,
@@ -64,7 +62,7 @@ export default function MapView() {
     } catch (error) {
       console.error("정류장 위치를 불러오는 중 오류 발생:", error);
     }
-  }
+  };
   // 정류장 위치는 초기 렌더링 시 한 번만 불러옴
   useEffect(() => {
     fetchStationLocations();
@@ -96,7 +94,7 @@ export default function MapView() {
 
         const subscribeMsg = {
           type: "SUBSCRIBE",
-          destination: "/topic/bus-locations"
+          destination: "/topic/bus-locations",
         };
         websocket.current.send(JSON.stringify(subscribeMsg));
       };
@@ -106,7 +104,7 @@ export default function MapView() {
           // CSV 데이터 파싱
           const rows = event.data.split("\n");
           const newBusPositions = rows
-            .filter(row => row.trim())
+            .filter((row) => row.trim())
             .map((row) => {
               const [busNumber, lat, lng] = row.split(",");
               return {
@@ -116,9 +114,10 @@ export default function MapView() {
                 },
               };
             })
-            .filter(pos =>
-              !isNaN(pos.location.coordinates[0]) &&
-              !isNaN(pos.location.coordinates[1])
+            .filter(
+              (pos) =>
+                !isNaN(pos.location.coordinates[0]) &&
+                !isNaN(pos.location.coordinates[1])
             );
 
           if (newBusPositions.length > 0) {
@@ -248,5 +247,6 @@ export default function MapView() {
             ))}
           </Map>
         </div>
-      ));
+      )
+  );
 }
