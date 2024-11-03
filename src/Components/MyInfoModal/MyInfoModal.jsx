@@ -42,7 +42,7 @@ const MyInfoModal = () => {
       });
 
       if (response.data) {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         selectedModalClose(modalName);
         navigate("/");
       } else {

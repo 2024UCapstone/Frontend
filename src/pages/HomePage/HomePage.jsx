@@ -24,7 +24,7 @@ function HomePage() {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
     if (token) {
-      localStorage.setItem('token', token);
+      sessionStorage.setItem('token', token);
       navigate(location.pathname, { replace: true });
       navigate('/home');
     }
