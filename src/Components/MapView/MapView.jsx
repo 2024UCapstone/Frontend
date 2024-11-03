@@ -195,54 +195,54 @@ export default function MapView() {
   // }, []);
 
   return (
-    center ?
-      <div
-        className={styles.mapViewContainer}
-        style={{ height: `${mapHeight}px` }}
-      >
-        <Map className={styles.mapView} center={center} level={3}>
-          {/* 현재 위치 마커 띄우기 */}
-          {!isLoading && (
-            <MapMarker position={center}>
-              <div style={{ padding: "5px", color: "#000" }}>
-                {errMsg ? errMsg : "여기에 계신가요?!"}
-              </div>
-            </MapMarker>
-          )}
-          {/* 버스 정류장 마커 띄우기 */}
-          {stationPositions.map((station, index) => (
-            <MapMarker
-              key={station.id}
-              position={station.location}
-              image={{
-                src: BusStopIcon,
-                size: { width: 30, height: 30 },
-              }}
-              title={station.title}
-            />
-          ))}
-          {/* 여러 버스 위치 마커 */}
-          {busPositions.length > 0 && busPositions.map((bus) => (
-            <MapMarker
-              key={bus.busNumber}
-              position={{
-                lat: bus.location.coordinates[0],
-                lng: bus.location.coordinates[1],
-              }}
-              title={`버스 번호: ${bus.busNumber}`}
-              image={{
-                src: BusIcon,
-                size: { width: 30, height: 30 },
-              }}
-            >
-              <div
-                style={{ padding: "5px", color: "#000" }}
-              >{`버스 번호: ${bus.busNumber}`}</div>
-            </MapMarker>
-          ))}
-        </Map>
-      </div>
-      :
+    isLoading ?
       <LoadingPage />
-  );
-}
+      :
+      center && (
+        <div
+          className={styles.mapViewContainer}
+          style={{ height: `${mapHeight}px` }}
+        >
+          <Map className={styles.mapView} center={center} level={3}>
+            {/* 현재 위치 마커 띄우기 */}
+            {!isLoading && (
+              <MapMarker position={center}>
+                <div style={{ padding: "5px", color: "#000" }}>
+                  {errMsg ? errMsg : "여기에 계신가요?!"}
+                </div>
+              </MapMarker>
+            )}
+            {/* 버스 정류장 마커 띄우기 */}
+            {stationPositions.map((station, index) => (
+              <MapMarker
+                key={station.id}
+                position={station.location}
+                image={{
+                  src: BusStopIcon,
+                  size: { width: 30, height: 30 },
+                }}
+                title={station.title}
+              />
+            ))}
+            {/* 여러 버스 위치 마커 */}
+            {busPositions.length > 0 && busPositions.map((bus) => (
+              <MapMarker
+                key={bus.busNumber}
+                position={{
+                  lat: bus.location.coordinates[0],
+                  lng: bus.location.coordinates[1],
+                }}
+                title={`버스 번호: ${bus.busNumber}`}
+                image={{
+                  src: BusIcon,
+                  size: { width: 30, height: 30 },
+                }}
+              >
+                <div
+                  style={{ padding: "5px", color: "#000" }}
+                >{`버스 번호: ${bus.busNumber}`}</div>
+              </MapMarker>
+            ))}
+          </Map>
+        </div>
+      ));}
