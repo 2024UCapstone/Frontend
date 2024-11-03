@@ -89,11 +89,6 @@ function StationDetail() {
       };
       // 초기 fetch 및 센터 설정
       fetchAndSetCenter();
-        
-      // 1분마다 재실행하는 interval 설정
-      const intervalId = setInterval(fetchAndSetCenter, 60000); // 60000ms = 1분
-      // cleanup 함수: 컴포넌트가 언마운트되거나 selectedStation이 변경될 때 interval 정리
-      return () => clearInterval(intervalId);   
     }
   
   }, [selectedStation]);
