@@ -4,13 +4,15 @@ import { useEffect, useState, useCallback } from "react";
 import LoadingPage from "pages/LoadingPage/LoadingPage";
 import { useMapActions } from "store/UseMapStore";
 import axios from "axios";
+import useSelectedStationStore from "store/UseSelectedStationStore";
 
-function StationDetail({ station }) {
+function StationDetail() {
   const [busInfo, setBusInfo] = useState([]);
   const { setCenter } = useMapActions();
+  const { selectedStation, setSelectedStation } = useSelectedStationStore();
 
   const { data: busStationData, fetchData: busStationFetch, loading: stationLoading, error: stationError } = useFetchData(
-    `https://DevSe.gonetis.com/api/bus/stations/${station.id}`
+    `https://DevSe.gonetis.com/api/bus/stations/${selectedStation?.id}`
   );
 
   const [destinationLoading, setLoading] = useState(false);
@@ -35,7 +37,7 @@ function StationDetail({ station }) {
 
   const busDestinationFetch = useCallback(async (name, x, y) => {
     try {
-      const response = await axios.get(`https://DevSe.gonetis.com/api/kakao-api/arrival-time/single?origin=${name},${y},${x}&destination=${station.name},${station.location.y},${station.location.x}`, {
+      const response = await axios.get(`https://DevSe.gonetis.com/api/kakao-api/arrival-time/single?origin=${name},${y},${x}&destination=${selectedStation?.name},${selectedStation?.location?.y},${selectedStation?.location?.x}`, {
         headers: {
           "Content-Type": "application/json",
           'Authorization': `Bearer ${token}`
@@ -77,23 +79,24 @@ function StationDetail({ station }) {
     } catch (error) {
       console.error('Error fetching bus destination data:', error);
     }
-  }, [station, token]);
+  }, [selectedStation, token]);
 
   useEffect(() => {
-    const fetchAndSetCenter = () => {
-      setCenter(station.location.x, station.location.y);
-      busStationFetch();
-    };
+    if(selectedStation){
+      const fetchAndSetCenter = () => {
+        setCenter(selectedStation?.location.x, selectedStation?.location.y);
+        busStationFetch();
+      };
+      // 초기 fetch 및 센터 설정
+      fetchAndSetCenter();
+        
+      // 1분마다 재실행하는 interval 설정
+      const intervalId = setInterval(fetchAndSetCenter, 60000); // 60000ms = 1분
+      // cleanup 함수: 컴포넌트가 언마운트되거나 selectedStation이 변경될 때 interval 정리
+      return () => clearInterval(intervalId);   
+    }
   
-    // 초기 fetch 및 센터 설정
-    fetchAndSetCenter();
-  
-    // 1분마다 재실행하는 interval 설정
-    const intervalId = setInterval(fetchAndSetCenter, 60000); // 60000ms = 1분
-  
-    // cleanup 함수: 컴포넌트가 언마운트되거나 station이 변경될 때 interval 정리
-    return () => clearInterval(intervalId);
-  }, [station]);
+  }, [selectedStation]);
 
   useEffect(() => {
     if (busStationData.data && busStationData.data.length > 0) {
