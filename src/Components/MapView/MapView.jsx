@@ -193,32 +193,41 @@ export default function MapView() {
   //   return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 interval 해제
   // }, []);
 
-  return isLoading ? (
-    <LoadingPage />
-  ) : (
-    center && (
-      <div
-        className={styles.mapViewContainer}
-        style={{ height: `${mapHeight}px` }}
-      >
-        <Map className={styles.mapView} center={center} level={3}>
-          {/* 현재 위치 마커 띄우기 */}
-          {!isLoading && <MapMarker position={center}></MapMarker>}
-          {/* 버스 정류장 마커 띄우기 */}
-          {stationPositions.map((station, index) => (
-            <MapMarker
-              key={station.id}
-              position={station.location}
-              image={{
-                src: BusStopIcon,
-                size: { width: 30, height: 30 },
-              }}
-              title={station.title}
-            />
-          ))}
-          {/* 여러 버스 위치 마커 */}
-          {busPositions.length > 0 &&
-            busPositions.map((bus) => (
+  return (
+    isLoading ?
+      // 로딩 페이지 스타일
+      <div style={{ height: `${mapHeight}px`, width: "100vw", display: "flex", padding: "3em", alignItems: "center", backgroundColor: "lightgrey" }}>
+        <LoadingPage />
+      </div>
+      :
+      center && (
+        <div
+          className={styles.mapViewContainer}
+          style={{ height: `${mapHeight}px` }}
+        >
+          <Map className={styles.mapView} center={center} level={3}>
+            {/* 현재 위치 마커 띄우기 */}
+            {!isLoading && (
+              <MapMarker position={center}>
+                <div style={{ padding: "5px", color: "#000" }}>
+                  {errMsg ? errMsg : "여기에 계신가요?!"}
+                </div>
+              </MapMarker>
+            )}
+            {/* 버스 정류장 마커 띄우기 */}
+            {stationPositions.map((station, index) => (
+              <MapMarker
+                key={station.id}
+                position={station.location}
+                image={{
+                  src: BusStopIcon,
+                  size: { width: 30, height: 30 },
+                }}
+                title={station.title}
+              />
+            ))}
+            {/* 여러 버스 위치 마커 */}
+            {busPositions.length > 0 && busPositions.map((bus) => (
               <MapMarker
                 key={bus.busNumber}
                 position={{
@@ -236,8 +245,8 @@ export default function MapView() {
                 >{`버스 번호: ${bus.busNumber}`}</div>
               </MapMarker>
             ))}
-        </Map>
-      </div>
-    )
+          </Map>
+        </div>
+      )
   );
 }
