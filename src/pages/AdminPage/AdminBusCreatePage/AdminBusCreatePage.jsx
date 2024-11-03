@@ -34,7 +34,7 @@ function AdminBusCreatePage() {
 
   const openModal = async () => {
     try {
-      const response = await axios.get(`http://devse.gonetis.com:12599/api/station`);
+      const response = await axios.get(`https://devse.gonetis.com/api/station`);
       setAllStations(response.data.data);
       setFilteredStations(response.data.data);
       setModalIsOpen(true);

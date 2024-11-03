@@ -18,7 +18,7 @@ function AdminBusEditPage() {
   const [searchTerm, setSearchTerm] = useState(""); // 모달 내 검색어 상태
   const [editingIndex, setEditingIndex] = useState(null); // 수정할 정류장의 인덱스
   
-  const BASE_URL = "http://devse.gonetis.com:12599";
+  const BASE_URL = "https://devse.gonetis.com";
 
   // 페이지가 로드되면 해당 버스 데이터를 서버에서 가져옴
   useEffect(() => {
