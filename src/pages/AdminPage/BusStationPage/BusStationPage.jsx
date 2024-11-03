@@ -17,7 +17,7 @@ function BusStationPage() {
     useEffect(() => {
         const fetchStations = async () => {
             try {
-                const response = await axios.get('http://DevSe.gonetis.com:12599/api/station');
+                const response = await axios.get('https://DevSe.gonetis.com/api/station');
                 console.log(response.data)
                 // 응답 데이터에서 "data" 속성을 추출하여 사용
                 const stations = response.data.data;

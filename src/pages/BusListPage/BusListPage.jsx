@@ -13,7 +13,7 @@ function BusListPage() {
   useEffect(() => {
     const fetchBusList = async () => {
       try {
-        const response = await axios.get('http://DevSe.gonetis.com:12599/api/bus');
+        const response = await axios.get('https://DevSe.gonetis.com/api/bus');
         setBusList(response.data); // 서버에서 받은 데이터를 상태에 저장
         console.log("response.data", response.data)
       } catch (error) {

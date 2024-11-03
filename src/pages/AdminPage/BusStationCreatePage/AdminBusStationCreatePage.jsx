@@ -22,7 +22,7 @@ function AdminBusStationCreatePage() {
     }
     
     try {
-      const response = await axios.post("http://DevSe.gonetis.com:12599/api/station", {
+      const response = await axios.post("https://DevSe.gonetis.com/api/station", {
         name: busStationName,
         longitude: data.position.lng,
         latitude: data.position.lat

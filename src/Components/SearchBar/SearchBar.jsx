@@ -48,7 +48,7 @@ export default function SearchBar({selectedStation, setSelectedStation}) {
     setError(null);
 
     try {
-      const endpoint = `http://DevSe.gonetis.com:12599/api/station?name=${stationName}`;
+      const endpoint = `https://DevSe.gonetis.com/api/station?name=${stationName}`;
 
       const response = await fetch(endpoint, {
         method: "GET",
