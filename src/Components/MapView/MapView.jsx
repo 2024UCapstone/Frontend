@@ -201,7 +201,7 @@ export default function MapView() {
       className={styles.mapViewContainer}
       style={{ height: `${mapHeight}px` }}
     >
-      <Map className={styles.mapView} center={center} level={4}>
+      <Map className={styles.mapView} center={center} level={3}>
         {/* 현재 위치 마커 띄우기 */}
         {!isLoading && (
           <MapMarker position={center}>
@@ -217,7 +217,7 @@ export default function MapView() {
             position={station.location}
             image={{
               src: BusStopIcon,
-              size: { width: 25, height: 25 },
+              size: { width: 30, height: 30 },
             }}
             title={station.title}
           />
@@ -233,7 +233,7 @@ export default function MapView() {
             title={`버스 번호: ${bus.busNumber}`}
             image={{
               src: BusIcon,
-              size: { width: 25, height: 25 },
+              size: { width: 30, height: 30 },
             }}
           >
             <div
