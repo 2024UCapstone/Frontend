@@ -88,7 +88,8 @@ export default function MapView() {
         }
 
         // Spring 웹소켓 서버 연결
-        websocket.current = new WebSocket("wss://devse.gonetis.com/bus-location");
+        // websocket.current = new WebSocket("wss://devse.gonetis.com/bus-location");
+        websocket.current = new WebSocket("http://localhost:3000/bus-location");
 
         websocket.current.onopen = () => {
             console.log("WebSocket Connected to Spring Server");
@@ -216,7 +217,7 @@ export default function MapView() {
             position={station.location}
             image={{
               src: BusStopIcon,
-              size: { width: 35, height: 35 },
+              size: { width: 25, height: 25 },
             }}
             title={station.title}
           />
@@ -232,7 +233,7 @@ export default function MapView() {
             title={`버스 번호: ${bus.busNumber}`}
             image={{
               src: BusIcon,
-              size: { width: 35, height: 35 },
+              size: { width: 25, height: 25 },
             }}
           >
             <div
