@@ -226,8 +226,8 @@ export default function MapView() {
                 >{`버스 번호: ${bus.busNumber}`}</div>
               </MapMarker>
             ))}
-          </Map>
-        </div>
-      )
+        </Map>
+      </div>
+    )
   );
 }

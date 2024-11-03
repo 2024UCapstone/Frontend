@@ -31,7 +31,7 @@ function BusRoutePage() {
   }, []);
 
   // 정류장 클릭 시 위치 정보 가져와서 모달 열기
-  const handleStationClick = async(station) => {
+  const handleStationClick = async (station) => {
     try {
       const response = await axios.get(
         `https://DevSe.gonetis.com/api/station?name=${station}`
