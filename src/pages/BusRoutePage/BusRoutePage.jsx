@@ -12,7 +12,7 @@ function BusRoutePage() {
     // 버스 정류장 목록 가져오기
     const fetchBusStations = async () => {
       try {
-        const response = await axios.get(`http://DevSe.gonetis.com:12599/api/bus/${busNumber}`);
+        const response = await axios.get(`https://DevSe.gonetis.com/api/bus/${busNumber}`);
         setStations(response.data.data?.stations || []); // 정류장 목록 저장
       } catch (error) {
         console.error("정류장 목록을 가져오는 중 오류 발생:", error);
