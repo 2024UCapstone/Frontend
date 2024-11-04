@@ -123,103 +123,103 @@ export default function MapView() {
     fetchStationLocations();
   }, []);
 
-  // /**
-  //  * WebSocket 연결 및 데이터 처리 - 버스 위치 파싱
-  //  */
-  // useEffect(() => {
-  //   let retryCount = 0;
-  //   const MAX_RETRIES = 5;
-  //   let retryTimeoutId;
+  /**
+   * WebSocket 연결 및 데이터 처리 - 버스 위치 파싱
+   */
+  useEffect(() => {
+    let retryCount = 0;
+    const MAX_RETRIES = 5;
+    let retryTimeoutId;
 
-  //   const connectWebSocket = () => {
-  //     // 최대 재시도 횟수 체크
-  //     if (retryCount >= MAX_RETRIES) {
-  //       console.log(`최대 재연결 시도 횟수(${MAX_RETRIES}회)를 초과했습니다.`);
-  //       return;
-  //     }
+    const connectWebSocket = () => {
+      // 최대 재시도 횟수 체크
+      if (retryCount >= MAX_RETRIES) {
+        console.log(`최대 재연결 시도 횟수(${MAX_RETRIES}회)를 초과했습니다.`);
+        return;
+      }
 
-  //     // Spring 웹소켓 서버 연결
-  //     websocket.current = new WebSocket("wss://devse.gonetis.com/bus-location");
-  //     // websocket.current = new WebSocket("http://localhost:3000/bus-location");
+      // Spring 웹소켓 서버 연결
+      websocket.current = new WebSocket("wss://devse.gonetis.com/bus-location");
+      // websocket.current = new WebSocket("http://localhost:3000/bus-location");
 
-  //     websocket.current.onopen = () => {
-  //       console.log("WebSocket Connected to Spring Server");
-  //       // 연결 성공시 재시도 카운트 초기화
-  //       retryCount = 0;
+      websocket.current.onopen = () => {
+        console.log("WebSocket Connected to Spring Server");
+        // 연결 성공시 재시도 카운트 초기화
+        retryCount = 0;
 
-  //       const subscribeMsg = {
-  //         type: "SUBSCRIBE",
-  //         destination: "/topic/bus-locations",
-  //       };
-  //       websocket.current.send(JSON.stringify(subscribeMsg));
-  //     };
+        const subscribeMsg = {
+          type: "SUBSCRIBE",
+          destination: "/topic/bus-locations",
+        };
+        websocket.current.send(JSON.stringify(subscribeMsg));
+      };
 
-  //     websocket.current.onmessage = (event) => {
-  //       try {
-  //         // CSV 데이터 파싱
-  //         const rows = event.data.split("\n");
-  //         const newBusPositions = rows
-  //           .filter((row) => row.trim())
-  //           .map((row) => {
-  //             const [busNumber, lat, lng] = row.split(",");
-  //             return {
-  //               busNumber: busNumber.trim(),
-  //               location: {
-  //                 coordinates: [parseFloat(lat), parseFloat(lng)],
-  //               },
-  //             };
-  //           })
-  //           .filter(
-  //             (pos) =>
-  //               !isNaN(pos.location.coordinates[0]) &&
-  //               !isNaN(pos.location.coordinates[1])
-  //           );
+      websocket.current.onmessage = (event) => {
+        try {
+          // CSV 데이터 파싱
+          const rows = event.data.split("\n");
+          const newBusPositions = rows
+            .filter((row) => row.trim())
+            .map((row) => {
+              const [busNumber, lat, lng] = row.split(",");
+              return {
+                busNumber: busNumber.trim(),
+                location: {
+                  coordinates: [parseFloat(lat), parseFloat(lng)],
+                },
+              };
+            })
+            .filter(
+              (pos) =>
+                !isNaN(pos.location.coordinates[0]) &&
+                !isNaN(pos.location.coordinates[1])
+            );
 
-  //         if (newBusPositions.length > 0) {
-  //           setBusPositions(newBusPositions);
-  //         }
-  //       } catch (error) {
-  //         console.error("Data parsing error:", error);
-  //       }
-  //     };
+          if (newBusPositions.length > 0) {
+            setBusPositions(newBusPositions);
+          }
+        } catch (error) {
+          console.error("Data parsing error:", error);
+        }
+      };
 
-  //     websocket.current.onerror = (error) => {
-  //       console.error("WebSocket Error:", error);
-  //       retryCount++;
-  //       console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
+      websocket.current.onerror = (error) => {
+        console.error("WebSocket Error:", error);
+        retryCount++;
+        console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
 
-  //       if (retryCount < MAX_RETRIES) {
-  //         retryTimeoutId = setTimeout(connectWebSocket, 3000);
-  //       } else {
-  //         console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
-  //       }
-  //     };
+        if (retryCount < MAX_RETRIES) {
+          retryTimeoutId = setTimeout(connectWebSocket, 3000);
+        } else {
+          console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
+        }
+      };
 
-  //     websocket.current.onclose = () => {
-  //       console.log("WebSocket Disconnected from Spring Server");
-  //       retryCount++;
-  //       console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
+      websocket.current.onclose = () => {
+        console.log("WebSocket Disconnected from Spring Server");
+        retryCount++;
+        console.log(`연결 재시도 중... (${retryCount}/${MAX_RETRIES})`);
 
-  //       if (retryCount < MAX_RETRIES) {
-  //         retryTimeoutId = setTimeout(connectWebSocket, 3000);
-  //       } else {
-  //         console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
-  //       }
-  //     };
-  //   };
+        if (retryCount < MAX_RETRIES) {
+          retryTimeoutId = setTimeout(connectWebSocket, 3000);
+        } else {
+          console.log("최대 재시도 횟수에 도달했습니다. 연결을 중단합니다.");
+        }
+      };
+    };
 
-  //   connectWebSocket();
+    connectWebSocket();
 
-  //   // 클린업 함수
-  //   return () => {
-  //     if (retryTimeoutId) {
-  //       clearTimeout(retryTimeoutId);
-  //     }
-  //     if (websocket.current) {
-  //       websocket.current.close();
-  //     }
-  //   };
-  // }, []);
+    // 클린업 함수
+    return () => {
+      if (retryTimeoutId) {
+        clearTimeout(retryTimeoutId);
+      }
+      if (websocket.current) {
+        websocket.current.close();
+      }
+    };
+  }, []);
 
   const fetchBusLocations = async () => {
     try {
