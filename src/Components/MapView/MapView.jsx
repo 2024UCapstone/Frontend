@@ -18,8 +18,6 @@ export default function MapView() {
   const { center, isLoading } = useMap();
   const { setCenter, setErrMsg, setIsLoading } = useMapActions();
   const location = useGeolocation();
-  const isInitialMountRef = useRef(true);
-  const ignoreNextCenterChange = useRef(false);
 
   const websocket = useRef(null);
 
@@ -48,7 +46,6 @@ export default function MapView() {
           lng: location.coordinates.lng,
         });
         if(!center.lat && !center.lng && !selectedStation){
-          ignoreNextCenterChange.current = true; // 초기 설정으로 인한 center 변경은 무시
           setCenter(location.coordinates.lat, location.coordinates.lng, "initial setting");
         } 
         setIsLoading(false);
@@ -62,22 +59,6 @@ export default function MapView() {
   const updateCenterWhenMapMoved = useMemo(
     () =>
     debounce((map) => {
-      // 초기 마운트 시의 center 변경은 무시
-      if (isInitialMountRef.current) {
-        isInitialMountRef.current = false;
-        return;
-      }
-
-      // 초기 위치 설정으로 인한 변경은 무시
-      if (ignoreNextCenterChange.current) {
-        ignoreNextCenterChange.current = false;
-        return;
-      }
-
-      // selectedStation이 있으면 center 업데이트 무시
-      if (selectedStation) {
-        return;
-      }
 
       const newLat = map.getCenter().getLat();
       const newLng = map.getCenter().getLng();
