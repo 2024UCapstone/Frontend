@@ -8,7 +8,6 @@ import useSelectedStationStore from "store/UseSelectedStationStore";
 
 function StationDetail() {
   const [busInfo, setBusInfo] = useState([]);
-  const { setCenter } = useMapActions();
   const { selectedStation, setSelectedStation } = useSelectedStationStore();
 
   const { data: busStationData, fetchData: busStationFetch, loading: stationLoading, error: stationError } = useFetchData(
@@ -83,7 +82,6 @@ function StationDetail() {
 
   useEffect(() => {
     if(selectedStation){
-        setCenter(selectedStation?.location.x, selectedStation?.location.y);
         busStationFetch();
     }
   
