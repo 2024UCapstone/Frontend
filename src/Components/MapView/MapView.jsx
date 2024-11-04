@@ -12,8 +12,8 @@ export default function MapView() {
   const { mapHeight } = useHeightState();
   const { updateMapHeight } = useHeightActions();
 
-  const { center, errMsg, isLoading } = useMap();
-  const { setCenter, setErrMsg, setIsLoading, resetMapState } = useMapActions();
+  const { center, isLoading } = useMap();
+  const { setCenter, setErrMsg, setIsLoading } = useMapActions();
 
   const location = useGeolocation();
   const websocket = useRef(null);
@@ -170,6 +170,25 @@ export default function MapView() {
     };
   }, []);
 
+  const fetchBusLocations = async () => {
+    try {
+      const response = await axios.get(`https://devse.gonetis.com/api/bus`);
+      console.log("busData", response.data.data)
+      // console.log("location", busData.location)
+      setBusPositions(response.data.data); // 여러 버스의 위치를 상태로 저장
+      response.data.data.map((bus) => {
+        console.log(bus.location.coordinates)
+      })
+    } catch (error) {
+      console.error("버스 위치를 불러오는 중 오류 발생:", error);
+    }
+  };
+
+  // 처음 1회 버스의 현재 위치 표기 설정
+  useEffect(() => {
+    fetchBusLocations()
+  }, [])
+
   useEffect(() => {
     console.log("Bus List:", busPositions); // 버스 리스트 확인용 로그 추가
   }, [busPositions]);
@@ -189,11 +208,7 @@ export default function MapView() {
           <Map className={styles.mapView} center={center} level={3}>
             {/* 현재 위치 마커 띄우기 */}
             {!isLoading && myLocation.lat && myLocation.lng && (
-              <MapMarker position={myLocation}>
-                <div style={{ padding: "5px", color: "#000" }}>
-                  {errMsg ? errMsg : "여기에 계신가요?!"}
-                </div>
-              </MapMarker>
+              <MapMarker position={myLocation}/>
             )}
             {/* 버스 정류장 마커 띄우기 */}
             {stationPositions.map((station, index) => (
