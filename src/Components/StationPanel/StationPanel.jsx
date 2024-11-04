@@ -26,6 +26,7 @@ export default function StationPanel({ openSearchStationModal, favoriteStations,
             {selectedStation !== null &&
               <button onClick={() => {
                 setSelectedStation(null);
+                resetMapState();
                 window.location.reload();
               }}>back</button>
             }
