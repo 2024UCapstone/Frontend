@@ -18,36 +18,29 @@ export default function MapView() {
   const { center, isLoading } = useMap();
   const { setCenter, setErrMsg, setIsLoading } = useMapActions();
   const location = useGeolocation();
-
   const websocket = useRef(null);
+  const centerInitialized = useRef(false);
 
-  const [stationPositions, setStationPositions] = useState([]); // 정류장 위치 상태
-  const [busPositions, setBusPositions] = useState([]); // 여러 버스 위치 상태
+  const [stationPositions, setStationPositions] = useState([]);
+  const [busPositions, setBusPositions] = useState([]);
   const [myLocation, setMyLocation] = useState({lat: null, lng: null});
-  const {selectedStation, setSelectedStation} = useSelectedStationStore();
-  
-  /**
-   * Map 사이즈 변동 관련 Effect
-   */
+  const {selectedStation} = useSelectedStationStore();
+
+  // Map 사이즈 변동 관련 Effect
   useEffect(() => {
     updateMapHeight();
     const handleResize = () => updateMapHeight();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [updateMapHeight]);
-  
-  /**
-   * 현재 위치 불러와 데이터 받기
-   */
+
+    // 현재 위치 설정 - 무조건 실행
     useEffect(() => {
       if (location.loaded && location.coordinates) {
         setMyLocation({
           lat: location.coordinates.lat,
           lng: location.coordinates.lng,
         });
-        if(!center.lat && !center.lng && !selectedStation){
-          setCenter(location.coordinates.lat, location.coordinates.lng, "initial setting");
-        } 
         setIsLoading(false);
       } else if (location.error) {
         setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
@@ -55,32 +48,66 @@ export default function MapView() {
       }
     }, [location, setErrMsg, setIsLoading]);
 
+  // 중심 좌표(center) 설정
+  useEffect(() => {
+    const initializeCenter = () => {
+      if (centerInitialized.current) return;
+      
+      setIsLoading(true);
+      try {
+        // selectedStation이 있는 경우 해당 위치로 center 설정
+        if (selectedStation?.location?.x && selectedStation?.location?.y) {
+          setCenter(selectedStation.location.x, selectedStation.location.y);
+          centerInitialized.current = true;
+        }
+        // selectedStation이 없고 현재 위치가 있는 경우 현재 위치로 center 설정
+        else if (myLocation.lat && myLocation.lng && !center.lat && !center.lng) {
+          setCenter(myLocation.lat, myLocation.lng);
+          centerInitialized.current = true;
+        }
+      } catch (error) {
+        console.error("Center initialization error:", error);
+        setErrMsg("중심 좌표 초기화 중 오류가 발생했습니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeCenter();
+  }, [myLocation, selectedStation, center, setCenter, setIsLoading, setErrMsg]);
+
+  // selectedStation이 변경될 때 center 업데이트
+  useEffect(() => {
+    if (selectedStation?.location?.x && selectedStation?.location?.y) {
+      setCenter(selectedStation.location.x, selectedStation.location.y);
+      centerInitialized.current = true;
+    }
+  }, [selectedStation, setCenter]);
+
   // 지도 중심좌표 이동 감지 시 이동된 중심좌표로 설정
   const updateCenterWhenMapMoved = useMemo(
     () =>
     debounce((map) => {
+      if (!centerInitialized.current) return;
 
       const newLat = map.getCenter().getLat();
       const newLng = map.getCenter().getLng();
       
-      // 현재 center와 새로운 좌표가 실제로 다른 경우에만 업데이트
       if (
         Math.abs(center.lat - newLat) > 0.0000001 || 
         Math.abs(center.lng - newLng) > 0.0000001
       ) {
-        setCenter(newLat, newLng, "updateCenterWhenMapMoved");
+        setCenter(newLat, newLng);
       }
     }, 500),
-    []
+    [center.lat, center.lng, setCenter]
   );
 
-  useEffect(()=>{
-    console.log("바뀜:", center);
-  }, [center])
-
-  // 지도의 중심을 유저의 현재 위치로 변경
+  // 현재 위치로 이동하는 버튼 핸들러
   const setCenterToMyPosition = () => {
-    setCenter(myLocation.lat, myLocation.lng, "IconSetting");
+    if (myLocation.lat && myLocation.lng) {
+      setCenter(myLocation.lat, myLocation.lng);
+    }
   };
 
   // 서버에서 모든 정류장 위치 불러오기
