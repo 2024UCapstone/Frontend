@@ -20,7 +20,7 @@ export default function MapView() {
 
   const [stationPositions, setStationPositions] = useState([]); // 정류장 위치 상태
   const [busPositions, setBusPositions] = useState([]); // 여러 버스 위치 상태
-  const [myLocation, setMyLocation] = useState({lat: null, lng: null});
+  const [myLocation, setMyLocation] = useState({ lat: null, lng: null });
   /**
    * Map 사이즈 변동 관련 Effect
    */
@@ -39,9 +39,10 @@ export default function MapView() {
       if (location.coordinates) {
         setMyLocation({
           lat: location.coordinates.lat,
-          lng: location.coordinates.lng
+          lng: location.coordinates.lng,
         });
-        if(center.lat == null && center.lng == null) setCenter(location.coordinates.lat, location.coordinates.lng);
+        if (center.lat == null && center.lng == null)
+          setCenter(location.coordinates.lat, location.coordinates.lng);
         setIsLoading(false);
       } else if (location.error) {
         setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
@@ -174,41 +175,51 @@ export default function MapView() {
     console.log("Bus List:", busPositions); // 버스 리스트 확인용 로그 추가
   }, [busPositions]);
 
-  return (
-    isLoading ?
-      // 로딩 페이지 스타일
-      <div style={{ height: `${mapHeight}px`, width: "100vw", display: "flex", padding: "3em", alignItems: "center", backgroundColor: "lightgrey" }}>
-        <LoadingPage />
-      </div>
-      :
-      (center.lng && center.lat) && (
-        <div
-          className={styles.mapViewContainer}
-          style={{ height: `${mapHeight}px` }}
-        >
-          <Map className={styles.mapView} center={center} level={3}>
-            {/* 현재 위치 마커 띄우기 */}
-            {!isLoading && myLocation.lat && myLocation.lng && (
-              <MapMarker position={myLocation}>
-                <div style={{ padding: "5px", color: "#000" }}>
-                  {errMsg ? errMsg : "여기에 계신가요?!"}
-                </div>
-              </MapMarker>
-            )}
-            {/* 버스 정류장 마커 띄우기 */}
-            {stationPositions.map((station, index) => (
-              <MapMarker
-                key={station.id}
-                position={station.location}
-                image={{
-                  src: BusStopIcon,
-                  size: { width: 30, height: 30 },
-                }}
-                title={station.title}
-              />
-            ))}
-            {/* 여러 버스 위치 마커 */}
-            {busPositions.length > 0 && busPositions.map((bus) => (
+  return isLoading ? (
+    // 로딩 페이지 스타일
+    <div
+      style={{
+        height: `${mapHeight}px`,
+        width: "100vw",
+        display: "flex",
+        padding: "3em",
+        alignItems: "center",
+        backgroundColor: "lightgrey",
+      }}
+    >
+      <LoadingPage />
+    </div>
+  ) : (
+    center.lng && center.lat && (
+      <div
+        className={styles.mapViewContainer}
+        style={{ height: `${mapHeight}px` }}
+      >
+        <Map className={styles.mapView} center={center} level={3}>
+          {/* 현재 위치 마커 띄우기 */}
+          {!isLoading && myLocation.lat && myLocation.lng && (
+            <MapMarker position={myLocation}></MapMarker>
+          )}
+          {/* 버스 정류장 마커 띄우기 */}
+          {stationPositions.map((station, index) => (
+            <MapMarker
+              key={station.id}
+              position={station.location}
+              image={{
+                src: BusStopIcon,
+                size: { width: 30, height: 30 },
+              }}
+              title={station.name}
+              onClick={() => {
+                console.log(station);
+                console.log(station.name);
+                console.log(station.location);
+              }}
+            ></MapMarker>
+          ))}
+          {/* 여러 버스 위치 마커 */}
+          {busPositions.length > 0 &&
+            busPositions.map((bus) => (
               <MapMarker
                 key={bus.busNumber}
                 position={{
