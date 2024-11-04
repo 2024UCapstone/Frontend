@@ -44,7 +44,7 @@ export default function MapView() {
       if (location.loaded && location.coordinates) {
         setMyLocation({
           lat: location.coordinates.lat,
-          lng: location.coordinates.lng
+          lng: location.coordinates.lng,
         });
         if(!center.lat && !center.lng && !selectedStation){
           ignoreNextCenterChange.current = true; // 초기 설정으로 인한 center 변경은 무시
