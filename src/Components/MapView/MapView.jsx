@@ -89,7 +89,7 @@ export default function MapView() {
         setCenter(newLat, newLng, "updateCenterWhenMapMoved");
       }
     }, 500),
-    [center, selectedStation]
+    []
   );
 
   useEffect(()=>{
@@ -161,7 +161,7 @@ export default function MapView() {
           const newBusPositions = rows
             .filter((row) => row.trim())
             .map((row) => {
-              const [busNumber, lat, lng] = row.split(",");
+              const [busNumber, lat, lng, seats] = row.split(",");
               return {
                 busNumber: busNumber.trim(),
                 location: {
