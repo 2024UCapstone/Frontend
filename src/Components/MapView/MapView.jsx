@@ -27,6 +27,7 @@ export default function MapView() {
   const [busPositions, setBusPositions] = useState([]); // 여러 버스 위치 상태
   const [myLocation, setMyLocation] = useState({lat: null, lng: null});
   const {selectedStation, setSelectedStation} = useSelectedStationStore();
+  
   /**
    * Map 사이즈 변동 관련 Effect
    */
