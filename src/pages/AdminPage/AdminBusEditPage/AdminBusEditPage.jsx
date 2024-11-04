@@ -117,12 +117,20 @@ function AdminBusEditPage() {
       console.log("Sending stationNames:", stationNames); // 리스트 형태 확인용
       console.log("busNumberInput", busNumberInput);
       console.log("ID", busDetails.id);
-      await axios.put(`https://devse.gonetis.com/api/bus`, {
-        id: busDetails.id,
-        busNumber: busNumberInput,
-        totalSeats: Number(totalSeats), // 좌석 수 전송
-        stationsNames: stations.map((station) => station.name), // 정류장 이름 배열 전송
-      });
+      await axios.put(
+        `https://devse.gonetis.com/api/bus`,
+        JSON.stringify({
+          id: busDetails.id,
+          busNumber: busNumberInput,
+          totalSeats: Number(totalSeats), // 좌석 수 전송
+          stationNames: stations.map((station) => station.name), // 정류장 이름 배열 전송
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       alert("버스가 성공적으로 수정되었습니다.");
       navigate(-1);
     } catch (error) {
