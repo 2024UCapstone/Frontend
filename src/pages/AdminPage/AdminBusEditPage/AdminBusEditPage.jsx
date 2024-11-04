@@ -115,7 +115,10 @@ function AdminBusEditPage() {
       // 전송 데이터 확인용 콘솔 출력
       const stationNames = stations.map((station) => station.name);
       console.log("Sending stationNames:", stationNames); // 리스트 형태 확인용
+      console.log("busNumberInput", busNumberInput);
+      console.log("ID", busDetails.id);
       await axios.put(`https://devse.gonetis.com/api/bus`, {
+        id: busDetails.id,
         busNumber: busNumberInput,
         totalSeats: Number(totalSeats), // 좌석 수 전송
         stationsNames: stations.map((station) => station.name), // 정류장 이름 배열 전송
