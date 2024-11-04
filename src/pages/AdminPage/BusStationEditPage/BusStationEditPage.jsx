@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import styles from "./BusStationEditPage.module.css";
 import { Map, MapMarker } from "react-kakao-maps-sdk"; // 카카오맵 SDK
-import useStore from 'store/UseStore'; // Zustand 스토어 불러오기
+import useStore from "store/UseStore"; // Zustand 스토어 불러오기
 import Footer from "components/Footer/Footer";
 
 function BusStationEditPage() {
@@ -14,7 +14,7 @@ function BusStationEditPage() {
   const setErrorMessage = useStore((state) => state.setErrorMessage); // 에러 메시지 상태
   const busStations = useStore((state) => state.busStations); // 전체 정류장 목록
   const [station, setStation] = useState(null); // 특정 정류장 상태
-  const [stationName, setStationName] = useState(''); // 정류장 이름 상태
+  const [stationName, setStationName] = useState(""); // 정류장 이름 상태
   const [locationData, setLocationData] = useState(null); // 위치 데이터 상태
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function BusStationEditPage() {
     if (foundStation) {
       setStation(foundStation);
       setStationName(foundStation.name);
-      console.log("foundStation", foundStation)
+      console.log("foundStation", foundStation);
       if (foundStation.location) {
         setLocationData({
           lat: foundStation.location.coordinates[0], // y 좌표 (위도)
@@ -31,27 +31,36 @@ function BusStationEditPage() {
         });
       }
     } else {
-      setErrorMessage('정류장을 찾을 수 없습니다.');
+      setErrorMessage("정류장을 찾을 수 없습니다.");
     }
   }, [busStations, setErrorMessage]);
 
   // 저장 버튼 클릭 시 처리
   const handleSave = async () => {
-    console.log("locationData",locationData)
-    console.log("stationId",stationId)
-    console.log("stationName",stationName)
+    console.log("id", stations.id);
+    console.log("locationData", locationData);
+    console.log("stationId", stationId);
+    console.log("stationName", stationName);
     try {
       // API 요청 경로를 명세서에 맞게 설정 (stationId 제외)
-      await axios.put(`https://DevSe.gonetis.com/api/station/${stationId}`, {
-        name: stationName,
-        longitude: locationData.lng,
-        latitude: locationData.lat
-      });
-      alert('정류장 정보가 성공적으로 수정되었습니다.');
-      navigate('/admin/bus-station');
+      await axios.put(
+        `https://DevSe.gonetis.com/api/station/${stationId}`,
+        {
+          name: stationName,
+          longitude: locationData.lng,
+          latitude: locationData.lat,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      alert("정류장 정보가 성공적으로 수정되었습니다.");
+      navigate("/admin/bus-station");
     } catch (error) {
-      console.error('정류장 정보를 수정하는 중 오류 발생:', error);
-      setErrorMessage('정류장 정보를 수정하는 중 오류가 발생했습니다.');
+      console.error("정류장 정보를 수정하는 중 오류 발생:", error);
+      setErrorMessage("정류장 정보를 수정하는 중 오류가 발생했습니다.");
     }
   };
 
@@ -59,7 +68,7 @@ function BusStationEditPage() {
   const handleCancel = () => {
     navigate(-1); // 사용자가 원래 있던 페이지로 돌아가기
   };
-  
+
   // 조건부 렌더링: locationData가 없으면 로딩 메시지를 출력
   if (!locationData) {
     return <div>위치 정보를 불러오는 중입니다...</div>;
@@ -83,7 +92,9 @@ function BusStationEditPage() {
         }}
       >
         {/* 마커 표시 */}
-        <MapMarker position={{ lat: locationData.lat, lng: locationData.lng }} />
+        <MapMarker
+          position={{ lat: locationData.lat, lng: locationData.lng }}
+        />
       </Map>
       <input
         className={styles.input}
@@ -94,8 +105,12 @@ function BusStationEditPage() {
       />
       {/* 저장 및 취소 버튼 */}
       <div className={styles.buttonContainer}>
-        <button onClick={handleSave} className={styles.saveButton}>저장</button>
-        <button onClick={handleCancel} className={styles.cancelButton}>취소</button>
+        <button onClick={handleSave} className={styles.saveButton}>
+          저장
+        </button>
+        <button onClick={handleCancel} className={styles.cancelButton}>
+          취소
+        </button>
       </div>
       <Footer />
     </div>
