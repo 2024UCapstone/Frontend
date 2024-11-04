@@ -25,7 +25,7 @@
 /* 정류장 목록 스타일 */
 .stationList {
   border-radius: 1rem;
-  border: solid 1px #000;
+  /* border: solid 1px #000; */
   height: 35rem;
   width: 34rem;
   overflow-y: auto;
