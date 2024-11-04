@@ -27,7 +27,7 @@ export default function StationList({
             }`}
             onClick={() => {
               onStationSelect(station);
-              setCenter(station.location.x, station.location.y);
+              setCenter(station.location.x, station.location.y, "StationList favoriteClick");
             }}
           >
             {station.name}
