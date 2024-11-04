@@ -83,12 +83,8 @@ function StationDetail() {
 
   useEffect(() => {
     if(selectedStation){
-      const fetchAndSetCenter = () => {
         setCenter(selectedStation?.location.x, selectedStation?.location.y);
         busStationFetch();
-      };
-      // 초기 fetch 및 센터 설정
-      fetchAndSetCenter();
     }
   
   }, [selectedStation]);

@@ -37,8 +37,6 @@ function BusRoutePage() {
         `https://DevSe.gonetis.com/api/station?name=${station}`
       );
       const stationData = response.data.data;
-      console.log(stationData);
-
       // Zustand 스토어에 저장
       setSelectedStation(...stationData);
       navigate("/home");
