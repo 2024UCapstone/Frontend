@@ -27,6 +27,7 @@ export default function MapView() {
   const [busPositions, setBusPositions] = useState([]); // 여러 버스 위치 상태
   const [myLocation, setMyLocation] = useState({lat: null, lng: null});
   const {selectedStation, setSelectedStation} = useSelectedStationStore();
+  
   /**
    * Map 사이즈 변동 관련 Effect
    */
@@ -44,7 +45,7 @@ export default function MapView() {
       if (location.loaded && location.coordinates) {
         setMyLocation({
           lat: location.coordinates.lat,
-          lng: location.coordinates.lng
+          lng: location.coordinates.lng,
         });
         if(!center.lat && !center.lng && !selectedStation){
           ignoreNextCenterChange.current = true; // 초기 설정으로 인한 center 변경은 무시
