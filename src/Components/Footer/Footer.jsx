@@ -1,6 +1,6 @@
 import styles from "./Footer.module.css";
 import { useNavigate } from "react-router-dom";
-import { HamburgerIcon, HomeIcon, BusStopIcon } from "assets/images";
+import { HamburgerIcon, HomeIcon, BusStopIcon, AdminIcon } from "assets/images";
 import { useModalActions, useModalState } from "store/UseModalStore";
 import { useHeightState } from "store/UseHeightStore";
 import axios from "axios";
@@ -50,7 +50,7 @@ const Footer = () => {
       {/* userInfo가 로드되고, role이 ADMIN인 경우에만 관리자 페이지 버튼을 보여줌 */}
       {userInfo && userInfo.role === "ADMIN" && (
         <button onClick={() => navigate("/admin")}>
-          <img src={BusStopIcon} alt="관리자" />
+          <img src={AdminIcon} alt="관리자" />
           <p>관리자 페이지</p>
         </button>
       )}
