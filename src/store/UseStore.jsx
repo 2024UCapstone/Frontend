@@ -1,12 +1,14 @@
-import create from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 const useStore = create(
   persist(
     (set, get) => ({
-      // 사용자 정보
+      // 사용자 정보 (role 포함)
       user: null,
       setUser: (user) => set({ user }),
+      // 역할 확인 함수
+      isAdmin: () => get().user?.role === "ADMIN",
 
       // 즐겨찾기 정류장
       favoriteStops: [],
@@ -29,7 +31,7 @@ const useStore = create(
       setSearchModalOpen: (isOpen) => set({ isSearchModalOpen: isOpen }),
     }),
     {
-      name: 'bus-app-storage', // localStorage 키
+      name: "bus-app-storage", // localStorage 키
       getStorage: () => localStorage, // localStorage 사용
     }
   )
