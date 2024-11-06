@@ -100,7 +100,10 @@ const DraggablePanel = ({ children }) => {
         bottom: `${footerHeight}px`,
       }}
     >
-      <div ref={handleRef} className={styles.draggableHandler}>
+
+
+      <div className={styles.draggableHandler}>
+        <div ref={handleRef} className={styles.draggableHandlerWrapper}></div>
         <div className={styles.draggableIcon}></div>
       </div>
       <div className={styles.draggablePanelContent}>
