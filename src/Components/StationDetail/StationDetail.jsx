@@ -5,10 +5,12 @@ import LoadingPage from "pages/LoadingPage/LoadingPage";
 import { useMapActions } from "store/UseMapStore";
 import axios from "axios";
 import useSelectedStationStore from "store/UseSelectedStationStore";
+import { useNavigate } from "react-router";
 
 function StationDetail() {
   const [busInfo, setBusInfo] = useState([]);
   const { selectedStation } = useSelectedStationStore();
+  const navigate = useNavigate();
   
   const { data: busStationData, fetchData: busStationFetch, loading: stationLoading, error: stationError } = useFetchData(
     `https://DevSe.gonetis.com/api/bus/stations/${selectedStation?.id}`
@@ -157,7 +159,7 @@ function StationDetail() {
             {busInfo && busInfo.length > 0 ? (
               busInfo.map((bus, idx) => (
                 <div key={idx} className={styles["bus-item"]}>
-                  <span className={styles["bus-id"]}>{bus.busNumber}</span>
+                  <span className={styles["bus-id"]} onClick={()=> navigate(`/bus-list/${bus.busNumber}`)}>{bus.busNumber}</span>
                   <span className={styles["bus-status"]}>{bus.durationMessage}</span>
                   <div className={styles["seats-info"]}>
                     <div className={styles["progress-bar-container"]}>
