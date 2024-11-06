@@ -23,7 +23,7 @@ export default function MapView() {
   const [stationPositions, setStationPositions] = useState([]);
   const [busPositions, setBusPositions] = useState([]);
   const [myLocation, setMyLocation] = useState({ lat: null, lng: null });
-  const { selectedStation, resetSelectedStation } = useSelectedStationStore();
+  const { selectedStation, setSelectedStation, resetSelectedStation } = useSelectedStationStore();
 
   // 초기화 상태를 관리하는 상태들
   const [isLocationInitialized, setIsLocationInitialized] = useState(false);
@@ -158,14 +158,7 @@ export default function MapView() {
   const fetchStationLocations = async () => {
     try {
       const response = await axios.get(`https://devse.gonetis.com/api/station`);
-      const stationData = response.data.data.map((station) => ({
-        id: station.id,
-        name: station.name,
-        location: {
-          lat: station.location.x,
-          lng: station.location.y,
-        },
-      }));
+      const stationData = response.data.data;
       setStationPositions(stationData);
       setIsStationInitialized(true);
     } catch (error) {
@@ -191,9 +184,7 @@ export default function MapView() {
     }
   };
 
-  useEffect(() => {
-    console.log(busPositions);
-  }, [busPositions])
+
   // 초기 버스 위치 로드
   useEffect(() => {
     fetchBusLocations();
@@ -338,15 +329,16 @@ export default function MapView() {
         {myLocation.lat && myLocation.lng && <MapMarker position={myLocation} />}
 
         {/* 버스 정류장 마커 */}
-        {stationPositions.map((station) => (
+        {stationPositions.length > 0 && stationPositions.map((station) => (
           <MapMarker
             key={station.id}
-            position={station.location}
+            position={{lat:station.location.x, lng:station.location.y}}
             image={{
               src: BusStopIcon,
               size: { width: 30, height: 30 },
             }}
             title={station.name}
+            onClick={()=> setSelectedStation(station)}
           />
         ))}
 
