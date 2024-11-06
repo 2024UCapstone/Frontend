@@ -101,7 +101,6 @@ h2 {
 .cancelButton:active {
     background-color: var(--main-red-bright-more);
 }
-
 /* 모달 스타일 */
 .modalOverlay {
     background-color: rgba(0, 0, 0, 0.5);
