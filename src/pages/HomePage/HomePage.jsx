@@ -10,13 +10,13 @@ import useFetchData from "hooks/useFetchData";
 import usePostData from "hooks/usePostData";
 import useDeleteData from "hooks/useDeleteData";
 import LoadingPage from "pages/LoadingPage/LoadingPage";
-import useSelectedStationStore from "store/UseSelectedStationStore";
+import { useMap, useMapActions } from "store/UseMapStore";
 
 function HomePage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSearchStationModalOpen, setIsSearchStationModalOpen] =
-    useState(false);
+  const [isSearchStationModalOpen, setIsSearchStationModalOpen] = useState(false);
+
   const {
     data: myStationData,
     load: myStationLoad,
@@ -29,8 +29,6 @@ function HomePage() {
   const { deleteData: stationDel } = useDeleteData(
     "https://devse.gonetis.com/api/user/my-station"
   );
-  // const [selectedStation, setSelectedStation] = useState(null);
-  const { selectedStation, setSelectedStation } = useSelectedStationStore();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);

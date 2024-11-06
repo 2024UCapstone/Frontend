@@ -5,10 +5,8 @@ import useSelectedStationStore from "store/UseSelectedStationStore";
 
 export default function StationList({
   favoriteStations,
-  onStationSelect,
   toggleFavorite,
 }) {
-  const { setCenter } = useMapActions();
   const { selectedStation, setSelectedStation } = useSelectedStationStore();
 
   return (
@@ -26,8 +24,7 @@ export default function StationList({
               selectedStation?.id === station.id ? styles.selected : ""
             }`}
             onClick={() => {
-              onStationSelect(station);
-              setCenter(station.location.x, station.location.y, "StationList favoriteClick");
+              setSelectedStation(station);
             }}
           >
             {station.name}
