@@ -8,8 +8,8 @@ import useSelectedStationStore from "store/UseSelectedStationStore";
 
 function StationDetail() {
   const [busInfo, setBusInfo] = useState([]);
-  const { selectedStation, setSelectedStation } = useSelectedStationStore();
-
+  const { selectedStation } = useSelectedStationStore();
+  
   const { data: busStationData, fetchData: busStationFetch, loading: stationLoading, error: stationError } = useFetchData(
     `https://DevSe.gonetis.com/api/bus/stations/${selectedStation?.id}`
   );

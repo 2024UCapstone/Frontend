@@ -14,33 +14,42 @@ const useGeolocation = () => {
         loaded: true,
         error: {
           code: 0,
-          message: "Geolocation not supported",
+          message: "Geolocation not supported"
         }
       }));
-    } else {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            loaded: true,
-            coordinates: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-            error: null
-          });
-        },
-        (error) => {
-          setLocation({
-            loaded: true,
-            coordinates: null,
-            error: {
-              code: error.code,
-              message: error.message,
-            }
-          });
-        }
-      );
+      return;
     }
+
+    // Success handler for both getCurrentPosition and watchPosition
+    const handleSuccess = (position) => {
+      setLocation({
+        loaded: true,
+        coordinates: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        },
+        error: null
+      });
+    };
+
+    // Error handler for both getCurrentPosition and watchPosition
+    const handleError = (error) => {
+      setLocation({
+        loaded: true,
+        coordinates: null,
+        error: {
+          code: error.code,
+          message: error.message,
+        }
+      });
+    };
+
+    navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
+    const watchId = navigator.geolocation.watchPosition(handleSuccess, handleError);
+
+    return () => {
+      navigator.geolocation.clearWatch(watchId);
+    };
   }, []);
 
   return location;

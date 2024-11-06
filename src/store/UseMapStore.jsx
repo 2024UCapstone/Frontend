@@ -1,7 +1,5 @@
 import { create } from "zustand";
 
-
-// 그리고 useMapStore를 정의합니다
 const useMapStore = create(set => ({
   center: {
     lat: null,

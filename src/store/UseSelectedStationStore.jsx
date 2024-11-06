@@ -6,6 +6,10 @@ const useSelectedStationStore = create(set => ({
     set({
       selectedStation: station,
     }),
+  resetSelectedStation: () => 
+    set({
+      selectedStation: null
+    })
 }));
 
 export default useSelectedStationStore;
