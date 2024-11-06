@@ -29,17 +29,21 @@ h2 {
     margin-bottom: 2vh;
     border: 1px solid #ccc;
     border-radius: 0.5rem;
+    font-size: 1.3rem;
 }
 
 .stationItem {
     padding: 1rem;
     border-bottom: 1px solid #eee;
-    background-color: #f0f0f0; /* 배경색을 회색으로 변경 */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    margin-bottom: 1vh;
+    cursor: grab;
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1.3rem;
-    position: relative; /* 위치 고정을 위해 position 추가 */
 }
 
 .addStationButton {
