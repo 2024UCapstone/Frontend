@@ -34,17 +34,19 @@ h2 {
 .stationItem {
     padding: 1rem;
     border-bottom: 1px solid #eee;
-    background-color: #f9f9f9;
+    background-color: #f0f0f0; /* 배경색을 회색으로 변경 */
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1.3rem;
+    position: relative; /* 위치 고정을 위해 position 추가 */
 }
 
 .addStationButton {
-    font-size: 2rem;
-    padding: 1rem;
-    background-color: #007bff;
+    font-size: 4rem;
+    /* padding: 1rem; */
+    /* background-color: #007bff; */
+    background-color: var(--main-green-dark);
     border: none;
     border-radius: 50%;
     height: 5rem;
@@ -75,9 +77,25 @@ h2 {
     color: white;
 }
 
+.saveButton:hover {
+    background-color: var(--main-green-bright);
+}
+
+.saveButton:active {
+    background-color: var(--main-green-bright-more);
+}
+
 .cancelButton {
     background-color: #dc3545;
     color: white;
+}
+
+.cancelButton:hover {
+    background-color: var(--main-red-bright);
+}
+
+.cancelButton:active {
+    background-color: var(--main-red-bright-more);
 }
 
 /* 모달 스타일 */
@@ -137,6 +155,18 @@ h2 {
     text-align: center;
 }
 
+.editButton {
+    position: absolute;
+    right: 6rem; /* 삭제 버튼 왼쪽에 고정된 위치 지정 */
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    background-color: #6c757d; /* 수정 버튼의 배경색을 회색으로 변경 */
+    color: white;
+}
+
 .deleteButton {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
@@ -145,4 +175,10 @@ h2 {
     cursor: pointer;
     background-color: #dc3545;
     color: white;
-}
+    position: absolute;
+    right: 1rem; /* 삭제 버튼을 정렬하기 위해 위치 지정 */
+} 
+
+.stationItemName {
+    margin-right: 7rem; /* 이름과 버튼 간격 확보를 위해 여백 추가 */
+} 
