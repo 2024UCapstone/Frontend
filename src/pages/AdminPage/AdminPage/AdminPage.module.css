@@ -1,0 +1,46 @@
+.AdminPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #f0f0f0;
+}
+
+.header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.busStopButton, .busButton {
+    background-color: #5a5c8a; /* 배경색을 어두운 파란색으로 변경하여 흰색 글자가 잘 보이도록 수정 */
+    border-radius: 20px;
+    width: 150px;
+    height: 150px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #f0f0f0; /* 글자색을 밝은 회색으로 변경하여 대비를 강화 */
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.busStopButton:hover, .busButton:hover {
+    transform: scale(1.1);
+    background-color: #4a4b6e; /* 배경색을 조금 더 진하게 하여 호버 시 시각적 차이를 제공 */
+}
+
+.buttonIcon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    object-fit: contain;
+    max-width: 100%;
+}
