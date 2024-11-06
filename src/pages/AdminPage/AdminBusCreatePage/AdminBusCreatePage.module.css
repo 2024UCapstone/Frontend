@@ -17,11 +17,8 @@
 }
 
 .stationList {
-    width: 100%;
-    /* width: 80vw; */
-    max-width: 80vw;
-    /* max-width: 600px; */
-    min-height: 20vh;
+    width: 80vw;
+    max-width: 600px;
     height: 40vh;
     overflow-y: auto;
     margin-bottom: 2vh;
@@ -34,17 +31,26 @@
     padding: 1rem;
     border-bottom: 1px solid #eee;
     background-color: #f9f9f9;
-    /*  */
     border: 1px solid #ddd;
     margin-bottom: 1vh;
     cursor: grab;
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+}
+
+.stationActions {
+    display: flex;
+    gap: 1rem;
+    position: absolute;
+    right: 1rem;
 }
 
 .addStationButton {
-    font-size: 2rem;
-    padding: 1rem;
-    background-color: #007bff;
+    font-size: 4rem;
+    background-color: var(--main-green-dark);
     border: none;
     border-radius: 50%;
     height: 5rem;
@@ -71,7 +77,7 @@
 }
 
 .saveButton {
-    background-color: var(--main-green);
+    background-color: #28a745;
     color: white;
 }
 
@@ -84,7 +90,7 @@
 }
 
 .cancelButton {
-    background-color: var(--main-red);
+    background-color: #dc3545;
     color: white;
 }
 
@@ -153,37 +159,42 @@
     text-align: center;
 }
 
-.editButton, .deleteButton {
+.editButton {
+    background-color: #6c757d;
+    color: white;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     font-size: 1rem;
     border: none;
     cursor: pointer;
-    margin-left: 1rem;
-}
-
-.editButton {
-    background-color: var(--main-green);
-    color: white;
 }
 
 .editButton:hover {
-    background-color: var(--main-green-bright)
+    background-color: #5a6268;
 }
 
 .editButton:active {
-    background-color: var(--main-green-bright-more);
+    background-color: #545b62;
 }
 
 .deleteButton {
     background-color: var(--main-red);
     color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
 }
 
 .deleteButton:hover {
-    background-color: var(--main-red-bright)
+    background-color: var(--main-red-bright);
 }
 
 .deleteButton:active {
     background-color: var(--main-red-bright-more);
+}
+
+.stationItemName {
+    margin-right: 7rem;
 }
