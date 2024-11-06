@@ -47,7 +47,7 @@ function BusRoutePage() {
 
   return (
     <div className={styles.BusRoutePage}>
-      <h3>울산과학대의 정류장 목록</h3>
+      <h3><span style={{color: 'lightblue'}}>{busNumber} 버스</span>의 정류장</h3>
       <ul className={styles.stationList}>
         {stationList.map((station, idx) => (
           <li
