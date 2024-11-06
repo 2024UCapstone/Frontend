@@ -13,20 +13,20 @@ function BusListPage() {
   useEffect(() => {
     const fetchBusList = async () => {
       try {
-        const response = await axios.get('https://DevSe.gonetis.com/api/bus');
+        const response = await axios.get("https://DevSe.gonetis.com/api/bus");
         setBusList(response.data); // 서버에서 받은 데이터를 상태에 저장
-        console.log("response.data", response.data)
+        console.log("response.data", response.data);
       } catch (error) {
-        console.error('버스 목록을 가져오는 중 오류 발생:', error);
+        console.error("버스 목록을 가져오는 중 오류 발생:", error);
       }
     };
     fetchBusList();
   }, []);
 
-  console.log("busList", busList)
+  console.log("busList", busList);
   // 버스 상세 페이지로 이동
   const goToBusDetail = (busNumber) => {
-    console.log(busNumber)
+    console.log(busNumber);
     navigate(`/bus-list/${busNumber}`);
   };
 
@@ -36,19 +36,21 @@ function BusListPage() {
       <h3>{"울산과학대의 버스 목록"}</h3>
       <ul>
         <div className={styles.busList}>
-        {busList.data && Array.isArray(busList.data) && busList.data.length > 0 ? (
-          busList.data.map((bus) => (
-            <li onClick={() => goToBusDetail(bus.busNumber)}>
-              <img src={BusIcon} alt="bus icon" />
-              <div key={bus.busNumber} className={styles.busItem}>
-                {bus.busNumber}
-              </div>
-            </li>
-          ))
-        ) : (
-          <p className={styles.noBuses}>등록된 버스가 없습니다.</p>
-        )}
-      </div>
+          {busList.data &&
+          Array.isArray(busList.data) &&
+          busList.data.length > 0 ? (
+            busList.data.map((bus) => (
+              <li onClick={() => goToBusDetail(bus.busNumber)}>
+                <img src={BusIcon} alt="bus icon" />
+                <div key={bus.busNumber} className={styles.busItem}>
+                  {bus.busNumber}
+                </div>
+              </li>
+            ))
+          ) : (
+            <p className={styles.noBuses}>등록된 버스가 없습니다.</p>
+          )}
+        </div>
       </ul>
       <Footer />
     </div>
