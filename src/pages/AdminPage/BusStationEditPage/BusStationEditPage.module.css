@@ -24,7 +24,7 @@
 
 /* 저장 버튼 */
 .saveButton {
-    background-color: #4CAF50; /* 녹색 */
+    background-color: var(--main-green); /* 녹색 */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -38,12 +38,12 @@
 
 /* 저장 버튼 hover 효과 */
 .saveButton:hover {
-    background-color: #45a049;
+    background-color: var(--main-green-bright);
 }
 
 /* 취소 버튼 */
 .cancelButton {
-    background-color: #f44336; /* 빨간색 */
+    background-color: var(--main-red); /* 빨간색 */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -56,5 +56,5 @@
 
 /* 취소 버튼 hover 효과 */
 .cancelButton:hover {
-    background-color: #d32f2f;
+    background-color: var(--main-red-bright);
 }
