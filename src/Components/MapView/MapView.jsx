@@ -55,7 +55,6 @@ export default function MapView() {
       setIsLocationInitialized(false);
       setIsStationInitialized(false);
       setIsBusInitialized(false);
-      setIsWebSocketInitialized(false);
     };
 
       // selectedStation이 변경될 때 초기화 상태를 리셋하고 재초기화 시작
@@ -78,10 +77,6 @@ export default function MapView() {
     // 버스 위치 재로드
     fetchBusLocations();
 
-    // WebSocket 재연결
-    if (websocket.current) {
-      websocket.current.close();
-    }
   }, [selectedStation]);
 
   // 초기화 상태에 따른 로딩 상태 관리
@@ -196,6 +191,9 @@ export default function MapView() {
     }
   };
 
+  useEffect(() => {
+    console.log(busPositions);
+  }, [busPositions])
   // 초기 버스 위치 로드
   useEffect(() => {
     fetchBusLocations();
@@ -238,7 +236,7 @@ export default function MapView() {
               return {
                 busNumber: busNumber.trim(),
                 location: {
-                  coordinates: [parseFloat(lat), parseFloat(lng)],
+                  coordinates: [parseFloat(lng), parseFloat(lat)],
                 },
               };
             })
@@ -281,7 +279,7 @@ export default function MapView() {
       if (retryTimeoutId) clearTimeout(retryTimeoutId);
       if (websocket.current) websocket.current.close();
     };
-  }, [selectedStation]);
+  }, []);
 
   const buttonStyle = {
     display: "flex",
