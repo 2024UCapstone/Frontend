@@ -39,6 +39,11 @@ function AdminBusStationCreatePage() {
     }
   };
 
+  // 취소 버튼 클릭 시 처리 (이전 페이지로 돌아가기)
+  const handleCancel = () => {
+    navigate(-1); // 사용자가 원래 있던 페이지로 돌아가기
+  };
+
   return (
     <div className={styles.AdminBusStationCreatePage}>
       <h1>정류장 등록</h1>
@@ -79,8 +84,16 @@ function AdminBusStationCreatePage() {
       />
       {errorMessage && <p className={styles.error}>{errorMessage}</p>}{" "}
       {/* 오류 메시지 표시 */}
-      <div className={styles.busStationPostButton} onClick={registerStation}>
-        등록
+      <div className={styles.buttonContainer}>
+        <button
+          className={styles.busStationPostButton}
+          onClick={registerStation}
+        >
+          등록
+        </button>
+        <button onClick={handleCancel} className={styles.cancelButton}>
+          취소
+        </button>
       </div>
       <Footer />
     </div>

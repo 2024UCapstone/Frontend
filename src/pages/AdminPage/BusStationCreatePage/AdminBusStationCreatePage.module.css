@@ -11,17 +11,54 @@
     margin-top: 20px;
 }
 
-.busStationPostButton {
+/* .busStationPostButton {
     text-align: center;
     width: calc(100% - 60%);
     background-color: aqua;
     border-radius: 16px;
     padding: 1rem 2rem;
     font-size: 1.2rem;
-    background-color: #4caf50;
+    background-color: var(--main-green);
     color: white;
     border: none;
     cursor: pointer;
+} */
+
+/* 저장 버튼 */
+.busStationPostButton {
+    background-color: var(--main-green); /* 녹색 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+    margin-right: 10px;
+}
+
+/* 저장 버튼 hover 효과 */
+.busStationPostButton:hover {
+    background-color: var(--main-green-bright);
+}
+
+/* 취소 버튼 */
+.cancelButton {
+    background-color: var(--main-red); /* 빨간색 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+}
+
+/* 취소 버튼 hover 효과 */
+.cancelButton:hover {
+    background-color: var(--main-red-bright);
 }
 
 .map {
