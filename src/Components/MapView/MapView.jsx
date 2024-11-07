@@ -30,6 +30,8 @@ export default function MapView() {
   const [isStationInitialized, setIsStationInitialized] = useState(false);
   const [isBusInitialized, setIsBusInitialized] = useState(false);
   const [isWebSocketInitialized, setIsWebSocketInitialized] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
 
   // 모든 초기화가 완료되었는지 확인
   const isFullyInitialized = useMemo(() => {
@@ -115,7 +117,8 @@ export default function MapView() {
     const initializeCenter = async () => {
       try {
         if (selectedStation?.location?.x && selectedStation?.location?.y) {
-          setCenter(selectedStation.location.x, selectedStation.location.y);
+          if(isDragging) alert("잠시 뒤에 정류장을 선택해주세요");
+          else setCenter(selectedStation.location.x, selectedStation.location.y);
         } else {
           setCenter(myLocation.lat, myLocation.lng);
         }
@@ -128,24 +131,26 @@ export default function MapView() {
     if (isLocationInitialized) {
       initializeCenter();
     }
-  }, [myLocation, selectedStation, isLocationInitialized]);
+  }, [myLocation, selectedStation, isLocationInitialized, isDragging]);
 
-  // 지도 중심좌표 이동 감지 시 이동된 중심좌표로 설정
   const updateCenterWhenMapMoved = useMemo(
     () =>
       debounce((map) => {
-        const newLat = map.getCenter().getLat();
-        const newLng = map.getCenter().getLng();
-
-        if (
-          Math.abs(center.lat - newLat) > 0.0000001 ||
-          Math.abs(center.lng - newLng) > 0.0000001
-        ) {
-          setCenter(newLat, newLng);
+        // 드래그 중일 때만 중심 좌표 업데이트
+        if (isDragging) {
+          const newLat = map.getCenter().getLat();
+          const newLng = map.getCenter().getLng();
+          if (
+            Math.abs(center.lat - newLat) > 0.0000001 ||
+            Math.abs(center.lng - newLng) > 0.0000001
+          ) {
+            setCenter(newLat, newLng);
+          }
         }
       }, 500),
-    [center.lat, center.lng, setCenter]
+    [center.lat, center.lng, setCenter, isDragging]
   );
+  
 
   // 현재 위치로 이동하는 버튼 핸들러
   const setCenterToMyPosition = () => {
@@ -321,6 +326,8 @@ export default function MapView() {
     <div className={styles.mapViewContainer} style={{ height: `${mapHeight}px` }}>
       <Map
         onCenterChanged={updateCenterWhenMapMoved}
+        onDragStart={() => setIsDragging(true)}
+        onDragEnd={() => setIsDragging(false)}
         className={styles.mapView}
         center={memoizedCenter}
         level={3}
