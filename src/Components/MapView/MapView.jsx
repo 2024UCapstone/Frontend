@@ -28,7 +28,6 @@ export default function MapView() {
   // 초기화 상태를 관리하는 상태들
   const [isLocationInitialized, setIsLocationInitialized] = useState(false);
   const [isStationInitialized, setIsStationInitialized] = useState(false);
-  const [isBusInitialized, setIsBusInitialized] = useState(false);
   const [isWebSocketInitialized, setIsWebSocketInitialized] = useState(false);
 
 
@@ -37,7 +36,6 @@ export default function MapView() {
     return (
       isLocationInitialized &&
       isStationInitialized &&
-      isBusInitialized &&
       isWebSocketInitialized &&
       center.lat &&
       center.lng
@@ -45,7 +43,6 @@ export default function MapView() {
   }, [
     isLocationInitialized,
     isStationInitialized,
-    isBusInitialized,
     isWebSocketInitialized,
     center.lat,
     center.lng,
@@ -55,7 +52,6 @@ export default function MapView() {
   const resetInitializationState = () => {
     setIsLocationInitialized(false);
     setIsStationInitialized(false);
-    setIsBusInitialized(false);
   };
 
   // selectedStation이 변경될 때 초기화 상태를 리셋하고 재초기화 시작
@@ -74,9 +70,6 @@ export default function MapView() {
 
     // 정류장 정보 재로드
     fetchStationLocations();
-
-    // 버스 위치 재로드
-    fetchBusLocations();
 
   }, [selectedStation]);
 
@@ -142,7 +135,7 @@ export default function MapView() {
         ) {
           setCenter(newLat, newLng);
         }
-      }, 1000),
+      }, 100),
     [center.lat, center.lng, setCenter]
   );
   
@@ -169,24 +162,6 @@ export default function MapView() {
   // 정류장 위치 초기화
   useEffect(() => {
     fetchStationLocations();
-  }, []);
-
-  // 버스 위치 초기화
-  const fetchBusLocations = async () => {
-    try {
-      const response = await axios.get(`https://devse.gonetis.com/api/bus`);
-      setBusPositions(response.data.data);
-      setIsBusInitialized(true);
-    } catch (error) {
-      console.error("버스 위치를 불러오는 중 오류 발생:", error);
-      setIsBusInitialized(true);
-    }
-  };
-
-
-  // 초기 버스 위치 로드
-  useEffect(() => {
-    fetchBusLocations();
   }, []);
 
   // WebSocket 연결 및 데이터 처리
