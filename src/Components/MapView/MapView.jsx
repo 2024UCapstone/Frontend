@@ -109,7 +109,7 @@ export default function MapView() {
       setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
       setIsLocationInitialized(true); // 에러가 나도 초기화는 완료된 것으로 처리
     }
-  }, [location]);
+  }, []);
 
   useEffect(() => {
     const initializeCenter = async () => {
