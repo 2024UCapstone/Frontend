@@ -65,6 +65,10 @@
     background-color: var(--main-red-bright);
 }
 
+.cancelButton:active {
+    background-color: var(--main-red-bright-more);
+}
+
 .map {
     width: 100vw;
     height: 60vh;
