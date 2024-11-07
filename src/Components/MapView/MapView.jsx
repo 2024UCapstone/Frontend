@@ -103,8 +103,8 @@ export default function MapView() {
     const initializeCenter = async () => {
       try {
         if (selectedStation?.location?.x && selectedStation?.location?.y) {
-          if(isDragging) alert("잠시 뒤에 정류장을 선택해주세요");
-          else setCenter(selectedStation.location.x, selectedStation.location.y);
+          if(!isDragging)
+            setCenter(selectedStation.location.x, selectedStation.location.y);
         } else {
           setCenter(myLocation.lat, myLocation.lng);
         }
