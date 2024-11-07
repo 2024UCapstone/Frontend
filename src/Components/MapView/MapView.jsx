@@ -112,7 +112,7 @@ export default function MapView() {
   }, []);
 
   useEffect(() => {
-    const initializeCenter = async () => {
+    const initializeCenter = () => {
       try {
         if (selectedStation?.location?.x && selectedStation?.location?.y) {
           setCenter(selectedStation.location.x, selectedStation.location.y);
