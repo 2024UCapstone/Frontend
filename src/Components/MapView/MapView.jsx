@@ -97,6 +97,20 @@ export default function MapView() {
     return () => window.removeEventListener("resize", handleResize);
   }, [updateMapHeight]);
 
+  // 현재 위치 설정
+  useEffect(() => {
+    if (location.loaded && location.coordinates) {
+      setMyLocation({
+        lat: location.coordinates.lat,
+        lng: location.coordinates.lng,
+      });
+      setIsLocationInitialized(true); // 에러가 나도 초기화는 완료된 것으로 처리
+    } else if (location.error) {
+      setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
+      setIsLocationInitialized(true); // 에러가 나도 초기화는 완료된 것으로 처리
+    }
+  }, [location]);
+
   useEffect(() => {
     const initializeCenter = async () => {
       try {
