@@ -50,18 +50,18 @@ export default function MapView() {
     center.lng,
   ]);
 
-  // 초기화 상태 리셋 함수
-  const resetInitializationState = () => {
-    setIsLocationInitialized(false);
-    setIsStationInitialized(false);
-    setIsBusInitialized(false);
-  };
+    // 초기화 상태 리셋 함수
+    const resetInitializationState = () => {
+      setIsLocationInitialized(false);
+      setIsStationInitialized(false);
+      setIsBusInitialized(false);
+    };
 
-  // selectedStation이 변경될 때 초기화 상태를 리셋하고 재초기화 시작
+      // selectedStation이 변경될 때 초기화 상태를 리셋하고 재초기화 시작
   useEffect(() => {
     resetInitializationState();
     setIsLoading(true);
-
+    
     // 위치 정보 재초기화
     if (location.loaded && location.coordinates) {
       setMyLocation({
@@ -96,21 +96,28 @@ export default function MapView() {
     return () => window.removeEventListener("resize", handleResize);
   }, [updateMapHeight]);
 
-  // 1. center 초기화 로직 수정
+  // 현재 위치 설정
+  useEffect(() => {
+    if (location.loaded && location.coordinates) {
+      setMyLocation({
+        lat: location.coordinates.lat,
+        lng: location.coordinates.lng,
+      });
+      setIsLocationInitialized(true); // 에러가 나도 초기화는 완료된 것으로 처리
+    } else if (location.error) {
+      setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
+      setIsLocationInitialized(true); // 에러가 나도 초기화는 완료된 것으로 처리
+    }
+  }, [location]);
+
+  // center 좌표 초기화
   useEffect(() => {
     const initializeCenter = async () => {
       try {
-        // 최초 한 번만 center 초기화
-        if (!center.lat || !center.lng) {
-          if (selectedStation?.location?.x && selectedStation?.location?.y) {
-            setCenter(selectedStation.location.x, selectedStation.location.y);
-          } else if (myLocation.lat && myLocation.lng) {
-            setCenter(myLocation.lat, myLocation.lng);
-          }
-        }
-        // selectedStation이 있을 때만 center 변경
-        else if (selectedStation?.location?.x && selectedStation?.location?.y) {
+        if (selectedStation?.location?.x && selectedStation?.location?.y) {
           setCenter(selectedStation.location.x, selectedStation.location.y);
+        } else {
+          setCenter(myLocation.lat, myLocation.lng);
         }
       } catch (error) {
         console.error("Center initialization error:", error);
@@ -121,44 +128,25 @@ export default function MapView() {
     if (isLocationInitialized) {
       initializeCenter();
     }
-  }, [selectedStation, isLocationInitialized]); // myLocation 의존성 제거
+  }, [myLocation, selectedStation, isLocationInitialized]);
 
-  // 2. 위치 업데이트 로직 분리
-  useEffect(() => {
-    if (location.loaded && location.coordinates) {
-      setMyLocation({
-        lat: location.coordinates.lat,
-        lng: location.coordinates.lng,
-      });
-      setIsLocationInitialized(true);
-
-      // 최초 위치 설정 시에만 center 설정
-      if (!center.lat || !center.lng) {
-        setCenter(location.coordinates.lat, location.coordinates.lng);
-      }
-    } else if (location.error) {
-      setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
-      setIsLocationInitialized(true);
-    }
-  }, [location, center.lat, center.lng]);
-
-  // 3. 지도 이동 감지 로직 개선
+  // 지도 중심좌표 이동 감지 시 이동된 중심좌표로 설정
   const updateCenterWhenMapMoved = useMemo(
     () =>
       debounce((map) => {
         const newLat = map.getCenter().getLat();
         const newLng = map.getCenter().getLng();
 
-        // 더 작은 변화는 무시 (민감도 조정)
         if (
-          Math.abs(center.lat - newLat) > 0.001 ||
-          Math.abs(center.lng - newLng) > 0.001
+          Math.abs(center.lat - newLat) > 0.0000001 ||
+          Math.abs(center.lng - newLng) > 0.0000001
         ) {
           setCenter(newLat, newLng);
         }
-      }, 1000), // debounce 시간 증가
+      }, 500),
     [center.lat, center.lng, setCenter]
   );
+
   // 현재 위치로 이동하는 버튼 핸들러
   const setCenterToMyPosition = () => {
     if (myLocation.lat && myLocation.lng) {
@@ -344,13 +332,13 @@ export default function MapView() {
         {stationPositions.length > 0 && stationPositions.map((station) => (
           <MapMarker
             key={station.id}
-            position={{ lat: station.location.x, lng: station.location.y }}
+            position={{lat:station.location.x, lng:station.location.y}}
             image={{
               src: BusStopIcon,
               size: { width: 30, height: 30 },
             }}
             title={station.name}
-            onClick={() => setSelectedStation(station)}
+            onClick={()=> setSelectedStation(station)}
           />
         ))}
 
