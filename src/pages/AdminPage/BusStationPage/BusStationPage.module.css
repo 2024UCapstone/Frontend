@@ -97,7 +97,7 @@ h2 {
 
 .registerButton {
     padding: 1.5rem;
-    background-color: #007bff;
+    background-color: var(--main-green);
     border: none;
     border-radius: 0.5rem;
     color: white;
@@ -105,6 +105,14 @@ h2 {
     width: 100%;
     max-width: 80vw;
     cursor: pointer;
+}
+
+.registerButton:hover {
+  background-color: var(--main-green-bright);
+}
+
+.registerButton:active {
+    background-color: var(--main-green-bright-more);
 }
 
 .noStations {
