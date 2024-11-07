@@ -52,18 +52,18 @@ export default function MapView() {
     center.lng,
   ]);
 
-    // 초기화 상태 리셋 함수
-    const resetInitializationState = () => {
-      setIsLocationInitialized(false);
-      setIsStationInitialized(false);
-      setIsBusInitialized(false);
-    };
+  // 초기화 상태 리셋 함수
+  const resetInitializationState = () => {
+    setIsLocationInitialized(false);
+    setIsStationInitialized(false);
+    setIsBusInitialized(false);
+  };
 
-      // selectedStation이 변경될 때 초기화 상태를 리셋하고 재초기화 시작
+  // selectedStation이 변경될 때 초기화 상태를 리셋하고 재초기화 시작
   useEffect(() => {
     resetInitializationState();
     setIsLoading(true);
-    
+
     // 위치 정보 재초기화
     if (location.loaded && location.coordinates) {
       setMyLocation({
@@ -98,21 +98,7 @@ export default function MapView() {
     return () => window.removeEventListener("resize", handleResize);
   }, [updateMapHeight]);
 
-  // 현재 위치 설정
-  useEffect(() => {
-    if (location.loaded && location.coordinates) {
-      setMyLocation({
-        lat: location.coordinates.lat,
-        lng: location.coordinates.lng,
-      });
-      setIsLocationInitialized(true); // 에러가 나도 초기화는 완료된 것으로 처리
-    } else if (location.error) {
-      setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
-      setIsLocationInitialized(true); // 에러가 나도 초기화는 완료된 것으로 처리
-    }
-  }, [location]);
-
-  // center 좌표 초기화
+  // 1. center 초기화 로직 수정
   useEffect(() => {
     const initializeCenter = async () => {
       try {
@@ -151,7 +137,6 @@ export default function MapView() {
     [center.lat, center.lng, setCenter, isDragging]
   );
   
-
   // 현재 위치로 이동하는 버튼 핸들러
   const setCenterToMyPosition = () => {
     if (myLocation.lat && myLocation.lng) {
@@ -339,13 +324,13 @@ export default function MapView() {
         {stationPositions.length > 0 && stationPositions.map((station) => (
           <MapMarker
             key={station.id}
-            position={{lat:station.location.x, lng:station.location.y}}
+            position={{ lat: station.location.x, lng: station.location.y }}
             image={{
               src: BusStopIcon,
               size: { width: 30, height: 30 },
             }}
             title={station.name}
-            onClick={()=> setSelectedStation(station)}
+            onClick={() => setSelectedStation(station)}
           />
         ))}
 
