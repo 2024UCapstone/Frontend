@@ -30,6 +30,8 @@ export default function MapView() {
   const [isStationInitialized, setIsStationInitialized] = useState(false);
   const [isBusInitialized, setIsBusInitialized] = useState(false);
   const [isWebSocketInitialized, setIsWebSocketInitialized] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
 
   // 모든 초기화가 완료되었는지 확인
   const isFullyInitialized = useMemo(() => {
@@ -100,17 +102,11 @@ export default function MapView() {
   useEffect(() => {
     const initializeCenter = async () => {
       try {
-        // 최초 한 번만 center 초기화
-        if (!center.lat || !center.lng) {
-          if (selectedStation?.location?.x && selectedStation?.location?.y) {
-            setCenter(selectedStation.location.x, selectedStation.location.y);
-          } else if (myLocation.lat && myLocation.lng) {
-            setCenter(myLocation.lat, myLocation.lng);
-          }
-        }
-        // selectedStation이 있을 때만 center 변경
-        else if (selectedStation?.location?.x && selectedStation?.location?.y) {
-          setCenter(selectedStation.location.x, selectedStation.location.y);
+        if (selectedStation?.location?.x && selectedStation?.location?.y) {
+          if(isDragging) alert("잠시 뒤에 정류장을 선택해주세요");
+          else setCenter(selectedStation.location.x, selectedStation.location.y);
+        } else {
+          setCenter(myLocation.lat, myLocation.lng);
         }
       } catch (error) {
         console.error("Center initialization error:", error);
@@ -121,44 +117,26 @@ export default function MapView() {
     if (isLocationInitialized) {
       initializeCenter();
     }
-  }, [selectedStation, isLocationInitialized]); // myLocation 의존성 제거
+  }, [myLocation, selectedStation, isLocationInitialized, isDragging]);
 
-  // 2. 위치 업데이트 로직 분리
-  useEffect(() => {
-    if (location.loaded && location.coordinates) {
-      setMyLocation({
-        lat: location.coordinates.lat,
-        lng: location.coordinates.lng,
-      });
-      setIsLocationInitialized(true);
-
-      // 최초 위치 설정 시에만 center 설정
-      if (!center.lat || !center.lng) {
-        setCenter(location.coordinates.lat, location.coordinates.lng);
-      }
-    } else if (location.error) {
-      setErrMsg(location.error.message || "위치 정보를 가져올 수 없습니다.");
-      setIsLocationInitialized(true);
-    }
-  }, [location, center.lat, center.lng]);
-
-  // 3. 지도 이동 감지 로직 개선
   const updateCenterWhenMapMoved = useMemo(
     () =>
       debounce((map) => {
-        const newLat = map.getCenter().getLat();
-        const newLng = map.getCenter().getLng();
-
-        // 더 작은 변화는 무시 (민감도 조정)
-        if (
-          Math.abs(center.lat - newLat) > 0.001 ||
-          Math.abs(center.lng - newLng) > 0.001
-        ) {
-          setCenter(newLat, newLng);
+        // 드래그 중일 때만 중심 좌표 업데이트
+        if (isDragging) {
+          const newLat = map.getCenter().getLat();
+          const newLng = map.getCenter().getLng();
+          if (
+            Math.abs(center.lat - newLat) > 0.0000001 ||
+            Math.abs(center.lng - newLng) > 0.0000001
+          ) {
+            setCenter(newLat, newLng);
+          }
         }
-      }, 1000), // debounce 시간 증가
-    [center.lat, center.lng, setCenter]
+      }, 500),
+    [center.lat, center.lng, setCenter, isDragging]
   );
+  
   // 현재 위치로 이동하는 버튼 핸들러
   const setCenterToMyPosition = () => {
     if (myLocation.lat && myLocation.lng) {
@@ -333,6 +311,8 @@ export default function MapView() {
     <div className={styles.mapViewContainer} style={{ height: `${mapHeight}px` }}>
       <Map
         onCenterChanged={updateCenterWhenMapMoved}
+        onDragStart={() => setIsDragging(true)}
+        onDragEnd={() => setIsDragging(false)}
         className={styles.mapView}
         center={memoizedCenter}
         level={3}
