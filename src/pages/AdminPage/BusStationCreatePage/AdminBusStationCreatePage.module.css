@@ -43,6 +43,10 @@
     background-color: var(--main-green-bright);
 }
 
+.busStationPostButton:active {
+    background-color: var(--main-green-bright-more);
+}
+
 /* 취소 버튼 */
 .cancelButton {
     background-color: var(--main-red); /* 빨간색 */
@@ -59,6 +63,10 @@
 /* 취소 버튼 hover 효과 */
 .cancelButton:hover {
     background-color: var(--main-red-bright);
+}
+
+.cancelButton:active {
+    background-color: var(--main-red-bright-more);
 }
 
 .map {
