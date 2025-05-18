@@ -10,7 +10,6 @@ import useFetchData from "hooks/useFetchData";
 import usePostData from "hooks/usePostData";
 import useDeleteData from "hooks/useDeleteData";
 import LoadingPage from "pages/LoadingPage/LoadingPage";
-import { useMap, useMapActions } from "store/UseMapStore";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -73,7 +72,7 @@ function HomePage() {
         <MapView />
       </div>
       <StationPanel
-        openSearchStationModal={() => setIsSearchStationModalOpen(true)}
+        openSearchStationModal={()=>setIsSearchStationModalOpen(true)}
         favoriteStations={myStationData.data}
         toggleFavorite={toggleFavorite}
       />
