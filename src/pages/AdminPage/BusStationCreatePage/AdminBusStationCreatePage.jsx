@@ -22,8 +22,8 @@ function AdminBusStationCreatePage() {
     }
 
     try {
-      const response = await axios.post(
-        "https://DevSe.gonetis.com/api/station",
+      await axios.post(
+        "http://devse.kr:12599/api/station",
         {
           name: busStationName,
           longitude: data.position.lng,

@@ -24,19 +24,19 @@ function EnterCodePage() {
     loading: nameLoad,
     message: nameMessage,
     postData: namePost,
-  } = usePostData("https://DevSe.gonetis.com/api/school/validation");
+  } = usePostData("http://devse.kr:12599/api/school/validation");
   const {
     data: mailData,
     loading: mailLoad,
     message: mailMessage,
     postData: mailPost,
-  } = usePostData("https://DevSe.gonetis.com/api/school/mail");
+  } = usePostData("http://devse.kr:12599/api/school/mail");
   const {
     data: codeData,
     loading: codeLoad,
     message: codeMessage,
     postData: codePost,
-  } = usePostData("https://DevSe.gonetis.com/api/school/code");
+  } = usePostData("http://devse.kr:12599/api/school/code");
   const navigate = useNavigate();
   const location = useLocation();
 

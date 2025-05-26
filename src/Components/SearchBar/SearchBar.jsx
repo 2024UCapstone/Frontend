@@ -50,7 +50,7 @@ export default function SearchBar() {
     setError(null);
 
     try {
-      const endpoint = `https://DevSe.gonetis.com/api/station?name=${stationName}`;
+      const endpoint = `http://devse.kr:12599/api/station?name=${stationName}`;
 
       const response = await fetch(endpoint, {
         method: "GET",

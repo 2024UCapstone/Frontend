@@ -12,7 +12,7 @@ function LoginPage() {
   }, [])
   
   const handleLogin = async () => {
-    window.location.href = 'http://DevSe.gonetis.com:12599/oauth2/authorization/google';
+    window.location.href = 'http://devse.kr:12599/oauth2/authorization/google';
   };
 
   return (

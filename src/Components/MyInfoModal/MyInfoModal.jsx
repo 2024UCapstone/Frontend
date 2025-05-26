@@ -37,7 +37,7 @@ const MyInfoModal = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post('https://DevSe.gonetis.com/api/auth/logout', {}, {
+      const response = await axios.post('http://devse.kr:12599/api/auth/logout', {}, {
         withCredentials: true
       });
 

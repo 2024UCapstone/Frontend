@@ -13,7 +13,7 @@ function StationDetail() {
   const navigate = useNavigate();
   
   const { data: busStationData, fetchData: busStationFetch, loading: stationLoading, error: stationError } = useFetchData(
-    `https://DevSe.gonetis.com/api/bus/stations/${selectedStation?.id}`
+    `http://devse.kr:12599/api/bus/stations/${selectedStation?.id}`
   );
 
   const [destinationLoading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ function StationDetail() {
 
   const busDestinationFetch = useCallback(async (name, x, y) => {
     try {
-      const response = await axios.get(`https://DevSe.gonetis.com/api/kakao-api/arrival-time/single?origin=${name},${y},${x}&destination=${selectedStation?.name},${selectedStation?.location?.y},${selectedStation?.location?.x}`, {
+      const response = await axios.get(`http://devse.kr:12599/api/kakao-api/arrival-time/single?origin=${name},${y},${x}&destination=${selectedStation?.name},${selectedStation?.location?.y},${selectedStation?.location?.x}`, {
         headers: {
           "Content-Type": "application/json",
           'Authorization': `Bearer ${token}`

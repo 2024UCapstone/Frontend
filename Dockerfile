@@ -18,7 +18,7 @@ FROM nginx:alpine
 RUN apk add --no-cache certbot certbot-nginx
 
 # Create required directories
-RUN mkdir -p /etc/nginx/ssl/live/devse.gonetis.com
+RUN mkdir -p /etc/nginx/ssl/live/devse.kr
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
@@ -82,6 +82,6 @@ RUN echo '#!/bin/sh' > /docker-entrypoint.sh && \
 # Copy built files
 COPY --from=build /app/build /usr/share/nginx/html
 
-EXPOSE 880 4433
+EXPOSE 80 443
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

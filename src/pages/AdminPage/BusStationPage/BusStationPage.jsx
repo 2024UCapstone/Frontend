@@ -17,7 +17,7 @@ function BusStationPage() {
     const fetchStations = async () => {
       try {
         const response = await axios.get(
-          "https://DevSe.gonetis.com/api/station"
+          "http://devse.kr:12599/api/station"
         );
         console.log(response.data);
         // 응답 데이터에서 "data" 속성을 추출하여 사용
@@ -47,7 +47,7 @@ function BusStationPage() {
   // 정류장 삭제 핸들러
   const handleDeleteStation = async (stationId) => {
     try {
-      await axios.delete(`https://DevSe.gonetis.com/api/station/${stationId}`);
+      await axios.delete(`http://devse.kr:12599/api/station/${stationId}`);
       setBusStations(busStations.filter((station) => station.id !== stationId)); // 삭제된 정류장 제외
       setSelectedStation(null); // 선택된 정류장 초기화
     } catch (error) {
