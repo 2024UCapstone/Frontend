@@ -20,7 +20,7 @@ function BusRoutePage() {
     const fetchStationList = async () => {
       try {
         const response = await axios.get(
-          `http://devse.kr:12599/api/bus/stationNames/${busNumber}`
+          `https://bbbserver.devse.kr/api/bus/stationNames/${busNumber}`
         );
         setStationList(response.data.data);
       } catch (error) {
@@ -34,7 +34,7 @@ function BusRoutePage() {
   const handleStationClick = async (station) => {
     try {
       const response = await axios.get(
-        `http://devse.kr:12599/api/station?name=${station}`
+        `https://bbbserver.devse.kr/api/station?name=${station}`
       );
       const stationData = response.data.data;
       // Zustand 스토어에 저장

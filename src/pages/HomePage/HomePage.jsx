@@ -21,12 +21,12 @@ function HomePage() {
     load: myStationLoad,
     error: myStationError,
     fetchData: myStationFetchData,
-  } = useFetchData("http://devse.kr:12599/api/user/my-station");
+  } = useFetchData("https://bbbserver.devse.kr/api/user/my-station");
   const { postData: myStationPostData } = usePostData(
-    "http://devse.kr:12599/api/user/my-station"
+    "https://bbbserver.devse.kr/api/user/my-station"
   );
   const { deleteData: stationDel } = useDeleteData(
-    "http://devse.kr:12599/api/user/my-station"
+    "https://bbbserver.devse.kr/api/user/my-station"
   );
 
   useEffect(() => {

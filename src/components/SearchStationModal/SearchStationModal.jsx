@@ -20,7 +20,7 @@ const SearchStationModal = ({ isOpen, toggleModal, favoriteStations, toggleFavor
   const handleSearch = async (stationName) => {
     setIsLoading(true);
     try {
-      const endpoint = `http://devse.kr:12599/api/station?name=${stationName}`;
+      const endpoint = `https://bbbserver.devse.kr/api/station?name=${stationName}`;
       const response = await fetch(endpoint, {
         method: "GET",
         headers: {

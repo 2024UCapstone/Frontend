@@ -24,19 +24,19 @@ function EnterCodePage() {
     loading: nameLoad,
     message: nameMessage,
     postData: namePost,
-  } = usePostData("http://devse.kr:12599/api/school/validation");
+  } = usePostData("https://bbbserver.devse.kr/api/school/validation");
   const {
     data: mailData,
     loading: mailLoad,
     message: mailMessage,
     postData: mailPost,
-  } = usePostData("http://devse.kr:12599/api/school/mail");
+  } = usePostData("https://bbbserver.devse.kr/api/school/mail");
   const {
     data: codeData,
     loading: codeLoad,
     message: codeMessage,
     postData: codePost,
-  } = usePostData("http://devse.kr:12599/api/school/code");
+  } = usePostData("https://bbbserver.devse.kr/api/school/code");
   const navigate = useNavigate();
   const location = useLocation();
 

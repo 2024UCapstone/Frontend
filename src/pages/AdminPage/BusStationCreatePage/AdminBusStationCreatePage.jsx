@@ -23,7 +23,7 @@ function AdminBusStationCreatePage() {
 
     try {
       await axios.post(
-        "http://devse.kr:12599/api/station",
+        "https://bbbserver.devse.kr/api/station",
         {
           name: busStationName,
           longitude: data.position.lng,
