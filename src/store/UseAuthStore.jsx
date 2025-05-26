@@ -10,7 +10,7 @@ const useAuthStore = create((set) => ({
     set({ isLoading: true });
     try {
       const response = await axios.get(
-        "https://DevSe.gonetis.com/api/auth/user",
+        "http://devse.kr:12599/api/auth/user",
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }

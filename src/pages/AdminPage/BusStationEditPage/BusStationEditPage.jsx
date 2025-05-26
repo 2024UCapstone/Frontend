@@ -44,7 +44,7 @@ function BusStationEditPage() {
     try {
       // API 요청 경로를 명세서에 맞게 설정 (stationId 제외)
       await axios.put(
-        `https://DevSe.gonetis.com/api/station/${stationId}`,
+        `http://devse.kr:12599/api/station/${stationId}`,
         {
           name: stationName,
           longitude: locationData.lng,

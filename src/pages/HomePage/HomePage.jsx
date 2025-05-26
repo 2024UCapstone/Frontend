@@ -21,12 +21,12 @@ function HomePage() {
     load: myStationLoad,
     error: myStationError,
     fetchData: myStationFetchData,
-  } = useFetchData("https://devse.gonetis.com/api/user/my-station");
+  } = useFetchData("http://devse.kr:12599/api/user/my-station");
   const { postData: myStationPostData } = usePostData(
-    "https://devse.gonetis.com/api/user/my-station"
+    "http://devse.kr:12599/api/user/my-station"
   );
   const { deleteData: stationDel } = useDeleteData(
-    "https://devse.gonetis.com/api/user/my-station"
+    "http://devse.kr:12599/api/user/my-station"
   );
 
   useEffect(() => {

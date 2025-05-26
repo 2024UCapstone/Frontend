@@ -18,7 +18,7 @@ const Footer = () => {
     const fetchUserInfo = async () => {
       try {
         const response = await axios.get(
-          "https://DevSe.gonetis.com/api/auth/user"
+          "http://devse.kr:12599/api/auth/user"
         );
         setUserInfo(response.data.data); // 서버에서 받은 데이터를 상태에 저장
       } catch (error) {

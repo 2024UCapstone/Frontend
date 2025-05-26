@@ -18,7 +18,7 @@ function AdminBusEditPage() {
   const [searchTerm, setSearchTerm] = useState(""); // 모달 내 검색어 상태
   const [editingIndex, setEditingIndex] = useState(null); // 수정할 정류장의 인덱스
 
-  const BASE_URL = "https://devse.gonetis.com";
+  const BASE_URL = "http://devse.kr:12599";
 
   // 페이지가 로드되면 해당 버스 데이터를 서버에서 가져옴
   useEffect(() => {
@@ -118,7 +118,7 @@ function AdminBusEditPage() {
       console.log("busNumberInput", busNumberInput);
       console.log("ID", busDetails.id);
       await axios.put(
-        `https://devse.gonetis.com/api/bus`,
+        `${BASE_URL}/api/bus`,
         JSON.stringify({
           id: busDetails.id,
           busNumber: busNumberInput,
