@@ -10,7 +10,7 @@ const useAuthStore = create((set) => ({
     set({ isLoading: true });
     try {
       const response = await axios.get(
-        "http://devse.kr:12599/api/auth/user",
+        "https://bbbserver.devse.kr/api/auth/user",
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }

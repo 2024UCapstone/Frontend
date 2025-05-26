@@ -149,7 +149,7 @@ export default function MapView() {
   // 서버에서 모든 정류장 위치 불러오기
   const fetchStationLocations = async () => {
     try {
-      const response = await axios.get(`http://devse.kr:12599/api/station`);
+      const response = await axios.get(`https://bbbserver.devse.kr/api/station`);
       const stationData = response.data.data;
       setStationPositions(stationData);
       setIsStationInitialized(true);
@@ -177,7 +177,7 @@ export default function MapView() {
         return;
       }
 
-      websocket.current = new WebSocket("wss://devse.kr:12599/bus-location");
+      websocket.current = new WebSocket("wss://bbbserver.devse.kr/bus-location");
 
       websocket.current.onopen = () => {
         console.log("WebSocket Connected to Spring Server");

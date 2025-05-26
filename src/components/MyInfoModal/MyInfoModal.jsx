@@ -6,7 +6,7 @@ import useFetchData from "hooks/useFetchData";
 import { useModalActions, useModalState } from "store/UseModalStore";
 
 const MyInfoModal = () => {
-  const { data: userData, loading: userLoad, error: userError, fetchData } = useFetchData(`https://DevSe.gonetis.com/api/auth/user`);
+  const { data: userData, loading: userLoad, error: userError, fetchData } = useFetchData(`https://bbbserver.devse.kr/api/auth/user`);
   const navigate = useNavigate();
   const { isModal, modalName } = useModalState();
   const { selectedModalClose } = useModalActions();
@@ -37,7 +37,7 @@ const MyInfoModal = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post('http://devse.kr:12599/api/auth/logout', {}, {
+      const response = await axios.post('https://bbbserver.devse.kr/api/auth/logout', {}, {
         withCredentials: true
       });
 

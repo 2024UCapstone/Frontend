@@ -12,7 +12,7 @@ function LoginPage() {
   }, [])
   
   const handleLogin = async () => {
-    window.location.href = 'http://devse.kr:12599/oauth2/authorization/google';
+    window.location.href = 'https://bbbserver.devse.kr/oauth2/authorization/google';
   };
 
   return (

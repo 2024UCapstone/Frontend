@@ -38,7 +38,7 @@ function StationDetail() {
 
   const busDestinationFetch = useCallback(async (name, x, y) => {
     try {
-      const response = await axios.get(`http://devse.kr:12599/api/kakao-api/arrival-time/single?origin=${name},${y},${x}&destination=${selectedStation?.name},${selectedStation?.location?.y},${selectedStation?.location?.x}`, {
+      const response = await axios.get(`https://bbbserver.devse.kr/api/kakao-api/arrival-time/single?origin=${name},${y},${x}&destination=${selectedStation?.name},${selectedStation?.location?.y},${selectedStation?.location?.x}`, {
         headers: {
           "Content-Type": "application/json",
           'Authorization': `Bearer ${token}`
